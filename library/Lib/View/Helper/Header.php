@@ -33,7 +33,7 @@ class Lib_View_Helper_Header extends Zend_View_Helper_Abstract
 		$slides = $this->view->useHeaderSlideshow ? $this->view->homePageSlides() : '';
 		$logoUrl = $this->view->cdnHelper->url($imgPath. 'logo.png');
     		$content = <<<HTML
-<div id="header"$class>
+<header$class>
 	<div id="headerContent">
 		$languageBox
 		$slides
@@ -45,7 +45,7 @@ $searchForm
 $menu
 		</div>
 	</div>
-</div>
+</header>
 HTML;
 
         $defaultOptions = array(
@@ -92,18 +92,19 @@ HTML;
 	         * Main menu
 	         */
 	        $menuClass = empty($options['menuClass']) ? '' : " class='{$options['menuClass']}'";
-	        $content = "<ul id='{$options['menuId']}'$menuClass>".PHP_EOL;
+	        $content  = '<nav role="navigation" class="clearfix">';
+	        $content .= "<ul id='{$options['menuId']}'$menuClass>".PHP_EOL;
 	        foreach($config->categories->category as $category){
 	            $content .= $this->_getCategoryContent($category, $currentCategoryId, $currentSubCategoryId, $options);
 	        }
 	        $content .= '</ul>'.PHP_EOL;
-
+	        $content .= '</nav>'.PHP_EOL;
+	        
 	        /*
 	         * Current category menu
 	         */
 	        if(!empty($this->_currentCategoryContent)){
 	            $currentCategoryMenuClass = empty($options['currentCategoryMenuClass']) ? '' : " class='{$options['currentCategoryMenuClass']}'";
-	            $content .= "<div class='clear'></div>".PHP_EOL;
 	            $content .= "<ul id='{$options['currentCategoryMenuId']}'$currentCategoryMenuClass>".PHP_EOL;
 	            $content .= $this->_currentCategoryContent.PHP_EOL;
 	            $content .= '</ul>'.PHP_EOL;

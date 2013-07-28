@@ -1,6 +1,6 @@
 <?php
 echo $this->doctype().PHP_EOL; ?>
-<html xmlns="http://www.w3.org/1999/<?php echo APP_PAGE_HTML_TYPE ?>" xml:lang="<?php echo $this->pageLang ?>" lang="<?php echo $this->pageLang ?>">
+<html lang="<?php echo $this->pageLang ?>">
 <head>
 <?php
 if(!empty($this->keywords)){
@@ -38,7 +38,7 @@ $wrapperClass = $headerHelper->getEmptyCategoryContentClass();
 <?php
 echo $header;
 ?>
-	<div id="main"<?php echo $wrapperClass ?>>
+	<main role="main"<?php echo $wrapperClass ?>>
 		<div id="mainContent" class="oneColumn">
 			<div id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
@@ -55,10 +55,8 @@ echo $header;
 <?php echo $this->layout()->modal . PHP_EOL; ?>
 			</div>
     	</div>
-  	</div>
-	<div id="footer">
+  	</main>
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
-	</div>
 	<div id="overlay"></div>
 <?php
 $this->google_Analytics().PHP_EOL;
