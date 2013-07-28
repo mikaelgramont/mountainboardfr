@@ -19,7 +19,7 @@ img, fieldset, abbr{border:none;}
 /** Default template elements */
 h1,h2,h3,h4,h5,h6{font-weight:bold;font-size:1em;}
 h1.pageTitle, h1.forumTitle, h1.topicTitle, h1.dataEdit,h1.dataAdd,h1.blogTitle, h2.blogDescription, h1.albumTitle{display:block;font-size:2em;margin:0 0 0.5em 0;}
-p.paragraph{margin:0.5em 0;}
+p.paragraph{margin:0.5em 0;max-width:45em;}
 
 a, span.user, span.author{font-weight:bold;color:#000000; text-decoration:underline;}
 a:hover{color:#4f4f4f;}
@@ -50,8 +50,6 @@ a.privatemessage {background: url("../../images/default/linkSprites.png") -10px 
 a.event {background: url("../../images/default/linkSprites.png") -10px -656px no-repeat;}
 a.facebook {background: url("../../images/default/linkSprites.png") -10px -728px no-repeat;text-decoration:none;}
 a.close {background: url("../../images/default/linkSprites.png") -7px -765px no-repeat;display:block; width:1.5em;height:1.5em;}
-a#chatOpen {background: url("../../images/default/linkSprites.png") -7px -801px no-repeat;width:1.125em;height:1em;}
-a#chatExit {background: url("../../images/default/linkSprites.png") -7px -837px no-repeat;width:1.125em;height:1em;}
 
 a.linkRight {padding-right:1.125em; background: url("../../images/default/linkSprites.png") right -511.5px no-repeat ;}
 a.linkLeft {padding-left:1.125em; background: url("../../images/default/linkSprites.png") -10px -547.5px no-repeat;}
@@ -193,26 +191,6 @@ background-image: -webkit-gradient(
 margin-top:-3em;}
 footer a{color:white}
 #activityBar{position:fixed;bottom:0;height:1em;padding:0.25em 0;width:100%;background:#FFFF80;z-index:5;}
-#chat{position:fixed;bottom:0em;right:0.25em;width:24em;background: white;border: 0.0625em solid black;border-bottom:none;}
-#chatMenu{bottom:0em;right:0.5em;height:1.5em;background:#FFFF80;padding-left:0.25em;}
-#chatExit, #chatOpen{float:right; position:relative; top:0.1825em;}
-#chatToggle{position:absolute;left:0; right:2em; float:none; padding-left:0.25em;}
-
-#chatContainer{bottom: 1.5em; max-height: 15em; display:none;}
-#chatLoader{display:none;text-align:center;margin:5em 0;height:5em;}
-#chatContainer.loading,#chatContainer.ready{display:block;}
-
-#chatContent{display:none;background: white;height:14.5em;padding:0.25em;}
-#chatContainer.ready #chatContent{display:block;}
-
-#chatContainer.loading #chatLoader{display:block}
-#chatContainer.ready #chatLoader{display:none}
-
-#chatConversation{position:absolute; top:1.5em; height:12.5em;overflow:auto;width:23.5em;}
-#chatConversation a.from {color:#666; margin-right:0.125em;}
-#chatInputs{position:absolute; bottom:0em; height:2em;}
-#chatMessage{width:19.75em;}
-#chatSubmit{width:2em;}
 
 div#languageBox{position:absolute;width:3em;height:1.25em; right:0em; top:3.7em; text-align:right; vertical-align:center;display:table}
 div#languageBox a{display:table-cell;vertical-align:middle;width:1.25em;height:1em;}
@@ -290,8 +268,8 @@ form.goToForm select{border:0.0625em solid #CCC;height:1.5em;}
 form.goToForm input[type=submit]{border:0.0625em solid #CCC;height:1.25em}
 p.element-group, #mapTools{width:45em; padding:0 1em 1em;position:relative;left:10em;background:none;}
 p.element-group.active{background-color:rgba(192,192,192,0.5);}
-p.element-group label.form-element-label{position:absolute;padding-top:0.25em;color:#444;line-height:2.25em;}
-p.element-group input, p.element-group select, p.element-group textarea, p.element-group div.tag{width: 100%;border:0.125em solid #CCCCCC;margin-top:2em;}
+p.element-group label.form-element-label{padding-top:0.25em;color:#444;line-height:2.25em;}
+p.element-group input, p.element-group select, p.element-group textarea, p.element-group div.tag{width: 100%;border:0.125em solid #CCCCCC;}
 p.element-group span.hint{position:absolute;top:0em;left:-11em;width:10em;padding:0.5em;display:none;background:rgba(192, 192, 192, 0.5);}
 p.element-group.active span.hint{display:inline;}
 span.mceEditor{margin-top:2em;display:inline-block;zoom:1;*display:inline;}
@@ -300,7 +278,7 @@ p.element-group input{line-height:1.25em;height:1.5em;padding-top:0.5em}
 p.element-group select{line-height:1.25em;background:white;}
 p.element-group div.tag{border:0.0625em solid #CCCCCC;}
 p.element-group input[type="file"]{border:inherit;}
-p.element-group input[type="checkbox"]{width:1em;border:0;margin-top:0;}
+p.element-group input[type="checkbox"]{width:2em;border:0;margin-top:0;}
 p.element-group input[type="radio"]{width: 2em;}
 p.element-group textarea#description{height:7em;}
 p.element-group textarea#tags{height:4em;}
@@ -647,6 +625,8 @@ div.connectionLinks a{margin:0em 0 2em 5em;background-color:#EFEF20;display:bloc
 p.recoverPassword{font-size:0.75em;margin:0 2em 1em 1.5em;}
 
 /** login form in second content column */
+div#secondContent p.element-group {width: 18em;}
+/*
 div#secondContent div.loginStatus{padding:0.5em;margin-bottom:1em; }
 div#secondContent div.loginStatus #loginForm p.element-group{width:18em; margin:0.25em 1em 0.25em 0;left:0;margin-left:0;}
 div#secondContent div.loginStatus #loginForm p.submit-group{width:19em;}
@@ -655,6 +635,7 @@ div#secondContent div.loginStatus #loginForm p.element-group input[type="checkbo
 div#secondContent div.loginStatus #loginForm p.element-group label.form-element-label{margin:0; display:block; width: 10em;}
 div#secondContent div.loginStatus #loginForm p.element-group-hidden{display:none;}
 div#secondContent div.loginStatus #loginForm .hint{display:none;}
+*/
 
 div#secondContent div.additionalContent {text-align:center;padding:0.5em;}
 div.additionalContent{clear:both;}
