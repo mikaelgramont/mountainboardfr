@@ -5,7 +5,7 @@ $showNewItems = ($this->items['newElementsAndMetadata']) || $this->newUnreadMess
 $showOldItems = ($this->items['oldElementsAndNewMetadata']) || $this->oldUnreadMessages;
 
 ?>
-<h1 class="pageTitle"><?php echo ucfirst($this->translate('newstuff'))?></h1>
+<h1 id="mainTitle" class="pageTitle"><?php echo ucfirst($this->translate('newstuff'))?></h1>
 
 <?php
 echo '<div class="actionLinkContainer">'.ucfirst($this->translate('showStuffPosted')).' '.$this->rangeForm.'</div>'.PHP_EOL;

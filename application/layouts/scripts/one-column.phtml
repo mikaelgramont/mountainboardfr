@@ -40,14 +40,14 @@ echo $header;
 ?>
 	<main role="main"<?php echo $wrapperClass ?>>
 		<div id="mainContent" class="oneColumn">
-			<div id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
+			<section role="region" id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
 <?php if($this->layout()->comments){?>
 				<div id="comments">
 <?php echo $this->layout()->comments . PHP_EOL; ?>
 				</div>
 <?php } ?>
-    		</div>
+    		</section>
     	</div>
     	<div id="modalInfo">
 			<a class="close" href="javascript:void(0);"></a>

@@ -11,7 +11,7 @@ $paginationControl = $this->paginationControl(
 $title = $this->blog->getTitle();
 $description = $this->blog->getDescription();
 $this->headTitle(ucfirst($title). ' - '.$description);
-echo '<h1 class="blogTitle">"'.$title.'"</h1>';
+echo '<h1 id="mainTitle" class="blogTitle">"'.$title.'"</h1>';
 echo '<h2 class="blogDescription">'.$description.'</h2>';
 
 $blogger = $this->blog->getUser();

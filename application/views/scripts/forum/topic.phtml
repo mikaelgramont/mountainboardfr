@@ -2,7 +2,7 @@
 $pagination = $this->paginationControl($this->posts, null, null, array('name' => $this->topic->getCleanTitle(), 'id' => $this->topic->id));
 $this->headTitle(ucfirst($this->topic->getTitle()));
 
-echo '<h1 class="topicTitle">'.ucfirst($this->topic->getTitle());
+echo '<h1 id="mainTitle" class="topicTitle">'.ucfirst($this->topic->getTitle());
 if($this->topic->isEditableBy($this->user, $this->acl)){
 	echo $this->itemStatus($this->topic, true);
 	echo $this->editLink($this->topic);

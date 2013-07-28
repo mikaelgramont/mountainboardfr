@@ -32,7 +32,7 @@ if(!empty($this->nextMedia)){
 
 ?>
 <div class="mediaTitle"><?php
-echo '<h1>'.ucfirst($this->media->getTitle()).'</h1>';
+echo '<h1 id="mainTitle">'.ucfirst($this->media->getTitle()).'</h1>';
 if($editable){
 	echo $this->itemStatus($this->media);
 	echo $this->editLink($this->media);

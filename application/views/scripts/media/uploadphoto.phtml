@@ -6,7 +6,7 @@ if($this->photo){
 	$string = ucfirst($this->translate('uploadPhotoTitle'));
 }
 ?>
-<h1 class="albumTitle"><?php echo $string ?></h1>
+<h1 id="mainTitle" class="albumTitle"><?php echo $string ?></h1>
 <?php
 echo $this->facebook_UploadLink();
 echo '	<div id="backToAlbum" class="actionLinkContainer uploadPage">'.$this->itemLink(array('name'=>$backToAlbum, 'link'=>$this->album->getLink(), 'itemType' => Constants_DataTypes::MEDIAALBUM), 'dataLink album').'</div>'.PHP_EOL;

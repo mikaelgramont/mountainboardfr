@@ -9,7 +9,7 @@ if($this->type == 'result'){
 }
 
 
-echo '<h1 class="pageTitle">'.ucfirst($this->translate('itemPlur_'.Constants_DataTypes::PRIVATEMESSAGE)).'</h1>';
+echo '<h1 id="mainTitle" class="pageTitle">'.ucfirst($this->translate('itemPlur_'.Constants_DataTypes::PRIVATEMESSAGE)).'</h1>';
 
 if($this->type != 'home'){
 	echo '	<div class="actionLinkContainer">'.$this->routeLink('privatemessageshome').'</div>'.PHP_EOL;

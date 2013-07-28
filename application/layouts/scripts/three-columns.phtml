@@ -37,19 +37,19 @@ echo $header;
 ?>
 	<main role="main"<?php echo $wrapperClass ?>>
 		<div id="mainContent" class="threeColumns">
-			<div id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
+			<section role="region" id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
-    		</div>
-			<div id="secondContent">
+    		</section>
+			<section role="region" id="secondContent">
 <?php
 	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN23).PHP_EOL;
 ?>
-			</div>
-			<div id="thirdContent">
+			</section>
+			<section role="region" id="thirdContent">
 <?php
 	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN33).PHP_EOL;
 ?>
-			</div>
+			</section>
 		</div>
 <?php if($this->layout()->comments){?>
 		<div id="comments">

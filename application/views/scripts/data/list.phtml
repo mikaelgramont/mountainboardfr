@@ -8,7 +8,7 @@ if(!($item instanceof Article_Row)){
 
 $listTitle = ucfirst($this->translate($this->dataType.'ListTitle'));
 $this->headTitle($listTitle);
-echo "<h1>$listTitle</h1>".PHP_EOL;
+echo "<h1 id="mainTitle">$listTitle</h1>".PHP_EOL;
 $listDescription = ucfirst($this->translate($this->dataType.'ListDescription'));
 echo "<h2 class=\"description\">$listDescription</h2>".PHP_EOL;
 

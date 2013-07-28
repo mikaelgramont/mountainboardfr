@@ -9,7 +9,7 @@ $pagination = $this->paginationControl(
 	)
 );
 $this->headTitle(ucfirst($this->forum->getTitle()));
-echo '<h1 class="forumTitle pageTitle">Forum: '.ucfirst($this->forum->getTitle()).'</h1>'.PHP_EOL;
+echo '<h1 id="mainTitle" class="forumTitle pageTitle">Forum: '.ucfirst($this->forum->getTitle()).'</h1>'.PHP_EOL;
 if($this->moderators){
 
 	echo '<div class="moderatorInfo">'.PHP_EOL;

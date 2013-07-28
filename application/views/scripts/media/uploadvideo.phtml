@@ -2,7 +2,7 @@
 $backToAlbum = sprintf($this->translate('backToAlbum'), $this->album->getTitle());
 $string = ucfirst($this->translate('uploadVideoTitle'));
 ?>
-<h1 class="albumTitle"><?php echo $string ?></h1>
+<h1 id="mainTitle" class="albumTitle"><?php echo $string ?></h1>
 <?php
 echo '<div id="backToAlbum" class="actionLinkContainer uploadPage">'.$this->itemLink(array('name'=>$backToAlbum, 'link'=>$this->album->getLink(), 'itemType' => Constants_DataTypes::MEDIAALBUM), 'dataLink album').'</div>'.PHP_EOL;
 $this->headTitle($string);

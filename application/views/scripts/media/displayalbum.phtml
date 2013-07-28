@@ -11,7 +11,7 @@ $string  = ucfirst($this->translate('loginOrRegisterInOrderTo'));
 
 $this->headTitle(ucfirst($title));
 
-echo '<h1 class="albumTitle">'.ucfirst($title).PHP_EOL;
+echo '<h1 id="mainTitle" class="albumTitle">'.ucfirst($title).PHP_EOL;
 if($description !== $title && !empty($description)){
 	echo '<span> - '.ucfirst($description).'</span>'.PHP_EOL;
 }
