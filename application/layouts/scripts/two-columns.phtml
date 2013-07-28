@@ -35,8 +35,11 @@ $wrapperClass = $headerHelper->getEmptyCategoryContentClass();
 <?php echo $this->headScript().PHP_EOL;?>
 </head>
 <body>
-	<div id="wrapper"<?php echo $wrapperClass ?>>
-		<div id="main" class="twoColumns">
+<?php
+echo $header;
+?>
+	<div id="main"<?php echo $wrapperClass ?>>
+		<div id="mainContent" class="twoColumns">
 			<div id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
     		</div>
@@ -68,9 +71,6 @@ $wrapperClass = $headerHelper->getEmptyCategoryContentClass();
 	<div id="footer">
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 	</div>
-<?php
-echo $header;
-?>
 	<div id="overlay"></div>
 <?php
 $this->google_Analytics().PHP_EOL;

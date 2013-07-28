@@ -33,8 +33,8 @@ class Lib_View_Helper_Header extends Zend_View_Helper_Abstract
 		$slides = $this->view->useHeaderSlideshow ? $this->view->homePageSlides() : '';
 		$logoUrl = $this->view->cdnHelper->url($imgPath. 'logo.png');
     		$content = <<<HTML
-<div id="headerContainer"$class>
-	<div id="header">
+<div id="header"$class>
+	<div id="headerContent">
 		$languageBox
 		$slides
 	    <div class="title">
@@ -161,27 +161,27 @@ HTML;
 
         if($category->id == $currentCategoryId){
             // Current category
-            $catClass = " class='{$options['activeCategoryClass']}'";
+            $catClass = " class='category {$options['activeCategoryClass']}'";
             $catString = $this->view->routeLink($category->route, $title, array()).PHP_EOL;
-            $content .= "    <li$catClass>".PHP_EOL;
+            $content .= "<li$catClass>".PHP_EOL;
             $content .= "        ".$catString . PHP_EOL;
-            $content .= "    </li>".PHP_EOL;
+            $content .= "</li>";
             if($category->subCategories){
                 $this->_currentCategoryContent = $this->_getSubCategoriesContent($category, $currentCategoryId, $currentSubCategoryId, $category->subCategories, $options);
             }
         } else {
             // Other categories
-            $catClass = " class='{$options['inactiveCategoryClass']}'";
+            $catClass = " class='category {$options['inactiveCategoryClass']}'";
         	$url = $this->view->cdnHelper->url($this->view->baseUrl . '/' . IMAGES_PATH.'menuItem.gif');
 
         	$title .= "<img src=\"$url\" alt=\"\" class=\"menuItemImage\"/>";
             $catString = $this->view->routeLink($category->route, $title, array()).PHP_EOL;
-            $content .= "    <li$catClass>".PHP_EOL;
+            $content .= "<li$catClass>".PHP_EOL;
             $content .= "        ".$catString . PHP_EOL;
             if($category->subCategories){
                 $content .= $this->_getSubCategoriesContent($category, $currentCategoryId, $currentSubCategoryId, $category->subCategories, $options);
             }
-            $content .= "    </li>".PHP_EOL;
+            $content .= "    </li>";
         }
 
         return $content;
