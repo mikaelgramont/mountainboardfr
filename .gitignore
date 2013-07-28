@@ -18,6 +18,6 @@ tools/*
 bin/crontab.backup
 bin/script.php
 tests/cache/*
-public/content/*
+public/content
 *.zip
 public/media/avatars/*.*
