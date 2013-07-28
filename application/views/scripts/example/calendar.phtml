@@ -1,0 +1,7 @@
+<?php
+$this->headTitle('Calendrier');
+$this->keywords = array('date calendrier');
+?>
+<form method="post" action="<?php echo $this->baseUrl ?>/">
+    Pick your Date: <?php echo $this->datePicker("dp1",'',array('defaultDate' =>date('Y/m/d', time()))).PHP_EOL; ?><br/>
+</form>

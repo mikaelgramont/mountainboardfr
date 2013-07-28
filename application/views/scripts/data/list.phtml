@@ -1,0 +1,30 @@
+<?php
+$paginationControl = $this->paginationControl($this->items, null, null, array('dataType' => $this->dataType));
+
+$item = $this->items->getItem(0);
+if(!($item instanceof Article_Row)){
+	echo $this->addNewDataLink($this->dataType);
+}
+
+$listTitle = ucfirst($this->translate($this->dataType.'ListTitle'));
+$this->headTitle($listTitle);
+echo "<h1>$listTitle</h1>".PHP_EOL;
+$listDescription = ucfirst($this->translate($this->dataType.'ListDescription'));
+echo "<h2 class=\"description\">$listDescription</h2>".PHP_EOL;
+
+$params = array(
+	'containerClass' => $this->dataType.'ListItem',
+	'striptags' => true,
+	'showDate' => true
+);
+
+if($this->dataType == Event::ITEM_TYPE){
+	$params['showDate'] = false;
+}
+
+echo $this->itemList($this->items, $params);
+
+if($paginationControl){
+	echo '<div class="'.$this->dataType.' paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+	echo '<div class="'.$this->dataType.' paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+}

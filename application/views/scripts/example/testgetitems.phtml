@@ -1,0 +1,23 @@
+Spots:<br/>
+<?php
+if(!count($this->items)){
+    echo "Rien trouvé !";
+} else {
+    echo "<ul>\n";
+    foreach($this->items as $item){
+        echo "<li>$item->item_type $item->item_id</li>\n";
+    }
+    echo "</ul>\n";
+}
+?>
+Evenements:<br/>
+<?php
+if(!count($this->items2)){
+    echo "Rien trouvé !";
+} else {
+    echo "<ul>\n";
+    foreach($this->items2 as $item){
+        echo "<li>$item->item_type $item->item_id</li>\n";
+    }
+    echo "</ul>\n";
+}

@@ -1,0 +1,32 @@
+<?php
+if (!$this->pageCount || $this->pageCount == 1){
+    return;
+}
+?>
+<div class="paginationControl">
+
+<!-- Previous page link -->
+<?php
+if (isset($this->previous)){
+    echo '<a href="'.$this->url(array('name' => $this->name, 'id' => $this->id, 'page' => $this->previous)).'">&lt;'. $this->translate('previousItem').'</a> | ';
+} else {
+    echo '<span class="disabled">&lt;'. $this->translate('previousItem').'</span> | ';
+}
+?>
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page){
+  if ($page != $this->current){
+    echo '<a href="'.$this->url(array('name' => $this->name, 'id' => $this->id,'page' => $page)).'">'.$page.'</a> | ';
+  } else {
+      echo '<span class="current">'.$page.'</span> | ';
+  }
+}
+?>
+<!-- Next page link -->
+<?php
+if (isset($this->next)){
+    echo '<a href="'.$this->url(array('name' => $this->name, 'id' => $this->id,'page' => $this->next)).'">'. $this->translate('nextItem').' &gt; </a>';
+} else {
+    echo '<span class="disabled">'.$this->translate('nextItem').' &gt;</span>';
+}?>
+</div>

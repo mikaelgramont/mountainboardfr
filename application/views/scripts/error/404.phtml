@@ -1,0 +1,25 @@
+<?php
+$notFound = ucfirst($this->translate('notFoundTitle'));
+$this->headTitle($notFound);
+
+$images = array(
+	array('file' => '404_1.jpg', 'width' => 640, 'height' => 480, 'from' => 'em'),
+	array('file' => '404_2.jpg', 'width' => 640, 'height' => 426, 'from' => 'fllo'),
+	array('file' => '404_3.jpg', 'width' => 604, 'height' => 403, 'from' => 'douce offensive'),
+);
+shuffle($images);
+$image = $images[0];
+$file = $this->baseUrl . '/'.IMAGES_PATH.$image['file'];
+$picBy = ucfirst(sprintf($this->translate('404picBy'), $image['from']));
+$msg = $this->translate('404HtmlMessage');
+?>
+<div class="notFoundPage">
+	<div class="pic">
+<?php
+echo "		<img src=\"{$file}\" alt=\"\" title=\"\" width=\"{$image['width']}\" height=\"{$image['height']}\" />".PHP_EOL;
+echo "		<p>($picBy)</p>";
+?>
+		
+	</div>
+<?php echo $msg ?>	
+</div>

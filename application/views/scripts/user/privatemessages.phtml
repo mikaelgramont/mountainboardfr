@@ -1,0 +1,42 @@
+<?php
+if($this->type == 'result'){
+	if($this->result == 'ok'){
+		echo sprintf(ucfirst($this->translate('messageWriteSuccessful')), $this->routeLink('privatemessageshome'));
+	} else {
+		echo ucfirst($this->translate('messageWriteError'));
+	}
+	return;
+}
+
+
+echo '<h1 class="pageTitle">'.ucfirst($this->translate('itemPlur_'.Constants_DataTypes::PRIVATEMESSAGE)).'</h1>';
+
+if($this->type != 'home'){
+	echo '	<div class="actionLinkContainer">'.$this->routeLink('privatemessageshome').'</div>'.PHP_EOL;
+}
+if($this->type != 'sent'){
+	echo '	<div class="actionLinkContainer">'.$this->routeLink('privatemessagessent').'</div>'.PHP_EOL;
+}
+if($this->type != 'new' && $this->type != 'reply'){
+	echo '	<div class="actionLinkContainer addMessageLink">'.$this->routeLink('privatemessagesnew').'</div>'.PHP_EOL;
+}
+
+switch($this->type){
+	case 'home':
+	case 'sent':
+		echo $this->postsList($this->messages, 0, array(), $this->lastLogin, Lib_View_Helper_PostsList::TYPE_PRIVATEMESSAGES );
+		$paginationControl = $this->paginationControl($this->messages, null, null, array('dataType' => Constants_DataTypes::PRIVATEMESSAGE));
+		echo '<div class="'.PrivateMessage::ITEM_TYPE.' paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+		echo '<div class="'.PrivateMessage::ITEM_TYPE.' paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+		break;
+	case 'new':
+		echo $this->form;
+		break;
+	case 'reply':
+		echo '<div class="quotedPrivateMessage">'.PHP_EOL;
+		echo '	<p>'.ucfirst($this->translate('replyToMessageFrom')).' '.$this->replyToUser->getTitle().':</p>'.PHP_EOL;
+		echo '	<div class="message">'.$this->replyToMessage->getContent().'</div>'.PHP_EOL;
+		echo '</div>'.PHP_EOL;
+		echo $this->form;
+		break;
+}

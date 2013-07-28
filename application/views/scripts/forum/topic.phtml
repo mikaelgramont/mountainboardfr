@@ -1,0 +1,34 @@
+<?php
+$pagination = $this->paginationControl($this->posts, null, null, array('name' => $this->topic->getCleanTitle(), 'id' => $this->topic->id));
+$this->headTitle(ucfirst($this->topic->getTitle()));
+
+echo '<h1 class="topicTitle">'.ucfirst($this->topic->getTitle());
+if($this->topic->isEditableBy($this->user, $this->acl)){
+	echo $this->itemStatus($this->topic, true);
+	echo $this->editLink($this->topic);
+    if(count($this->topic->getPosts()) == 1){
+        echo $this->deleteLink($this->topic);
+    }
+}
+echo '</h1>'.PHP_EOL;
+
+$forum = $this->topic->getForum();
+$linkInfo = array(
+	'itemType' => $forum->getItemType(),
+	'link' => $forum->getLink(),
+	'name' => sprintf($this->translate('backToForum'), $forum->getTitle())
+);
+echo '<div class="actionLinkContainer backToTopicLink">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
+
+echo $this->forumPostList($this->topic, $this->posts, $this->page, $this->lastLogin);
+
+if($pagination){
+	echo '<div class="topic paginationControl top">'.PHP_EOL.$pagination.PHP_EOL.'</div>'.PHP_EOL;
+	echo '<div class="topic paginationControl bottom">'.PHP_EOL.$pagination.PHP_EOL.'</div>'.PHP_EOL;
+}
+
+if(in_array($this->user->status, array(User::STATUS_BANNED, User::STATUS_GUEST, User::STATUS_PENDING))){
+	echo $this->addNewDataLink($this->dataType, $this->topic->id);
+} else {
+	echo $this->form->render();
+}

@@ -1,0 +1,29 @@
+<?php
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+echo "<rss version=\"2.0\">\n";
+echo "   <channel>\n";
+echo "       <title>".$this->translate('appBaseTitle')."</title>\n";
+echo "       <link>".APP_URL."</link>\n";
+echo "       <description>".APP_SLOGAN."</description>\n";
+echo "       <language>fr-fr</language>\n";
+echo "       <generator>A la main</generator>\n";
+echo "       <managingEditor>Mika</managingEditor>\n";
+
+if(empty($this->items)){
+	echo "     </channel>\n";
+	echo "</rss> ";
+	return;
+}
+
+foreach($this->items as $item){
+echo "       <item>\n";
+echo "        <title>".ucfirst($item->getTitle())."</title>\n";
+echo "               <link>".APP_URL.$item->getLink()."</link>\n";
+echo "               <pubdate>".$item->date."</pubdate>\n";
+echo "               <description>".$item->getDescription()."</description>\n";
+echo "       </item>\n";
+	
+}
+
+echo "     </channel>\n";
+echo "</rss> ";

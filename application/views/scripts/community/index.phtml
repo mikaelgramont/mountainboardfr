@@ -1,0 +1,23 @@
+<?php
+	$subCategories = array(
+		'forums' => 'forums',
+		'photos' => 'photos',
+		'videos' => 'videos',
+		'france' => 'france',
+		'users' => 'userlist',
+		'spots' => 'listspots',
+		'tricks' => 'listtricks',
+		'blogs' => 'listblogs',
+	);
+?>
+<h1 class="subCategoriesTitle"><?php echo ucfirst($this->translate('communitySubCategoriesTitle')) ?></h1>
+<h2 class="subCategoriesDescription"><?php echo ucfirst($this->translate('communitySubCategoriesDescription')) ?></h2>
+<ul id="communitySubCategoriesDescription">
+<?php foreach($subCategories as $k => $v){?>
+	<li>
+		<h2><div class="actionLinkContainer"><?php echo $this->routeLink($v, null, array(), '') ?></div></h2>
+		<?php echo ucfirst($this->translate($k.'Description')) ?>
+	</li>
+
+<?php } ?>
+</ul>

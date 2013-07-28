@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<root>
+    <categories>
+        <category route="noCat">
+            <!-- No subcategories: category does not appear in menus -->
+        </category>
+
+        <category id="start" route="startCat">
+            <subCategories>
+                <subCategory id="index"  	route="index"/>
+                <subCategory id="france"  	route="france"/>
+                <subCategory id="events"    route="listevents"/>
+                <subCategory id="portfolio" route="portfolio"/>
+                <subCategory id="tricks"  	route="listtricks"/>
+            </subCategories>
+        </category>
+
+        <category id="articles" route="articlesCat">
+            <subCategories>
+                <subCategory id="dossiers"  route="listdossiers"/>
+                <subCategory id="news"  	route="listnews"/>
+                <subCategory id="tests"  	route="listtests"/>
+            </subCategories>
+        </category>
+
+        <category id="community" route="communityCat">
+            <subCategories>
+                <subCategory id="forums"    route="forums"/>
+                <subCategory id="photos"    route="photos"/>
+                <subCategory id="videos"    route="videos"/>
+                <subCategory id="users"     route="userlist"/>
+                <subCategory id="spots"     route="listspots"/>
+                <subCategory id="blogs"  	route="listblogs"/>
+            </subCategories>
+        </category>
+
+        <category id="edition" route="editionCat" resource="writerResource">
+            <subCategories>
+                <subCategory id="createnews"        route="createnews" 		title="news" 		dataType="news"/>
+                <subCategory id="createdossiers"    route="createdossier" 	title="dossiers" 	dataType="dossier"/>
+                <subCategory id="createtests"    	route="createtest" 		title="tests" 		dataType="test"/>
+                <subCategory id="createevents"    	route="createevent"		title="events" 		dataType="event"/>
+            </subCategories>
+        </category>
+
+        <category id="account" route="accountCat">
+            <subCategories>
+                <subCategory id="newstuff"				route="newstuff"			resource="registeredResource"/>
+                <subCategory id="myprofile"				route="myprofile"			resource="registeredResource"/>
+                <subCategory id="userpending"           route="userpending"        	resource="pendingOnlyResource"/>
+                <subCategory id="privatemessageshome"	route="privatemessageshome"	resource="registeredResource"/>
+                <subCategory id="admin"         		route="admin"       		resource="adminResource"/>
+                <subCategory id="logout"            	route="logout"          	resource="pendingResource"/>
+                <subCategory id="userregister"      	route="userregister"    	resource="loggedOutOnlyResource"/>
+                <subCategory id="loginpage"         	route="loginpage"       	resource="loggedOutOnlyResource"/>
+            </subCategories>
+        </category>
+
+    </categories>
+</root>

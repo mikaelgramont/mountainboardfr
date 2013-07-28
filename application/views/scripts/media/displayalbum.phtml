@@ -1,0 +1,72 @@
+<?php
+$medias = $this->albumContent($this->album, $this->page);
+$paginationControl = $this->paginationControl($medias);
+$editable = $this->album->isEditableBy($this->user, $this->acl);
+$editLink = $editable ? $this->editLink($this->album) : '';
+$title = $this->album->getTitle();
+$description = $this->album->getDescription();
+$canPost = $this->acl->isAllowed($this->user, Lib_Acl::REGISTERED_RESOURCE);
+$url = Globals::getRouter()->assemble(array(), 'loginpage', true);
+$string  = ucfirst($this->translate('loginOrRegisterInOrderTo'));
+
+$this->headTitle(ucfirst($title));
+
+echo '<h1 class="albumTitle">'.ucfirst($title).PHP_EOL;
+if($description !== $title && !empty($description)){
+	echo '<span> - '.ucfirst($description).'</span>'.PHP_EOL;
+}
+echo $editLink.'</h1>'.PHP_EOL;
+switch($this->album->id){
+	case Media_Album_PhotoMain::ID:
+		$prepend = '<div class="addPhotoContainer">'.PHP_EOL.'	<div class="addPhoto">'.PHP_EOL;
+		$append = '	</div>'.PHP_EOL.'</div>'.PHP_EOL;
+		echo $this->actionLink($prepend, $append, $this->user, array('route' => 'uploadphotomain', 'title' => null, 'params' => array()), 'dataLink photo');
+		break;
+	case Media_Album_VideoMain::ID:
+		$prepend = '<div class="addVideo">'.PHP_EOL;
+		$append = '</div>'.PHP_EOL;
+		echo $this->actionLink($prepend, $append, $this->user, array('route' => 'uploadvideo', 'title' => null, 'params' => array()), 'dataLink video');
+		break;
+	case Media_Album_Portfolio::ID:
+		if($this->acl->isAllowed($this->user, Lib_Acl::EDITOR_RESOURCE)){
+			echo '<div class="addPhoto">'.$this->routeLink('uploadportfolio').'</div>'.PHP_EOL;
+		}
+		break;
+	default:
+		if($this->album->albumCreation != Media_Album::CREATION_AUTOMATIC) {
+			echo "<p>". $this->renderDataInformation($this->album) ."</p>";
+		} else {
+			$parent = $this->album->getParent();
+			if(!empty($parent)){
+				if($parent instanceof User_Row){
+					echo 'back to the profile of '.$this->userLink($parent).PHP_EOL;
+				} else {
+					echo 'back to the page of ' .$this->itemLink($parent).PHP_EOL;
+				}
+			}
+		}
+		break;
+}
+
+$commentClass = in_array($this->album->id, array(Media_Album_PhotoMain::ID, Media_Album_VideoMain::ID, Media_Album_Portfolio::ID)) ? '' : ' withComments';
+
+echo '<ul class="album">'.PHP_EOL;
+foreach($medias as $media){
+	$angle = rand(THUMBNAIL_ROTATION_MIN, THUMBNAIL_ROTATION_MAX);
+	$style = " style=\"-webkit-transform: rotate({$angle}deg);-moz-transform: rotate({$angle}deg);transform: rotate({$angle}deg);\"";
+	if($media['mediaType'] == Media_Item::TYPE_VIDEO){
+		$class = " class=\"video\"";
+	} else {
+		$class = " class=\"photo\"";
+	}
+	echo "    <li$class>".$this->mediaThumbnail($media, true, true).'</li>'.PHP_EOL;
+}
+echo '</ul>'.PHP_EOL;
+
+if($paginationControl){
+	echo '<div class="album paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+	echo "<div class=\"album paginationControl bottom$commentClass\">".PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+}
+if(!in_array($this->album->id, array(Media_Album_PhotoMain::ID, Media_Album_VideoMain::ID, Media_Album_Portfolio::ID, ))){
+    echo $this->renderComments($this->comments, $this->album, $this->lastLogin);
+}

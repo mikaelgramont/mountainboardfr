@@ -1,0 +1,35 @@
+<?php
+if(!$this->user->canLogin()){
+	return;
+}
+
+$loginAction = $this->url();
+$form = new User_Form_Login(array(), $loginAction);
+$request = Zend_Controller_Front::getInstance()->getRequest();
+$data = $request->getPost();
+
+if ($data && $form->isValid($data)){
+	// Form is valid, we must now log in
+	$request->setControllerName('user');
+	$request->setActionName('login');
+	$request->setDispatched(false);
+}
+
+echo '<div class="connectionLinks">'.PHP_EOL;
+echo $this->routeLink('loginpage', null, array(), '', 'revealLoginButton').' '.
+	 $this->routeLink('userregister', null, array(), '', 'registerButton').PHP_EOL;
+echo '</div>'.PHP_EOL;
+
+echo '<div class="loginStatus">'.PHP_EOL.$form.PHP_EOL.'</div>'.PHP_EOL;
+echo '<p class="recoverPassword">'.$this->routeLink('lostpassword').'</p>'.PHP_EOL;
+
+$js = <<<JS
+$('div.loginStatus').hide();
+$('#revealLoginButton').click(function(){
+	$('div.connectionLinks').hide();
+	$('div.loginStatus').fadeIn();
+	return false;
+});
+JS;
+
+$this->getHelper('jQuery')->addOnLoad($js);

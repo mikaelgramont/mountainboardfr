@@ -1,0 +1,17 @@
+<?php
+if($this->data instanceof Dpt_Row){
+	$this->headTitle(ucfirst($this->data->getTitle() . ', '.$this->data->getCountry()->getTitle()));
+} else {
+	$this->headTitle(ucfirst($this->data->getTitle()));
+}
+$this->keywords = $this->data->getTags();
+
+echo $this->renderData($this->data, $this->additionalData, $this->hasMap, $this->album);
+ 
+if(array_key_exists('comments', $this->additionalData)){
+	$this->layout()->comments = $this->renderComments($this->additionalData['comments'], $this->data, $this->lastLogin);
+} else {
+	$this->layout()->comments = null;
+}
+$this->layout()->mainContentSource = $this->data;
+

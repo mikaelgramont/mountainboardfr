@@ -1,0 +1,16 @@
+<?php
+$auth = $this->translate('password');
+$loginInfo = $this->{User::COLUMN_PASSWORD};
+
+$email = sprintf(
+    $this->translate('contactEmail_Html'),
+    $this->message,
+    $this->ip,
+    $this->hostname,
+    $this->id,
+    $this->name
+);
+
+echo $this->includeView("user/email/header.phtml") .PHP_EOL;
+echo $email;
+echo $this->includeView("user/email/footer.phtml") .PHP_EOL;

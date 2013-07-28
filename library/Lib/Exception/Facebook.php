@@ -1,0 +1,9 @@
+<?php
+class Lib_Exception_Facebook extends Lib_Exception
+{
+	const FACEBOOK_DATA_WRONG_OR_INCOMPLETE = 1;
+	const OAUTH_SETTINGS_WRONG_OR_INCOMPLETE = 2;
+	const USER_CONNECTED_TO_OTHER_USERS_FB_ACCOUNT = 3;
+	const NAME_INVALID_OR_UNAVAILABLE = 4;
+	const NO_CODE_ACCESS_UNAUTHORIZED = 5;
+}

@@ -1,0 +1,38 @@
+<?php
+echo $this->registerForm;
+/*
+$authMethod = User::INPUT_AUTH_METHOD;
+$identity = User::INPUT_OPENID_IDENTITY;
+$password = User::INPUT_PASSWORD;
+$passwordConfirm = User::INPUT_PASSWORD_CONFIRM;
+$js = <<<JS
+var handleOpenIdAndPassword = function(){
+    var selectedIndex = $('#{$authMethod}').get(0).selectedIndex;
+    if(selectedIndex == 0){
+        $('#{$identity}').val('').attr('disabled','disabled');
+        $('p:has(#{$identity})').hide();
+
+        $('#{$password}').removeAttr('disabled');
+        $('p:has(#{$password})').show();
+
+        $('#{$passwordConfirm}').removeAttr('disabled');
+        $('p:has(#{$passwordConfirm})').show();
+    } else {
+        $('#{$identity}').removeAttr('disabled');
+        $('p:has(#{$identity})').show();
+
+        $('#{$password}').val('').attr('disabled','disabled');
+        $('p:has(#{$password})').hide();
+
+        $('#{$passwordConfirm}').val('').attr('disabled','disabled');
+        $('p:has(#{$passwordConfirm})').hide();
+    }
+
+};
+$('#authMethod').change(function(){
+    handleOpenIdAndPassword();
+});
+handleOpenIdAndPassword();
+JS;
+$this->getHelper('jQuery')->addOnLoad($js);
+*/

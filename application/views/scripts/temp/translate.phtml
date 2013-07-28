@@ -1,0 +1,18 @@
+<h1>translateAction</h1>
+<ul>
+<?php
+foreach($this->count as $dataType => $total){
+	echo "<li>$dataType: $total</li>\n";
+}
+?>
+</ul>
+<?php return; ?>
+<table width="100%">
+	<tr>
+		<td width="50%">
+			<?php echo $this->original ?>
+		</td>
+		<td width="50%">
+			<?php echo $this->translation ?>
+		</td>
+</table>

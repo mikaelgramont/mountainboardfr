@@ -1,0 +1,6 @@
+<?php
+$this->headTitle(ucfirst($this->translate('forums')));
+?>
+<h1 class="pageTitle"><?php echo ucfirst($this->translate('forums')) ?></h1>
+<?php
+echo $this->forumsList($this->forums, $this->forumListForm, $this->lastLogin);

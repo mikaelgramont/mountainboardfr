@@ -1,0 +1,9 @@
+database <?php
+if($this->message){
+    echo ucfirst($this->translate('detailedDatabaseProblem')).'<br/>'.PHP_EOL;
+    echo '<pre>'.PHP_EOL;
+    echo $this->message;
+    echo '</pre>'.PHP_EOL;
+} else {
+    echo ucfirst($this->translate('simpleDatabaseProblem'));
+}

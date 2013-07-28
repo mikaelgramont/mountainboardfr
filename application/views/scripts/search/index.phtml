@@ -1,0 +1,29 @@
+<?php
+$title = ucfirst($this->translate('search'));
+$this->headTitle($title);
+?>
+<h1 class="pageTitle"><?php echo $title ?></h1>
+<div class=" search">
+<?php echo $this->form; ?>
+
+</div>
+<?php
+if(empty($this->searchTerms)){
+	return;
+} else {
+	echo '<div>'.sprintf(ucfirst($this->translate('searchResultsInfo')), $this->searchInfo['totalFound']).'</div>'.PHP_EOL;
+}
+//print "<p>A retourné {$this->results['total']} items sur {$this->results['total_found']} en {$this->results['time']} secondes</p>";
+
+if(count($this->items) > 0){
+	//foreach ($this->results['matches'] as $docid => $docinfo) {
+	//    echo "<p>$docid</p>";
+	//}
+	echo '<ul class="searchResults">';
+	foreach ($this->items as $i => $item) {
+	    echo "<li>".$this->itemLink($item).' '.$item->getDate(false)."<br/>".$this->excerpts[$i]."</li>";
+	}
+	echo '</ul>';
+} else {
+	echo '<p>No results</p>';
+}

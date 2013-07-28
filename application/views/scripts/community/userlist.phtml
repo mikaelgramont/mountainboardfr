@@ -1,0 +1,18 @@
+<?php
+$users = Lib_PaginatorFactory::getPaginator($this->users, $this->page, $this->limit);
+/*
+$pagination = $this->paginationControl($users);
+echo $pagination;
+echo $this->userList($users, 'userListItem');
+echo $pagination;
+
+
+*/
+$paginationControl = $this->paginationControl($users, null, null, array('dataType' => 'user'));
+
+echo $this->userList($users, 'userListItem');
+
+if($paginationControl){
+	echo '<div class="user paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+	echo '<div class="user paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+}

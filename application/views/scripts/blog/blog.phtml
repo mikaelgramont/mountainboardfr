@@ -1,0 +1,32 @@
+<?php
+$paginationControl = $this->paginationControl(
+	$this->posts,
+	null,
+	null,
+	array(
+		'name' => $this->blog->getCleanTitle(),
+		'id' => $this->blog->id
+	)
+);
+$title = $this->blog->getTitle();
+$description = $this->blog->getDescription();
+$this->headTitle(ucfirst($title). ' - '.$description);
+echo '<h1 class="blogTitle">"'.$title.'"</h1>';
+echo '<h2 class="blogDescription">'.$description.'</h2>';
+
+$blogger = $this->blog->getUser();
+echo '<div class="blogOwner">'.$this->profilePic($blogger).'</div>'.PHP_EOL;
+if($blogger->{User::COLUMN_USERID} == $this->user->{User::COLUMN_USERID }){
+	echo $this->routeLink('createblogpost', null, array(), '', 'addBlogPostLink').PHP_EOL;
+}
+
+if($this->blog->submitter == $this->user->{User::COLUMN_USERID}){
+	echo $this->itemLink($this->blog->getAlbum()).PHP_EOL;
+}
+
+echo $this->itemList($this->posts, array('containerClass' => 'blogPostListItem'));
+
+if($paginationControl){
+	echo '<div class="blogpost paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+	echo '<div class="blogpost paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+}

@@ -1,0 +1,11 @@
+<h1 class="pageTitle"><?php echo ucfirst($this->translate('contact'))?></h1>
+<?php
+	if($this->display == 'form'){?>
+		<p><?php
+echo ucfirst($this->translate('contactPageDescription')) ?></p>
+<?php echo $this->form;
+	} elseif($this->display == 'success'){
+		echo ucfirst($this->translate('contactSuccess'));
+	} else {
+		echo ucfirst($this->translate('contactFailure'));
+	}

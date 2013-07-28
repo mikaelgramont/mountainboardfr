@@ -1,0 +1,102 @@
+#slider{ 
+	font-size:1em;
+}
+#slider.ui-corner-all{
+	-moz-border-radius: none; -webkit-border-radius: none;
+	border:none;
+	background:none;
+}
+#slider ul.ui-tabs-nav{ 
+	position:absolute; 
+	top:0;
+	left:47em; 
+	width:12em;
+	padding:0; 
+	-moz-border-radius: none;
+	-webkit-border-radius: none;
+	border:none;
+	background:none;
+	z-index:1;
+}
+#slider ul.ui-tabs-nav li{ 
+	margin:0;
+	padding:0;
+	padding-left:0.75em;
+	background:none;
+}
+#slider ul.ui-tabs-nav li.ui-corner-top{
+	-moz-border-radius: none; -webkit-border-radius: none;
+}
+#slider ul.ui-tabs-nav li.ui-state-active{ 
+	background:none;
+}
+#slider ul.ui-tabs-nav li.ui-state-default, #slider ul.ui-tabs-nav li.ui-state-content, #slider ul.ui-tabs-nav li.ui-state-active{
+	border:none; 
+}
+#slider ul.ui-tabs-nav li img{ 
+	float:left;
+	padding:0.125em;
+}
+#slider ul.ui-tabs-nav li span{ 
+}
+#slider li.ui-tabs-nav-item a{ 
+	padding:0;
+}
+#slider li.ui-tabs-nav-item a:hover{ 
+	background:#f2f2f2; 
+}
+#slider ul.ui-tabs-nav li a{ 
+	display:block;
+	height:100%; 
+}
+
+#slider ul.ui-tabs-nav li.ui-tabs-selected{
+	background:url('../../images/default/selected-slider-item.png') top left no-repeat;
+}
+#slider ul.ui-tabs-nav li.ui-tabs-selected img{
+	background:#D0D0D0;
+}
+#slider .ui-tabs-panel img{
+	border-top:0.0625em solid #6b6b6b;
+	border-bottom:0.0625em solid #A0A0A0;
+	border-right:0.0625em solid #A0A0A0;
+	border-left:0.0625em solid #6b6b6b;
+}
+#slider .ui-tabs-panel{
+	width:47.5em;
+	height:10em;
+	padding:0; 
+	background:none;
+	position:absolute;
+	left:0.25em;
+	top:0;
+}
+#slider .ui-tabs-panel .info{ 
+	position:absolute; 
+	bottom:0.875em;
+	left:0.0625em; 
+	height:3em;
+	width:47.25em;
+	background-color:rgba(144,144,144,0.75);
+	*background-color:rgb(144,144,144);
+}
+#slider .info h2{ 
+	font-size:18px; 
+	color:#fff; padding:5px; margin:0;
+	overflow:hidden; 
+}
+#slider .info p{ 
+	margin:0 5px; 
+	font-size:0.875em; 
+	line-height:15px; color:#f0f0f0;
+}
+#slider .info a{ 
+	text-decoration:none; 
+	color:#fff; 
+}Verdana
+#slider .info a:hover{ 
+	text-decoration:underline; 
+}
+#slider .ui-tabs-hide{ 
+	display:none; 
+}

@@ -1,0 +1,11 @@
+<ul>
+<?php
+$savedTotal = 0;
+foreach($this->result as $name => $data){
+    $savedTotal += $data['sizeBefore'] - $data['sizeAfter'];
+    echo "<li>$name: {$data['sizeBefore']} - {$data['sizeAfter']}</li>";
+}
+?>
+</ul>
+<?php
+echo "saved total: ".round($savedTotal/1024) . 'Ko';

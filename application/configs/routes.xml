@@ -1,0 +1,1071 @@
+<root>
+    <routes>
+        <defaults>
+			<defaults controller="index" action="index" />
+        </defaults>
+
+        <contact>
+			<route>contact/</route>        	
+            <defaults controller="index" action="contact"/>
+        </contact>
+        
+        <!-- INDEX PAGE -->
+        <index>
+            <defaults/>
+        </index>
+        
+         <search>
+            <route>recherche/</route>
+            <defaults controller="search" />
+        </search>       
+
+        <!-- START -->
+        <startCat>
+            <defaults/>
+        </startCat>
+
+        <!-- ARTICLES CATEGORY -->
+        <articlesCat>
+            <route>articles/</route>
+            <defaults controller="article" />
+        </articlesCat>
+
+        <!-- COMMUNITY CATEGORY -->
+        <communityCat>
+            <route>communaute/</route>
+            <defaults controller="community" />
+        </communityCat>
+
+        <!-- EDITION CATEGORY -->
+        <editionCat>
+            <defaults/>
+        </editionCat>
+
+        <!-- ME CATEGORY -->
+        <accountCat>
+            <defaults/>
+        </accountCat>
+
+        <admin>
+            <route>admin/</route>
+            <defaults controller="admin" />
+        </admin>
+
+		<switchlanguage>
+            <route>switchlanguage/:lang</route>
+            <defaults controller="index" action="switchlanguage"/>
+		</switchlanguage>
+		
+		<publicrss>
+            <route>news.rss</route>
+            <defaults controller="index" action="publicrss"/>
+		</publicrss>
+		
+        <!-- LOGIN / LOGOUT PAGES -->
+        <login>
+            <route>connexion/</route>
+            <defaults controller="user" action="login" />
+        </login>
+        <loginpage>
+            <route>connexion/form</route>
+            <defaults controller="user" action="loginpage" />
+        </loginpage>
+        <logout>
+            <route>deconnexion/</route>
+			<defaults controller="user" action="logout" />
+        </logout>
+        <openidlogin>
+            <route>openidlogin/</route>
+            <defaults controller="user" action="openidlogin" />
+        </openidlogin>
+        <usererror>
+            <route>utilisateur/erreur/:errorCode</route>
+            <defaults controller="user" action="error" errorCode="-10"/>
+        </usererror>
+
+        <menuerror>
+            <!-- do not translate this route -->
+            <route>menuerror</route>
+            <defaults controller="error" action="menuerror"/>
+        </menuerror>
+
+        <!-- USER PAGES -->
+        <myprofile>
+            <route>mon-compte/</route>
+            <defaults>
+                <controller>user</controller>
+                <action>myprofile</action>
+            </defaults>
+        </myprofile>
+        <markallasread>
+            <route>toutvu</route>
+            <defaults controller="user" action="markallasread"/>
+        </markallasread>
+        <newstuff>
+            <route>nouveautes/:range</route>
+            <defaults controller="user" action="newstuff" range="lastVisit"/>
+        </newstuff>
+        <gotonewstuff>
+            <route>aller-aux-nouveautes</route>
+            <defaults controller="user" action="gotonewstuff" range="lastVisit"/>
+        </gotonewstuff>
+        <userregister>
+            <route>utilisateur/inscription/</route>
+            <defaults controller="user" action="register" />
+        </userregister>
+        <userpending>
+            <route>utilisateur/en-attente/</route>
+            <defaults controller="user" action="pending" />
+        </userpending>
+        <userwaitforconfirmation>
+            <route>utilisateur/en-attente-de-confirmation/</route>
+            <defaults controller="user" action="waitforconfirmation" />
+        </userwaitforconfirmation>
+        <userconfirmation>
+            <route>utilisateur/confirmation/</route>
+            <defaults controller="user" action="confirmation" />
+        </userconfirmation>
+        <userconfirmationsuccess>
+            <route>utilisateur/inscription-reussie/</route>
+            <defaults controller="user" action="confirmationsuccess" />
+        </userconfirmationsuccess>
+        <userupdate>
+            <route>modifier-mon-profil/:newPassword</route>
+            <defaults controller="user" action="update" newPassword=""/>
+        </userupdate>
+        <userupdatesuccess>
+            <route>utilisateur/mise-a-jour-reussie/</route>
+            <defaults controller="user" action="userupdatesuccess" />
+        </userupdatesuccess>
+        <lostpassword>
+            <route>utilisateur/mot-de-passe-perdu/</route>
+            <defaults controller="user" action="lostpassword" />
+        </lostpassword>
+        <activatenewpassword>
+            <route>utilisateur/activer-nouveau-mot-de-passe/</route>
+            <defaults controller="user" action="activatenewpassword" />
+        </activatenewpassword>
+        <editnotifications>
+            <route>controler-mes-notifications/</route>
+            <defaults controller="user" action="notifications" />
+        </editnotifications>
+
+        <displayprivatemessage>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>message-prive/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="privatemessage"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>message-prive/%s_%s/</reverse>
+        </displayprivatemessage>
+
+        <privatemessageshome>
+            <route>messages-prives/:page</route>
+            <defaults controller="user" action="privatemessages" type="home" page="1" />
+        </privatemessageshome>
+        <privatemessagessent>
+            <route>messages-prives/envoyes/:page</route>
+            <defaults controller="user" action="privatemessages" type="sent" page="1" />
+        </privatemessagessent>
+        <privatemessagesnew>
+            <route>messages-prives/nouveau/:toUser</route>
+            <defaults controller="user" action="privatemessages" type="new" page="1" toUser=""/>
+        </privatemessagesnew>
+        <privatemessagesreply>
+        	<type>Zend_Controller_Router_Route_Regex</type>
+            <route>messages-prives/repondre-a/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="user" action="privatemessages" type="reply"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>messages-prives/repondre-a/%s_%s/</reverse>
+        </privatemessagesreply>
+        <privatemessagesresult>
+            <route>messages-prives/resultat/:result</route>
+            <defaults controller="user" action="privatemessages" type="result"/>
+        </privatemessagesresult>
+        <togglepmread>
+            <route>togglepmread/:messageId</route>
+            <defaults controller="user" action="togglepmread" messageId=""/>
+        </togglepmread>
+
+		<savedestinationforredirect>
+			<type>Zend_Controller_Router_Route_Regex</type>
+			<route>utilisateur/login-puis/(.*)</route>
+            <defaults controller="user" action="savedestinationforredirect" url=""/>
+        	<map>
+        		<param1>url</param1>
+			</map>
+			<reverse>utilisateur/login-puis/%s</reverse>
+		</savedestinationforredirect>
+
+        <userlist>
+            <route>membres/:page</route>
+            <defaults controller="community" action="userlist" page="1"/>
+        </userlist>
+
+        <!-- DATA -->
+        <uploadcontent>
+            <route>upload-content/</route>
+            <defaults controller="data" action="upload" type="content" operation="upload"/>
+        </uploadcontent>
+
+        <checkcontent>
+            <route>check-content/</route>
+            <defaults controller="data" action="upload" type="content" operation="check"/>
+        </checkcontent>
+
+        <uploadadmin>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>upload-admin/([A-Za-z0-9\/\-]*)</route>
+            <defaults controller="data" action="upload" type="admin"/>
+        	<map>
+        		<param1>path</param1>
+        	</map>
+        	<reverse>upload-admin/%s</reverse>
+        </uploadadmin>
+
+        <filebrowser>
+        	<type>Zend_Controller_Router_Route_Regex</type>
+        	<route>file-browser/([a-z]*)(/([A-Za-z0-9\/\_\-])*)*</route>
+            <defaults controller="data" action="file-browser"/>
+        	<map>
+        		<param1>type</param1>
+        		<param2>path</param2>
+        	</map>
+        	<reverse>file-browser/%s/%s</reverse>
+        </filebrowser>
+
+        <forum>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>forum/([a-z0-9\-]+)_(\d+)/page-(\d+)</route>
+            <defaults controller="forum" action="forum" page="1"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        		<param3>page</param3>
+        	</map>
+        	<reverse>forum/%s_%s/page-%d/</reverse>
+        </forum>
+
+        <gotoforum>
+            <route>aller-au-forum</route>
+            <defaults controller="forum" action="gotoforum"/>
+        </gotoforum>
+
+        <topic>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>discussion/([a-z0-9\-]+)_(\d+)/page-(\d+)</route>
+            <defaults controller="forum" action="topic" page="1"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        		<param3>page</param3>
+        	</map>
+        	<reverse>discussion/%s_%s/page-%d</reverse>
+        </topic>
+
+        <listdata>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>([a-z]+)/liste/([0-9]+)</route>
+            <defaults controller="data" action="list" page="1"/>
+        	<map>
+        		<param1>dataType</param1>
+        		<param2>page</param2>
+        	</map>
+        	<reverse>%s/liste/%d/</reverse>
+        </listdata>
+
+        <listnews>
+            <route>toutes-les-news/:page</route>
+            <defaults controller="data" action="list" page="1" dataType="news"/>
+        </listnews>
+
+        <listdossiers>
+            <route>les-dossiers-mountainboard/:page</route>
+            <defaults controller="data" action="list" page="1" dataType="dossier"/>
+        </listdossiers>
+
+        <listtricks>
+            <route>freestyle-tricks/:page</route>
+            <defaults controller="data" action="list" page="1" dataType="trick"/>
+        </listtricks>
+
+        <listtests>
+            <route>tests-matos/:page</route>
+            <defaults controller="data" action="list" page="1" dataType="test"/>
+        </listtests>
+
+        <listspots>
+            <route>spots-de-mountainboard/:page</route>
+            <defaults controller="data" action="list" page="1" dataType="spot"/>
+        </listspots>
+
+        <listevents>
+            <route>evenements-de-mountainboard/:page</route>
+            <defaults controller="data" action="list" page="1" dataType="event"/>
+        </listevents>
+
+        <listalbums>
+            <route>album/:page</route>
+            <defaults controller="data" action="list" page="1" dataType="album"/>
+        </listalbums>
+
+        <listblogs>
+            <route>blogs/:page</route>
+            <defaults controller="blog" action="index" page="1" />
+        </listblogs>
+
+        <homedossiers>
+            <route>dossiers/liste</route>
+            <defaults controller="data" action="list" page="1" dataType="dossier"/>
+        </homedossiers>
+
+        <createdatafordpt>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>ajouter-([a-z]+)</route>
+            <defaults controller="data" action="edit" dpt=""/>
+        	<map>
+        		<param1>dataType</param1>
+        		<param2>dpt</param2>
+        	</map>
+        	<reverse>ajouter-%s/?dpt=%d</reverse>
+        </createdatafordpt>
+
+        <createdata>
+            <route>ajouter-data</route>
+            <defaults controller="data" action="edit" dataType="data"/>
+        </createdata>
+
+        <createnews>
+            <route>ajouter-news</route>
+            <defaults controller="data" action="edit" dataType="news"/>
+        </createnews>
+
+        <createdossier>
+            <route>ajouter-dossier</route>
+            <defaults controller="data" action="edit" dataType="dossier"/>
+        </createdossier>
+
+        <createtrick>
+            <route>ajouter-trick</route>
+            <defaults controller="data" action="edit" dataType="trick"/>
+        </createtrick>
+
+        <createtest>
+            <route>ajouter-test</route>
+            <defaults controller="data" action="edit" dataType="test"/>
+        </createtest>
+
+        <createspot>
+            <route>ajouter-spot</route>
+            <defaults controller="data" action="edit" dataType="spot"/>
+        </createspot>
+
+        <createalbum>
+            <route>ajouter-album</route>
+            <defaults controller="data" action="edit" dataType="album"/>
+        </createalbum>
+
+        <createblogpost>
+            <route>poster-un-billet</route>
+            <defaults controller="data" action="edit" dataType="blogpost"/>
+        </createblogpost>
+
+        <createevent>
+            <route>ajouter-evenement</route>
+            <defaults controller="data" action="edit" dataType="event"/>
+        </createevent>
+
+        <displaydata>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>data/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="data"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>data/%s_%s/</reverse>
+        </displaydata>
+
+        <validatedata>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>valide/([a-z0-9\-\_]+)/(\d+)</route>
+            <defaults controller="data" action="validate" targetStatus="valid"/>
+        	<map>
+        		<param1>dataType</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>valide/%s/%s/</reverse>
+        </validatedata>
+
+        <invalidatedata>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>invalide/([a-z0-9\-\_]+)/(\d+)</route>
+            <defaults controller="data" action="validate" targetStatus="invalid"/>
+        	<map>
+        		<param1>dataType</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>invalide/%s/%s/</reverse>
+        </invalidatedata>
+
+        <displaynews>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>news/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="news"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>news/%s_%s/</reverse>
+        </displaynews>
+
+        <displaydossier>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>dossier/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="dossier"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>dossier/%s_%s/</reverse>
+        </displaydossier>
+
+        <displaytrick>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>freestyle-trick/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="trick"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>freestyle-trick/%s_%s/</reverse>
+        </displaytrick>
+
+        <displaytest>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>test-matos/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="test"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>test-matos/%s_%s/</reverse>
+        </displaytest>
+
+        <displayspot>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>spot-de-mountainboard/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="spot"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>spot-de-mountainboard/%s_%s/</reverse>
+        </displayspot>
+
+        <displayevent>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>evenement/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="event"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>evenement/%s_%s/</reverse>
+        </displayevent>
+
+        <displayphoto>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>photo/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="photo"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>photo/%s_%s/</reverse>
+        </displayphoto>
+
+        <displayvideo>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>video/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="video"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>video/%s_%s/</reverse>
+        </displayvideo>
+
+        <blog>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>blog/([a-z0-9\-]+)_(\d+)/page-(\d+)</route>
+            <defaults controller="blog" action="blog" page="1"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        		<param3>page</param3>
+        	</map>
+        	<reverse>blog/%s_%s/page-%d/</reverse>
+        </blog>
+
+        <blogpost>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>billet/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="blogpost"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>billet/%s_%s/</reverse>
+        </blogpost>
+
+        <displaydpt>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>departement/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="dpt"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>departement/%s_%s/</reverse>
+        </displaydpt>
+
+        <displaycountry>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>pays/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="display" dataType="country"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>pays/%s_%s/</reverse>
+        </displaycountry>
+        
+        <france>
+            <route>france/</route>
+            <defaults controller="data" action="display" dataType="country" id="1"/>
+        </france>
+
+        <editdata>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-data/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="data"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-data/%s_%s/</reverse>
+        </editdata>
+
+        <editnews>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-news/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="news"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-news/%s_%s/</reverse>
+        </editnews>
+
+        <editdossier>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-dossier/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="dossier"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-dossier/%s_%s/</reverse>
+        </editdossier>
+
+        <editcomment>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-commentaire/(\d+)</route>
+            <defaults controller="data" action="editcomment"/>
+        	<map>
+        		<param1>id</param1>
+        	</map>
+        	<reverse>modifier-commentaire/%s/</reverse>
+        </editcomment>
+
+        <edittrick>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-trick/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="trick"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-trick/%s_%s/</reverse>
+        </edittrick>
+
+        <edittest>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-test/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="test"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-test/%s_%s/</reverse>
+        </edittest>
+
+        <editspot>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-spot/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="spot"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-spot/%s_%s/</reverse>
+        </editspot>
+
+        <editevent>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-evenement/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="event"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-evenement/%s_%s/</reverse>
+        </editevent>
+
+        <editalbum>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-album/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="album"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-album/%s_%s/</reverse>
+        </editalbum>
+
+        <editblog>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-un-blog/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="blog"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-un-blog/%s_%s/</reverse>
+        </editblog>
+
+        <editblogpost>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-un-billet/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="edit" dataType="blogpost"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-un-billet/%s_%s/</reverse>
+        </editblogpost>
+
+        <editdatadone>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modification-terminee-([a-z]+)/([a-z0-9\-]+)_(\d+)/([a-z]+)</route>
+            <defaults controller="data" action="editdone"/>
+        	<map>
+        		<param1>dataType</param1>
+        		<param2>name</param2>
+        		<param3>id</param3>
+        		<param4>status</param4>
+        	</map>
+        	<reverse>modification-terminee-%s/%s_%s/%s/</reverse>
+        </editdatadone>
+
+        <deletedata>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-data/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="data"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-data/%s_%s/</reverse>
+        </deletedata>
+
+        <deletenews>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-news/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="news"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-news/%s_%s/</reverse>
+        </deletenews>
+
+        <deletedossier>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-dossier/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="dossier"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-dossier/%s_%s/</reverse>
+        </deletedossier>
+
+        <deletecomment>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-commentaire/(\d+)</route>
+            <defaults controller="data" action="delete" dataType="comment"/>
+        	<map>
+        		<param1>id</param1>
+        	</map>
+        	<reverse>supprimer-commentaire/%s/</reverse>
+        </deletecomment>
+
+        <deletetrick>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-trick/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="trick"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-trick/%s_%s/</reverse>
+        </deletetrick>
+
+        <deletetest>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-test/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="test"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-test/%s_%s/</reverse>
+        </deletetest>
+
+        <deletespot>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-spot/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="spot"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-spot/%s_%s/</reverse>
+        </deletespot>
+
+        <deleteprivatemessage>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-message-prive/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="privatemessage"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-message-prive/%s_%s/</reverse>
+        </deleteprivatemessage>
+
+        <deletealbum>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-album/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="album"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-album/%s_%s/</reverse>
+        </deletealbum>
+
+        <deletephoto>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-photo/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="photo"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-photo/%s_%s/</reverse>
+        </deletephoto>
+
+        <deletevideo>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-video/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="video"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-video/%s_%s/</reverse>
+        </deletevideo>
+
+        <deletepost>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-message/(\d+)</route>
+            <defaults controller="data" action="delete" dataType="post"/>
+        	<map>
+        		<param1>id</param1>
+        	</map>
+        	<reverse>supprimer-message/%s/</reverse>
+        </deletepost>
+
+        <deleteevent>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-evemenent/(\d+)</route>
+            <defaults controller="data" action="delete" dataType="event"/>
+        	<map>
+        		<param1>id</param1>
+        	</map>
+        	<reverse>supprimer-evemenent/%s/</reverse>
+        </deleteevent>
+
+        <deletetopic>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-discussion/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="topic"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-discussion/%s_%s/</reverse>
+        </deletetopic>
+
+        <deleteblogpost>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>supprimer-billet/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="data" action="delete" dataType="blogpost"/>
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>supprimer-billet/%s_%s/</reverse>
+        </deleteblogpost>
+
+        <deletedatadone>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>confirmation-suppression/(.*)</route>
+            <defaults controller="data" action="deletedone" redirectUrl=""/>
+        	<map>
+        		<param1>redirectUrl</param1>
+        	</map>
+        	<reverse>confirmation-suppression/%s/</reverse>
+        </deletedatadone>
+
+        <userprofile>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>profil/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="user" action="profile" />
+        	<map>
+        		<param1>name</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>profil/%s_%s/</reverse>
+        </userprofile>
+
+        <postcomment>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-commentaire/([a-z\_]+)/(\d+)</route>
+            <defaults controller="data" action="editcomment"/>
+        	<map>
+        		<param1>dataType</param1>
+        		<param2>id</param2>
+        	</map>
+        	<reverse>modifier-commentaire/%s/%d/</reverse>
+        </postcomment>
+
+        <newpost>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>nouveau-message/([a-z]+)/([0-9]+)</route>
+            <defaults controller="forum" action="editpost"/>
+        	<map>
+        		<param1>dataType</param1>
+        		<param2>topicId</param2>
+        	</map>
+        	<reverse>nouveau-message/%s/%d/</reverse>
+        </newpost>
+
+        <editpost>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-message/(\d+)</route>
+            <defaults controller="forum" action="editpost"/>
+        	<map>
+        		<param1>id</param1>
+        	</map>
+        	<reverse>modifier-message/%d/</reverse>
+        </editpost>
+
+        <newtopic>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>nouveau-sujet/([a-z]+)/([0-9]+)</route>
+            <defaults controller="forum" action="edittopic"/>
+        	<map>
+        		<param1>dataType</param1>
+        		<param2>forumId</param2>
+        	</map>
+        	<reverse>nouveau-sujet/%s/%d/</reverse>
+        </newtopic>
+
+        <edittopic>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>modifier-sujet/(\d+)</route>
+            <defaults controller="forum" action="edittopic"/>
+        	<map>
+        		<param1>id</param1>
+        	</map>
+        	<reverse>modifier-sujet/%d/</reverse>
+        </edittopic>
+
+        <!--MEDIA-->
+        <photos>
+            <route>photos/:page</route>
+            <defaults controller="media" action="displayalbum" albumName="photomain" page="1"/>
+        </photos>
+
+        <videos>
+            <route>videos/:page</route>
+            <defaults controller="media" action="displayalbum" albumName="videomain" page="1"/>
+        </videos>
+
+        <portfolio>
+            <route>portfolio/:page</route>
+            <defaults controller="media" action="displayalbum" albumName="portfolio" page="1"/>
+        </portfolio>
+
+        <displayalbum>
+            <route>album/:albumName/:albumId/:page</route>
+            <defaults controller="media" action="displayalbum" page="1"/>
+        </displayalbum>
+
+        <media>
+            <type>Zend_Controller_Router_Route_Regex</type>
+            <route>(photo|video)/([a-z0-9\-]+)_(\d+)</route>
+            <defaults controller="media" action="displaymedia"/>
+        	<map>
+        		<param1>type</param1>
+        		<param2>name</param2>
+        		<param3>id</param3>
+        	</map>
+        	<reverse>%s/%s_%s/</reverse>
+        </media>
+
+        <editphoto>
+            <route>modifier-photo/:id</route>
+            <defaults controller="media" action="editphoto"/>
+        </editphoto>
+
+        <editvideo>
+            <route>modifier-video/:id</route>
+            <defaults controller="media" action="editvideo"/>
+        </editvideo>
+
+		<uploadphoto>
+            <route>envoyer/photo/:albumId</route>
+            <defaults controller="media" action="uploadphoto" />
+		</uploadphoto>
+
+		<uploadphotomain >
+            <route>envoyer/photo</route>
+            <defaults controller="media" action="uploadphoto" albumId="1"/>
+		</uploadphotomain >
+
+		<uploadvideo>
+            <route>envoyer/video</route>
+            <defaults controller="media" action="uploadvideo" albumId="2"/>
+		</uploadvideo>
+
+		<uploadportfolio>
+            <route>envoyer/portfolio</route>
+            <defaults controller="media" action="uploadphoto" albumId="3"/>
+		</uploadportfolio>
+
+		<rotatephoto>
+            <route>rotate-photo/:id/:angle</route>
+            <defaults controller="media" action="rotatephoto"/>
+		</rotatephoto>
+
+
+    	<!-- SPOTS -->
+        <dptlist>
+            <route>departements/</route>
+            <defaults controller="community" action="dptlist" country="1"/>
+        </dptlist>
+
+        <nearby>
+            <route>pres-de-chez-moi/</route>
+            <defaults controller="community" action="nearby" />
+        </nearby>
+
+        <!-- FORUM -->
+        <forums>
+            <route>forum/</route>
+            <defaults controller="forum" />
+        </forums>
+
+        <impersonate>
+            <route>admin/impersonate/:authCheck/:i</route>
+            <defaults controller="admin" action="impersonate" authCheck="" i=""/>
+        </impersonate>
+
+        <!-- AJAX (see .htaccess) -->
+        <getperson>
+            <route>ajax/getperson/</route>
+            <defaults controller="anonymousajax" action="getperson" format="html"/>
+        </getperson>
+        <getspot>
+            <route>ajax/getspot/</route>
+            <defaults controller="anonymousajax" action="getspot" format="html"/>
+        </getspot>
+        <gettrick>
+            <route>ajax/gettrick/</route>
+            <defaults controller="anonymousajax" action="gettrick" format="html"/>
+        </gettrick>
+        <getdpt>
+            <route>ajax/getdpt/</route>
+            <defaults controller="anonymousajax" action="getdpt" format="html"/>
+        </getdpt>
+        <getcountry>
+            <route>ajax/getcountry/</route>
+            <defaults controller="anonymousajax" action="getcountry" format="html"/>
+        </getcountry>
+        <getalbum>
+            <route>ajax/getalbum/</route>
+            <defaults controller="anonymousajax" action="getalbum" format="html"/>
+        </getalbum>
+        <isusernameavailable>
+            <route>ajax/isusernameavailable/</route>
+            <defaults controller="anonymousajax" action="isusernameavailable" format="html"/>
+        </isusernameavailable>
+        <doesuserexist>
+            <route>ajax/doesuserexist/</route>
+            <defaults controller="anonymousajax" action="doesuserexist" format="html"/>
+        </doesuserexist>
+        <isemailavailableandvalid>
+            <route>ajax/isemailavailableandvalid/</route>
+            <defaults controller="anonymousajax" action="isemailavailableandvalid" format="html"/>
+        </isemailavailableandvalid>
+        <isopenidavailable>
+            <route>ajax/isopenidavailable/</route>
+            <defaults controller="anonymousajax" action="isopenidavailable" format="html"/>
+        </isopenidavailable>
+        <getitemsinbounds>
+            <route>ajax/getitemsinbounds/</route>
+            <defaults controller="anonymousajax" action="getitemsinbounds" format="json"/>
+        </getitemsinbounds>
+
+		<facebookoauth>
+            <route>facebook/oauth/:type</route>
+            <defaults controller="facebook" action="oauth" type="login"/>
+		</facebookoauth>
+
+        <othererror>
+            <route>/error/:error</route>
+            <defaults controller="error" action="othererror" error="default"/>
+        </othererror>
+
+    </routes>
+</root>

@@ -1,0 +1,8 @@
+<h1 class="pageTitle"><?php echo ucfirst($this->translate('registerTitle'))?></h1>
+<p class="paragraph"><?php echo ucfirst($this->translate('createMyAccountText1'))?></p>
+<p class="paragraph"><?php echo ucfirst($this->translate('createMyAccountText2'))?></p>
+<?php
+if($this->emailFailure){
+    echo '<p class="error">'.ucfirst($this->translate('registrationError_emailFailure')).'</p>';
+}
+echo $this->includeView("commonviews/register.phtml").PHP_EOL;

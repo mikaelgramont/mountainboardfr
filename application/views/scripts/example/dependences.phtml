@@ -1,0 +1,15 @@
+Tables dependantes: celles qui font reference a la table actuelle.
+<p>
+User: <?php echo Globals::getUser()->username; ?><br/>
+</p>
+<p>
+Spots postes par lui:
+<ul>
+<?php
+foreach($this->spots as $spot){
+    echo "    <li>$spot->title</li>\n";
+}
+?>
+</ul>
+<?php echo $this->spots ?>
+</p>

@@ -1,0 +1,17 @@
+<?php
+switch($this->errorCode){
+	case Lib_Exception_Facebook::USER_CONNECTED_TO_OTHER_USERS_FB_ACCOUNT:
+		$msg = $this->translate('facebookOauth_connectedToOtherUsersFbAccount');
+		break;
+	case Lib_Exception_Facebook::NAME_INVALID_OR_UNAVAILABLE:
+		$msg = $this->translate('facebookOauth_nameInvalidOrUnavailable');
+		break;
+	case Lib_Exception_Facebook::FACEBOOK_DATA_WRONG_OR_INCOMPLETE:
+	case Lib_Exception_Facebook::OAUTH_SETTINGS_WRONG_OR_INCOMPLETE:
+	case Lib_Exception_Facebook::NO_CODE_ACCESS_UNAUTHORIZED:
+	default:
+		$msg = $this->translate('facebookOauth_systemError');
+		break;
+}
+
+echo '<p>'.ucfirst($msg).'</p>';

@@ -1,0 +1,26 @@
+<?php
+/*
+if($this->{User::INPUT_AUTH_METHOD} == User::LOGIN_AUTHMETHOD_PASSWORD){
+    $auth = $this->translate('password');
+} else {
+    $auth = $this->translate('openIDIdentity');
+}
+*/
+
+$auth = $this->translate('password');
+$loginInfo = $this->{User::COLUMN_PASSWORD};
+
+$email = sprintf(
+    $this->translate('creationConfirmationEmail_Txt'),
+    $this->escape($this->{User::COLUMN_USERNAME}),
+    $this->site,
+    $this->link,
+    $auth,
+    $loginInfo,
+    $this->site
+);
+
+
+echo $this->includeView("user/email/header.phtml") .PHP_EOL;
+echo $email;
+echo $this->includeView("user/email/footer.phtml") .PHP_EOL;

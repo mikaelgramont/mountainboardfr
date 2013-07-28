@@ -1,0 +1,12 @@
+<?php
+if($this->alreadyDone){
+    echo ucfirst($this->translate('userConfirmation_alreadyDone'));
+    echo(PHP_EOL.'<br/>');
+    echo $this->routeLink('userupdate');
+} elseif($this->success){
+    echo ucfirst($this->translate('userConfirmation_success'));
+    echo(PHP_EOL.'<br/>');
+    echo $this->routeLink('userupdate');
+} else {
+    echo ucfirst($this->translate('userConfirmation_failure'));
+}

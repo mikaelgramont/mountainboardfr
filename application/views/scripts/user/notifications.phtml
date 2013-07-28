@@ -1,0 +1,15 @@
+<h1 class="pageTitle"><?php echo ucfirst($this->translate('notificationEdition'));?></h1>
+<?php
+if($this->form){
+	echo $this->form;
+}
+
+if($this->status === true){
+	echo '<p>'. $this->translate('notificationUpdateSuccessful').'<br/>';
+	echo $this->routeLink('myprofile', ucfirst($this->translate('backToHomePage')));
+	echo '</p>';
+} else if($this->status === false){
+	echo '<p>'. $this->translate('notificationUpdateFailed').'<br/>';
+	echo $this->routeLink('myprofile', ucfirst($this->translate('backToHomePage')));
+	echo '</p>';
+}

@@ -1,0 +1,126 @@
+<?php
+$isMyPage = ($this->profilee->{User::COLUMN_USERID} == $this->user->{User::COLUMN_USERID});
+$isLoggedIn = $this->user->isLoggedIn();
+
+$album = $this->albumPreview($this->album);
+
+$blog = $this->blog->hasBlogPosts() ? $this->itemLink($this->blog) : null;
+$dob = (!empty($this->profilee->birthDate) && $this->profilee->birthDate != '0000-00-00') ? $this->date($this->profilee->birthDate, false) : null;
+$email = $this->escape($this->profilee->email);
+$gear = $this->escape(ucfirst($this->profilee->gear));
+$gender = (!empty($this->profilee->gender)) ? $this->escape(ucfirst($this->translate(Lib_Form_Element_Gender::$genders[$this->profilee->gender]))) : '';
+$lastLoggedin = $this->profilee->lastLogin ? $this->date($this->profilee->lastLogin, false) : null;
+$level = $this->escape($this->profilee->level);
+
+if(trim($this->profilee->firstName) && trim($this->profilee->lastName)){
+	$name = $this->escape(ucfirst($this->profilee->firstName)) . ' ' . $this->escape(ucfirst($this->profilee->lastName));
+} elseif(trim($this->profilee->firstName) && !trim($this->profilee->lastName)){
+	$name = $this->escape(ucfirst($this->profilee->firstName));
+} elseif(!trim($this->profilee->firstName) && trim($this->profilee->lastName)){
+	$name = $this->escape(ucfirst($this->profilee->lastName));
+} else {
+	$name = null;
+}
+
+$occupation = $this->escape(ucfirst($this->profilee->occupation));
+$otherSports = $this->escape(ucfirst($this->profilee->otherSports));
+
+$rideType = $this->rideType($this->profilee);
+
+$site = $this->escape($this->profilee->site);
+$username = $this->escape($this->profilee->getTitle());
+
+$where = $this->renderLocationInfo($this->profilee);
+
+$content = "";
+if($isMyPage && 1){
+	$content .= '<div id="userPreferences">'.PHP_EOL;
+	$content .= '	<p class="actionLinkContainer">'.$this->routeLink('userupdate').'</p>'.PHP_EOL;
+	$content .= '	<p class="actionLinkContainer">'.$this->routeLink('editnotifications').PHP_EOL;
+	$content .= '</div>'.PHP_EOL;
+}
+
+$content .= "
+<div id=\"userInformation\">
+";
+$content .= $this->profilePic($this->profilee).PHP_EOL;
+if($isLoggedIn && !$isMyPage){
+	$content .= "
+	<div class=\"profileMessageContainer actionLinkContainer\">".$this->routeLink('privatemessagesnew', null, array('toUser' => $this->profilee->getTitle()))."</div>
+";
+	if($this->user->status == User::STATUS_ADMIN){
+		$content .= '	<div class="actionLinkContainer">'.$this->routeLink('impersonate', null, array('authCheck' => AUTHCHECK, 'i' => $this->profilee->getId())).'</div>'.PHP_EOL;
+	}
+
+}
+$content .= '	<ul id="personalInformation">'.PHP_EOL;
+if($lastLoggedin && $isLoggedIn){
+	$content .= '		<li>'.ucfirst($this->translate('lastLoggedIn')).': '. $lastLoggedin.'</li>'.PHP_EOL;
+}
+if(trim($name) && $isLoggedIn){
+	$content .= "		<li>".ucfirst($this->translate('realName')).": $name</li>".PHP_EOL;
+}
+if($gender && $isLoggedIn){
+	$content .= '		<li>'.ucfirst($this->translate('gender')).': '. $gender.'</li>'.PHP_EOL;
+}
+if($dob && $isLoggedIn){
+	$content .= '		<li>'.ucfirst($this->translate('birthDate')).': '. $dob.'</li>'.PHP_EOL;
+}
+if($where){
+	$content .= '		<li>'.ucfirst($this->translate('livesIn')).': '. $where.'</li>'.PHP_EOL;
+}
+if($occupation && $isLoggedIn){
+	$content .= '		<li>'.ucfirst($this->translate('occupation')).': '. $occupation.'</li>'.PHP_EOL;
+}
+$content .= '
+	</ul>
+	<ul id="contactInformation">
+';
+if($email && $isLoggedIn && false){
+	$content .= '		<li>'.ucfirst($this->translate('email')).": <a href='mailto:$email'>$email</a></li>".PHP_EOL;
+}
+if(!empty($site)){
+	$content .= '		<li>'.ucfirst($this->translate('site')).": <a rel='nofollow' href='$site'>$site</a></li>".PHP_EOL;
+}
+if($blog){
+	$content .= '		<li>'.ucfirst($this->translate('userBlog')).': '. $blog.'</li>'.PHP_EOL;
+}
+$content .= '
+	</ul>
+	<ul id="rideInformation">
+';
+if($rideType){
+	$content .= '		<li>'.ucfirst($this->translate('rideType')).': '. $rideType.'</li>'.PHP_EOL;
+}
+if($level){
+	$content .= '		<li>'.ucfirst($this->translate('level')).': '. $this->translate(Lib_Form_Element_Level::$levels[$level]).'</li>'.PHP_EOL;
+}
+if($gear){
+	$content .= '		<li>'.ucfirst($this->translate('gear')).': '. $gear.'</li>'.PHP_EOL;
+}
+if($otherSports){
+	$content .= '		<li>'.ucfirst($this->translate('otherSports')).': '. $otherSports.'</li>'.PHP_EOL;
+}
+$content .= "
+	</ul>
+";
+if($album){
+	$content .= '	<div id="userAlbumPreview">'. $album.'</div>'.PHP_EOL;
+}
+$content .= "
+</div>
+";
+
+if($isLoggedIn){
+	$location = $this->profilee->getLocation();
+	if($location){
+		$mapElementId = 'userMapElement';
+		$this->googleMaps()->displayItem($location, array('mapElementId' => $mapElementId));
+		$map = '   <div id="'.$mapElementId.'" style="left:0;width:58em;height:20em"><img src="'.$this->staticGoogleMap($location, 288, 288).'" alt="" /></div>'.PHP_EOL;
+
+		$content .= '	<div class="userMap">'.$map.'</div>'.PHP_EOL;
+	} else {
+		$content .= '	<div class="userNoMap"></div>'.PHP_EOL;
+	}
+}
+echo $content;

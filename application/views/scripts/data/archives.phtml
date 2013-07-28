@@ -1,0 +1,5 @@
+<?php
+$pagination = $this->paginationControl($this->items, null, null, array('dataType' => $this->dataType));
+echo $pagination;
+echo $this->itemList($this->items, 'archivesPageItem');
+echo $pagination;

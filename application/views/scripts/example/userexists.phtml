@@ -1,0 +1,28 @@
+<form id="loginForm" enctype="application/x-www-form-urlencoded" method="post" action="/user/register">
+    <dl class="zend_form">
+        <dt><label for="userN" class="required">Pseudo</label></dt>
+        <dd>
+            <input type="text" name="userN" id="userN" value="" />
+        </dd>
+    </dl>
+</form>
+
+<script type="text/javascript">
+//<![CDATA[
+window.onload = function() {
+    $.checkUsername = function() {
+        $.get("/anonymousajax/is-username-available/format/html/", {userN: $("#userN").get(0).value}, function(data) {
+            if(data == '0'){
+                alert('deja pris !');
+            }
+        });
+    }
+
+    $("#userN").keypress(function(e){
+        setTimeout("$.checkUsername()", 100);
+    });
+
+};
+//]]>
+
+</script>

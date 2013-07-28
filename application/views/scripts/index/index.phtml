@@ -1,0 +1,15 @@
+<?php
+$this->headTitle(ucfirst($this->translate('homepageTitle')));
+
+echo $this->itemList(
+	$this->items,
+	array(
+		'containerClass' => 'homePageItem',
+		'postInfoClass' => 'dateInfo',
+		'showPostInfo' => false,
+		'showDate' => true,
+		'striptags' => true,
+		'author' => true,
+	),
+	true
+);

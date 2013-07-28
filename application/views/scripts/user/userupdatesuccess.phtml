@@ -1,0 +1,6 @@
+<?php
+$url = $this->user->getLink();
+$msg = ucfirst($this->translate('userProfileUpdated'));
+$msg = sprintf($msg, "<a href=\"$url\">", '</a>');
+echo "<p>$msg.</p>".PHP_EOL;
+$this->headMeta()->appendHttpEquiv('Refresh','3;URL='.$url);

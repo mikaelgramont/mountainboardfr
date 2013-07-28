@@ -1,0 +1,19 @@
+<?php 
+	$subCategories = array(
+		'dossiers' => 'listdossiers',
+		'news' => 'listnews',
+		'tests' => 'listtests',
+		'portfolio' => 'portfolio'
+	);
+?>
+<h1 class="subCategoriesTitle"><?php echo ucfirst($this->translate('articleSubCategoriesTitle')) ?></h1>
+<h2 class="subCategoriesDescription"><?php echo ucfirst($this->translate('articleSubCategoriesDescription')) ?></h2>
+<ul id="articleSubCategoriesDescription">
+<?php foreach($subCategories as $k => $v){?>
+	<li>
+		<h2><div class="actionLinkContainer"><?php echo $this->routeLink($v, null, array(), 'linkRight') ?></div></h2>
+		<?php echo ucfirst($this->translate($k.'Description')) ?>
+	</li>
+	
+<?php } ?>
+</ul>

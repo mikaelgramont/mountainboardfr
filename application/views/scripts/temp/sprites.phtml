@@ -1,0 +1,33 @@
+<ul>
+<?php
+$types = array(
+	'user',
+	'author',
+	'spot',
+	'trick',
+	'photo',
+	'video',
+	'album',
+	'test',
+	'blogpost',
+	'blog',
+	'topic',
+	'forum',
+	'news',
+	'dpt',
+	'post',
+	'comment',
+	'dossier',
+	'privatemessage',
+	'linkRight',
+	'linkLeft',
+	'backLeft',
+	'facebook',
+);
+
+foreach($types as $type){
+	echo "<li><a class=\"$type dataLink\" href=\"#\">$type</a></li>\n";
+}
+?>
+
+</ul>

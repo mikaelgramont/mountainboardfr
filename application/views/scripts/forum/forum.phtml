@@ -1,0 +1,39 @@
+<?php
+$pagination = $this->paginationControl(
+	$this->topics,
+	null,
+	null,
+	array(
+		'name' => $this->forum->getCleanTitle(),
+		'id' => $this->forum->id
+	)
+);
+$this->headTitle(ucfirst($this->forum->getTitle()));
+echo '<h1 class="forumTitle pageTitle">Forum: '.ucfirst($this->forum->getTitle()).'</h1>'.PHP_EOL;
+if($this->moderators){
+
+	echo '<div class="moderatorInfo">'.PHP_EOL;
+	echo ucfirst($this->translate('forumModeratorsList')).': '.PHP_EOL;
+	echo '	<ul class="forumModeratorList">'.PHP_EOL;
+	foreach($this->moderators as $moderator){
+		echo '		<li>'.$this->userLink($moderator).'</li>'.PHP_EOL;
+	}
+	echo '	</ul>'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
+}
+?>
+<div id="forumTools">
+<?php
+echo $this->addNewDataLink($this->dataType, $this->forum->id);
+echo '<div class="actionLinkContainer" id="forumList">'.ucfirst($this->translate('goToForum')).' '.$this->forumListForm.'</div>'.PHP_EOL;
+if($pagination){
+	echo '<div class="forum paginationControl top">'.PHP_EOL.$pagination.PHP_EOL.'</div>'.PHP_EOL;
+}
+?>
+</div>
+<?php
+echo $this->forumTopicList($this->topics, $this->lastLogin);
+
+if($pagination){
+	echo '<div class="forum paginationControl bottom">'.PHP_EOL.$pagination.PHP_EOL.'</div>'.PHP_EOL;
+}

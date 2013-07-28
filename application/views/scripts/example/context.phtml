@@ -1,0 +1,12 @@
+<?php
+echo $this->ajaxLink("contextlist (full page)",
+                     "{$this->baseUrl}/example/contextlist/",
+                     array('update' => '#toto'));
+?><br/>
+<?php
+echo $this->ajaxLink("contextlist (ajax - no layout)",
+                     "{$this->baseUrl}/example/contextlist/",
+                     array('update' => '#toto'),
+                     array('format'=>'html'));
+?><br/>
+<div id="toto"></div>

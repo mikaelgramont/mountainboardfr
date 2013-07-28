@@ -1,0 +1,75 @@
+<?php
+echo ucfirst($this->translate('error')).':';
+switch($this->errorCode){
+    case Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS:
+        $msg = 'loginError_ambiguousUser';
+        break;
+    case User::INVALID_LOGIN_POST_DATA:
+        $msg = 'loginError_invalidLoginPostData';
+        break;
+    case User::OPEN_ID_NOT_ACTIVE:
+        $msg = 'loginError_openIDNotActive';
+        break;
+    case User::MISSING_POST_IDENTITY:
+        $msg = 'loginError_missingPostIdentity';
+        break;
+    case User::MISSING_GET_IDENTITY:
+        $msg = 'loginError_missingGetIdentity';
+        break;
+    case User::NO_USER_FOR_GIVEN_IDENTITY:
+        $msg = 'loginError_noUserForGivenIdentity';
+        break;
+    case User::DIRECT_REQUEST_NOT_ALLOWED:
+        $msg = 'loginError_directRequesNotAllowed';
+        break;
+    case Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND:
+    case Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
+        $msg = 'loginError_invalidPwOrNN';
+        break;
+    case User::ALREADY_REGISTERED:
+        $msg = 'registrationError_alreadyRegistered';
+        break;
+    case User::CREATION_FAILURE:
+        $msg = 'registrationError_failure';
+        break;
+    case User::UPDATE_FAILED:
+        $msg = 'registrationError_updateFailure';
+        break;
+    case User::NOT_LOGGED_IN:
+        $msg = 'loginError_mustBeLoggedIn';
+        break;
+    case User::ACTIVATION_FAILED:
+        $msg = 'activationFailed';
+        break;
+    case User::LOGGED_IN:
+        $msg = 'errorLoggedIn';
+        break;
+    case User::NO_SUCH_USER:
+        $msg = 'noSuchUser';
+        break;
+    case User::NEWPASSWORD_FAILED:
+        $msg = 'newPasswordFailed';
+        break;
+    case User::NEWPASSWORD_EMAIL_FAILED:
+        $msg = 'newPasswordEmailFailed';
+        break;
+    case User::NEWPASSWORD_ACTIVATION_FAILED:
+        $msg = 'newPasswordActivationFailed';
+        break;
+    case User::BAD_IDENTITY:
+        $msg = 'badOpenIdIdentity';
+        break;
+    case User::RESOURCE_ACCESS_DENIED:
+        $msg = 'resourceAccessDenied';
+        break;
+    case Zend_Auth_Result::FAILURE_UNCATEGORIZED:
+    case Zend_Auth_Result::FAILURE:
+    default:
+        $msg = 'loginError_defaultErrorMessage';
+        break;
+    case Zend_Auth_Result::SUCCESS:
+        throw(new Lib_Exception_Login('SUCCESS code returned but user/login/error page loaded'));
+        break;
+}
+echo '<ul><li>'.ucfirst($this->translate($msg)).'</li></ul>';
+echo "<a href='{$this->baseUrl}/'>".ucfirst($this->translate('backToHomePage')).'</a>';

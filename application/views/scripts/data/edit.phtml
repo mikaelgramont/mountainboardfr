@@ -1,0 +1,20 @@
+<?php
+if($this->data->id){
+	$stringName = 'edit'.ucfirst($this->dataType).'Title';
+    $string = ucfirst($this->translate($stringName));
+    echo '<h1 class="dataEdit">'.$string.'</h1>'.PHP_EOL;
+    
+    $linkInfo = array(
+    	'link' => $this->data->getLink(),
+    	'name' => sprintf(ucfirst($this->translate('backTo')), $this->data->getTitle()),
+    	'itemType' => $this->data->getItemType()
+    );
+	echo '<div id="backToData" class="actionLinkContainer">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
+} else {
+	$stringName = 'add'.ucfirst($this->dataType).'Title';
+    $string = ucfirst($this->translate($stringName));
+	echo '<h1 class="dataAdd">'.$string.'</h1>'.PHP_EOL;
+}
+$this->headTitle($string);
+echo $this->form;
+?>

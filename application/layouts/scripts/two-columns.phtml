@@ -1,0 +1,81 @@
+<?php
+echo $this->doctype().PHP_EOL; ?>
+<html xmlns="http://www.w3.org/1999/<?php echo APP_PAGE_HTML_TYPE ?>" xml:lang="<?php echo $this->pageLang ?>" lang="<?php echo $this->pageLang ?>">
+<head>
+<?php
+if(!empty($this->keywords)){
+	$this->headMeta()->appendName('keywords', implode(', ', $this->keywords)).PHP_EOL;
+}
+echo $this->headMeta();
+?>
+
+<!--[if IE]><![endif]-->
+<?php
+echo $this->headTitle($this->translate('appBaseTitle')).PHP_EOL;
+$this->prepareCss()->main(APPLICATION_ENV == 'production');
+echo $this->headLink().PHP_EOL;
+?>
+<!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->prepareCss()->ieCss(APPLICATION_ENV == 'production') ?>" />
+<![endif]-->
+<link rel="shortcut icon" href="<?php echo $this->favicon ?>" />
+<link rel="alternate" type="application/rss+xml" title="<?php echo $this->translate('publicrss') ?>" href="<?php echo Globals::getRouter()->assemble(array(), 'publicrss', true)?>" />
+
+<?php
+$headerHelper = new Lib_View_Helper_Header($this, $this->acl, $this->user);
+$header = $headerHelper->header();
+$wrapperClass = $headerHelper->getEmptyCategoryContentClass();
+?>
+<!--[if lt IE 7]>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE7.js"></script>
+<![endif]-->
+<!--[if lt IE 8]>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE8.js"></script>
+<![endif]-->
+<?php echo $this->headScript().PHP_EOL;?>
+</head>
+<body>
+	<div id="wrapper"<?php echo $wrapperClass ?>>
+		<div id="main" class="twoColumns">
+			<div id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
+<?php echo $this->layout()->content.PHP_EOL; ?>
+    		</div>
+			<div id="secondContent">
+<?php
+	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN2).PHP_EOL;
+	if($this->isHomePage){
+		echo $this->facebook_LikeBox(FACEBOOK_PAGE_URL);
+		echo '<div class="homePageGooglePlus">'.PHP_EOL;
+		echo '<p>'.ucfirst(sprintf($this->translate('likeUsOnGoogle'), APP_NAME)).'</p>'.PHP_EOL;
+		echo $this->shareButtons()->google().PHP_EOL;
+		echo '</div>'.PHP_EOL;
+	}
+?>
+			</div>
+		</div>
+<?php if($this->layout()->comments){?>
+		<div id="comments">
+<?php echo $this->layout()->comments . PHP_EOL; ?>
+		</div>
+<?php } ?>
+    	<div id="modalInfo">
+			<a class="close" href="javascript:void(0);"></a>
+			<div class="modalContent">
+<?php echo $this->layout()->modal . PHP_EOL; ?>
+			</div>
+    	</div>
+  	</div>
+	<div id="footer">
+<?php echo $this->includeView("commonviews/footer.phtml"); ?>
+	</div>
+<?php
+echo $header;
+?>
+	<div id="overlay"></div>
+<?php
+$this->google_Analytics().PHP_EOL;
+echo $this->jQuery().PHP_EOL;
+echo $this->inlineScript().PHP_EOL;
+?>
+</body>
+</html>

@@ -1,0 +1,25 @@
+Tests updates:
+
+<ul>
+    <li>
+        <p>
+            Title: <?php echo $this->spot->getTitle(); ?><br/>
+            Link: <?php echo $this->spot->getLink(); ?>
+        </p>
+        <p>
+            Submitter: <?php echo $this->spot->getSubmitter()->username; ?><br/>
+            Submitter Link: <?php echo $this->spot->getSubmitter()->getLink(); ?><br/>
+        </p>
+        <p>
+            Dpt: <?php echo $this->spot->getDpt()->getTitle(); ?><br/>
+            Dpt Link: <?php echo $this->spot->getDpt()->getLink(); ?><br/>
+        </p>
+        <p>
+            Location: <?php  echo $this->spot->getLocation()->longitude . ', '.
+                                 $this->spot->getLocation()->latitude;  ?><br/>
+        </p>
+        <p>
+            Tags: <?php echo implode(' ', $this->spot->getTags()); ?>
+        </p>
+    </li>
+</ul>

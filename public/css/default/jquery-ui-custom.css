@@ -1,0 +1,12 @@
+.ui-tabs .ui-tabs-panel{padding:0.5em}
+
+.ui-widget-header{background:none;border:none;}
+.ui-widget-content{background:none;border:none;}
+.ui-tabs .ui-tabs-hide {position: absolute;left: -10000px;display:block;}
+.ui-tabs .ui-tabs-nav{padding:0;}
+.ui-tabs .ui-tabs-nav li{margin:0 0.2em 0 0;border:none;}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{background: url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected{background: url(images/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x;}
+
+#ui-datepicker-div{background: #b0b0b0 url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;}

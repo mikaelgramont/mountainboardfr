@@ -1,0 +1,142 @@
+<p>Browsing for filetype: '<?php echo $this->type; ?>' in '<?php echo $this->currentFolder ?>'</p>
+<?php
+if(count($this->files['folders']) == 0 && count($this->files['files']) == 0 ) {
+	echo "Nothing in here";
+}
+
+if(count($this->files['folders']) > 0) {?>
+<div id="elementLists">
+	<p>Folders:</p>
+	<ul class="folderList">
+<?php
+	foreach($this->files['folders'] as $folder){
+		echo "<li>$folder</li>".PHP_EOL;
+	}
+?>
+	</ul>
+<?php
+}
+if(count($this->files['files']) > 0) {?>
+	<p>Files:</p>
+	<ul class="fileList">
+<?php
+	foreach($this->files['files'] as $file){
+		echo "<li>{$file['name']}</li>".PHP_EOL;
+	}
+?>
+	</ul>
+</div>
+<input type="button" value="Pick" id="pickButton" />
+<div id="previewArea"></div>
+<?php
+}
+
+$path = empty($this->currentFolder) ? APP_URL : APP_URL . '/' . $this->currentFolder;
+$js = <<<JS
+function substr (f_string, f_start, f_length) {
+    // Returns part of a string
+    //
+    // version: 909.322
+    // discuss at: http://phpjs.org/functions/substr
+    // +     original by: Martijn Wieringa
+    // +     bugfixed by: T.Wild
+    // +      tweaked by: Onno Marsman
+    // *       example 1: substr('abcdef', 0, -1);
+    // *       returns 1: 'abcde'
+    // *       example 2: substr(2, 0, -6);
+    // *       returns 2: ''
+    f_string += '';
+
+    if (f_start < 0) {
+	       f_start += f_string.length;
+	}
+	if (f_length == undefined) {
+        f_length = f_string.length;
+    } else if (f_length < 0){
+        f_length += f_string.length;
+    } else {
+        f_length += f_start;
+    }
+
+    if (f_length < f_start) {
+        f_length = f_start;
+    }
+
+    return f_string.substring(f_start, f_length);
+}
+
+var FileBrowserDialogue = {
+    init : function () {
+        // Here goes your code for setting your custom things onLoad.
+    },
+    mySubmit : function (url) {
+        //var URL = document.my_form.my_field.value;
+        var win = tinyMCEPopup.getWindowArg("window");
+        // insert information now
+        win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = url;
+
+        // are we an image browser
+        if (typeof(win.ImageDialog) != "undefined") {
+            // we are, so update image dimensions...
+            if (win.ImageDialog.getImageData)
+                win.ImageDialog.getImageData();
+
+            // ... and preview if necessary
+            if (win.ImageDialog.showPreviewImage)
+                win.ImageDialog.showPreviewImage(url);
+        }
+
+        // close popup window
+        tinyMCEPopup.close();
+    }
+}
+
+tinyMCEPopup.onInit.add(FileBrowserDialogue.init, FileBrowserDialogue);
+
+var pick = '';
+$('ul.folderList li').click(function(){
+	pick = $(this).html();
+	$("#elementLists ul li").removeClass('active');
+	$(this).addClass('active');
+	$('#previewArea').html('');
+}).dblclick(function(){
+	var pickedFolder = $(this).html();
+	var newFolder = '$this->url' + '/' + pickedFolder;
+	document.location.href = newFolder;
+});
+$('ul.fileList li').click(function(){
+	$("#elementLists ul li").removeClass('active');
+	$(this).addClass('active');
+	pick = $(this).html();
+
+	var extension =  substr(pick.toLowerCase(), -4 , 4);
+	switch(extension){
+		case '.jpg':
+		case '.jpe':
+		case 'jpeg':
+		case '.gif':
+		case '.png':
+			$('#previewArea').html('<img src="' + '$path' + '/' + pick + '"/>');
+			break;
+		default:
+			$('#previewArea').html('');
+			break;
+	}
+
+}).dblclick(function(){
+	pick = $(this).html();
+	var fullUrl = '$path' + '/' + pick;
+	FileBrowserDialogue.mySubmit(fullUrl);
+});
+
+$("#pickButton").click(function(){
+	if(pick.length > 0) {
+		var fullUrl = '$path' + '/' + pick;
+		FileBrowserDialogue.mySubmit(fullUrl);
+	}
+
+});
+JS;
+
+$this->getHelper('jQuery')->addOnLoad($js);
+$this->getHelper('jQuery')->addJavascriptFile($this->baseUrl . '/'.SCRIPTS_PATH.'tiny_mce_jquery/tiny_mce_popup.js');

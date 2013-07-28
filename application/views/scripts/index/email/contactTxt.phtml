@@ -1,0 +1,14 @@
+<?php
+$auth = $this->translate('password');
+$loginInfo = $this->{User::COLUMN_PASSWORD};
+
+$email = sprintf(
+    $this->translate('contactEmail_Txt'),
+    $this->message,
+    $this->ip,
+    $this->hostname,
+    $this->id,
+    $this->name
+);
+
+echo $email;

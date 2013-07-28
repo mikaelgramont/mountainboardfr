@@ -1,0 +1,9 @@
+<h1><?php ucfirst($this->translate('deleteConfirmationMessage')) ?></h1>
+<div id="deleteFormContainer">
+	<p>
+<?php
+echo ucfirst(sprintf($this->translate('deleteConfirm'), $this->data->getTitle()))."	</p>".PHP_EOL; 
+echo $this->form;
+echo "<a id=\"cancelLink\" href=\"".$this->data->getLink()."\">".ucfirst(Globals::getTranslate()->_('cancel'))."</a>";
+?>
+</div>

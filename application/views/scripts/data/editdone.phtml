@@ -1,0 +1,30 @@
+<?php
+switch($this->status){
+    case Constants::SUCCESS:
+        break;
+    case Constants::FAILURE:
+    default:
+        echo ucfirst($this->translate('dataCouldNotBeSaved'));
+        return;
+}
+
+
+if(!$this->data){
+    return;
+}
+if(!$this->data->onePassSubmit()){
+	// Display a link to display the page, and another one to validate it
+	echo '<p>';
+	echo $this->itemLink($this->data);
+	echo $this->editLink($this->data);
+	echo ' validationLink ?';
+	echo '</p>';
+} else {
+	// Display a link to display the page, and redirect after 3 seconds
+	echo '<p>'.ucfirst($this->translate('dataSaved')).': ';
+	echo $this->itemLink($this->data);
+	echo '</p>';
+	$this->headMeta()->appendHttpEquiv('Refresh','3;URL='.$this->data->getLink()); 
+}
+
+

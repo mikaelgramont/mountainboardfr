@@ -1,0 +1,27 @@
+<?php 
+echo $this->doctype().PHP_EOL; ?>
+<html xmlns="http://www.w3.org/1999/<?php echo APP_PAGE_HTML_TYPE ?>" xml:lang="<?php echo $this->pageLang ?>" lang="<?php echo $this->pageLang ?>">
+<head>
+<?php
+echo $this->headMeta()->appendName('keywords', implode(' ', $this->keywords)).PHP_EOL;
+echo $this->headTitle($this->baseTitle).PHP_EOL;
+$this->prepareCss(APPLICATION_ENV == 'production');
+echo $this->headLink().PHP_EOL;?>
+<!--[if lt IE 8]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js" type="text/javascript"></script>
+<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/ie7-squish.js" type="text/javascript"></script>
+<![endif]-->
+<?php echo $this->headScript().PHP_EOL;?>
+</head>
+<body>
+  <div id="main">
+    <div id="pageContent">
+<?php echo $this->layout()->content.PHP_EOL; ?>
+    </div>
+  </div>
+<?php
+echo $this->jQuery().PHP_EOL;
+echo $this->inlineScript().PHP_EOL;
+?>
+</body>
+</html>
