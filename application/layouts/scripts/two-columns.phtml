@@ -39,7 +39,7 @@ $wrapperClass = $headerHelper->getEmptyCategoryContentClass();
 echo $header;
 ?>
 	<main role="main"<?php echo $wrapperClass ?>>
-		<div id="mainContent" class="twoColumns">
+		<div id="mainContent" aria-labelledby="mainTitle" class="twoColumns">
 			<section role="region" id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
     		</section>
