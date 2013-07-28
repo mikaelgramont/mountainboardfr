@@ -20,3 +20,4 @@ bin/script.php
 tests/cache/*
 public/content/*
 *.zip
+public/media/avatars/*.*
