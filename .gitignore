@@ -5,6 +5,7 @@ application/configs/application.ini
 .project
 *.log
 data/cache/*
+public/content/*
 public/media/*.*
 public/media/thumbnails/*.*
 todo.txt
