@@ -60,7 +60,7 @@ class Lib_View_Helper_ItemList extends Zend_View_Helper_Abstract
             $content .= "<li{$params['itemClass']}>$href".PHP_EOL;
             if(method_exists($item, 'getThumbnail')){
             	$src = $this->view->cdnHelper->url('/'.$item->getThumbnail());
-            	$content .= "	<div class=\"img\"><img src=\"".$src."\" alt=\"\"/></div>".PHP_EOL;
+            	$content .= "	<div class=\"img\"><img src=\"".$this->view->baseUrl.$src."\" alt=\"\"/></div>".PHP_EOL;
             }
             $content .= "	<div class=\"bd\">".PHP_EOL.'<h1>'.PHP_EOL;
             if($params['link']){
