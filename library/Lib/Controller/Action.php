@@ -73,6 +73,8 @@ class Lib_Controller_Action extends Zend_Controller_Action
 
         $this->view->headMeta('text/html; charset='.APP_PAGE_ENCODING, 'Content-Type', 'name', array(), Zend_View_Helper_Placeholder_Container_Abstract::SET );
         $this->view->headMeta(APP_PAGE_LANG, 'Content-Language', 'name', array(), Zend_View_Helper_Placeholder_Container_Abstract::SET );
+        $this->view->headMeta('DPR, Viewport-Width, Width', 'Accept-CH', 'http-equiv', array(), Zend_View_Helper_Placeholder_Container_Abstract::SET );
+        $this->view->headMeta('width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no', 'viewport', 'name', array(), Zend_View_Helper_Placeholder_Container_Abstract::SET );
 
         $this->view->keywords = Constants::getDefaultKeywords();
         $this->view->setEncoding(APP_PAGE_ENCODING);
