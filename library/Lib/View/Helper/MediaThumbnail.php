@@ -41,14 +41,6 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		$description = $this->view->escape(strip_tags($media->getDescription()));
 		$title = ucfirst(strip_tags($media->getTitle()));
 
-		/*
-		$views = $media->getViews();
-		$viewsText = '';
-		if($views == 1){
-			$viewsText = '('.$this->view->translate('shownOnce').')';
-		} elseif($views > 1){
-			$viewsText = '('.sprintf($this->view->translate('shownNTimes'), $views).')';
-		}*/
 		$viewsText = '';
 
 		/**
@@ -95,20 +87,11 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 
 	protected function _videoThumbnail(Media_Item_Video_Row $media)
 	{
-		$src = $media->getThumbnailURI(false);
 		$width = $media->getThumbnailWidth();
 		$height = $media->getThumbnailHeight();
 		$description = $this->view->escape($media->getDescription());
 		$title = ucfirst($media->getTitle());
 
-		/*
-		$views = $media->getViews();
-		$viewsText = '';
-		if($views == 1){
-			$viewsText = '('.$this->view->translate('shownOnce').')';
-		} elseif($views > 1){
-			$viewsText = '('.sprintf($this->view->translate('shownNTimes'), $views).')';
-		}*/
 		$viewsText = '';
 
 		switch($media->thumbnailSubType){
@@ -129,6 +112,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		        break;
 
 			case NULL:
+				$src = $media->getThumbnailURI(false);
 		    	break;
 
 		    default:
@@ -137,7 +121,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		}
 
 		$alt = "";
-		$src = $this->view->cdnHelper->url($src);
+		$src = $this->view->baseUrl .'/'. $this->view->cdnHelper->url($src);
 		$img = "<img src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title $viewsText\" class=\"media video\"/>";
 		$link = $media->getLink();
 		$content = $this->_mediaLink($link, $img);
