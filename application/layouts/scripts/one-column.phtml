@@ -38,16 +38,16 @@ $wrapperClass = $headerHelper->getEmptyCategoryContentClass();
 <?php
 echo $header;
 ?>
-	<main role="main"<?php echo $wrapperClass ?>>
-		<div id="mainContent" class="oneColumn" aria-labelledby="mainTitle">
-			<section role="region" id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
+	<div id="wrapper" <?php echo $wrapperClass ?>>
+		<div id="contentWrapper" aria-labelledby="mainTitle" class="oneColumn">
+			<main id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
 <?php if($this->layout()->comments){?>
 				<div id="comments">
 <?php echo $this->layout()->comments . PHP_EOL; ?>
 				</div>
 <?php } ?>
-    		</section>
+    		</main>
     	</div>
     	<div id="modalInfo">
 			<a class="close" href="javascript:void(0);"></a>
@@ -55,7 +55,7 @@ echo $header;
 <?php echo $this->layout()->modal . PHP_EOL; ?>
 			</div>
     	</div>
-  	</main>
+  	</div>
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 	<div id="overlay"></div>
 <?php

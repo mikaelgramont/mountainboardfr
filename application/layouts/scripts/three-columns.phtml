@@ -35,28 +35,28 @@ $wrapperClass = $headerHelper->getEmptyCategoryContentClass();
 <?php
 echo $header;
 ?>
-	<main role="main"<?php echo $wrapperClass ?>>
+	<div id="wrapper" <?php echo $wrapperClass ?>>
 		<div id="mainContent" aria-labelledby="mainTitle" class="threeColumns">
-			<section role="region" id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
+			<main id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
-    		</section>
-			<section role="region" id="secondContent">
+    		</main>
+			<aside id="secondContent">
 <?php
 	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN23).PHP_EOL;
 ?>
-			</section>
-			<section role="region" id="thirdContent">
+			</aside>
+			<aside id="thirdContent">
 <?php
 	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN33).PHP_EOL;
 ?>
-			</section>
+			</aside>
 		</div>
 <?php if($this->layout()->comments){?>
 		<div id="comments">
 <?php echo $this->layout()->comments . PHP_EOL; ?>
 		</div>
 <?php } ?>
-  	</main>
+  	</div>
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 <?php
 $this->google_Analytics().PHP_EOL;
