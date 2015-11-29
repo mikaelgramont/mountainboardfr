@@ -323,11 +323,25 @@ header.noCategoryContent,
 header.noCategoryContent #headerContent {
     height: 18.125em;
 }
-#headerContent div.title {
+#headerContent .title {
+    display: flex;
+    padding: 0 .5em;
     height: 8em;
     clear: both;
-    position: relative;
-    top: 1em;
+    justify-content: space-between;
+}
+.headerButton {
+    display: none;
+    color: #fff;
+    background: none;
+    padding: 0;
+    border: 0;
+    width: 2em;
+    height: 2em;
+    margin-top: 2.25em;
+}
+.headerButton path {
+    fill: #fff;    
 }
 #slider {
     position: absolute;
@@ -335,10 +349,13 @@ header.noCategoryContent #headerContent {
     width: 60em;
     height: 10em;
 }
-a#logo {
+#logo {
     display: block;
+    margin-top: 1em;
     width: 19.375em;
     height: 3.875em;
+    transform-origin: 50% 53px;
+    transform: scale(.8);
 }
 #logoImage {
     display: block;
@@ -2199,7 +2216,7 @@ p.homePageLoginTitle {
 }
 
 @media screen and (max-width: 580px) {
-    a#logo {
-        margin: 0 auto;
+     .headerButton {
+        display: initial;
     }
 }
