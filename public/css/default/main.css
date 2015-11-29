@@ -232,11 +232,12 @@ a.backLeft {
 #facebookLikeBox {
     background: white;
     position: relative;
-    left: -0.25em;
     margin-top: 1em;
-    width: 20.5em;
     height: 15.9375em;
     box-shadow: 0.0625em 0.0625em 0.0625em #404040
+}
+#facebookLikeBox iframe {
+    margin: 0 18.5px;
 }
 .homePageGooglePlus {
     padding: 1em;
@@ -256,16 +257,18 @@ body#tinymce {
     background: white;
     padding: 0.5em;
 }
+#wrapper,
+#headerContent {
+    max-width: 60em;
+}
 #wrapper {
     display: block;
-    width: 60em;
     margin: -4.5em auto 0;
     position: relative;
     z-index: 0;
 }
 header {
     height: 18.125em;
-    width: 100%;
     background-color: rgb(143, 143, 143);
     background-image: linear-gradient(
         center top,
@@ -307,12 +310,12 @@ header {
         color-stop(0.993, rgb(181,181,181)),
         color-stop(0.996, rgb(143,143,143)),
         color-stop(1.0, rgb(226,226,226))
-    );     
+    );
+    background-size: auto 18.125em;
 }
 #headerContent {
     position: relative;
     height: 14em;
-    width: 60em;
     margin: 0 auto;
 }
 header.noCategoryContent,
@@ -322,7 +325,7 @@ header.noCategoryContent #headerContent {
 #headerContent div.title {
     height: 8em;
     clear: both;
-    position: absolute;
+    position: relative;
     top: 1em;
 }
 #slider {
@@ -342,9 +345,9 @@ a#logo {
     height: 3.875em
 }
 #contentWrapper {
+    display: flex;
     position: relative;
     background-color: #f8f8f8;
-    border-radius: 1em;
     z-index: 2;
     box-shadow: 0.0625em 0.0625em 0.0625em #404040
 }
@@ -354,23 +357,22 @@ a#logo {
 .oneColumn {
     padding: 1em;
 }
+#firstContent,
+#secondContent,
+#thirdContent {
+    box-sizing: border-box;
+}
 .oneColumn #firstContent {
-    min-height: 25em;
     position: relative;
 }
 .twoColumns #firstContent {
-    width: 37em;
-    min-height: 25em;
+    width: 62.1%;
     position: relative;
     padding: 1em;
 }
 .twoColumns #secondContent {
-    width: 20em;
-    margin-left: 39em;
-    position: absolute;
-    top: 0;
+    width: 37.9%;
     padding-top: 1.5em;
-    bottom: 0;
     background-color: #F0F0F0;
 }
 #firstContent p.description {
@@ -431,7 +433,7 @@ footer a {
     position: absolute;
     width: 3em;
     height: 1.25em;
-    right: 0em;
+    right: .5em;
     top: 3.7em;
     text-align: right;
     vertical-align: center;
@@ -452,7 +454,7 @@ footer a {
 form#simpleSearch {
     position: absolute;
     top: 1.5em;
-    right: 0em
+    right: .5em
 }
 div.notFoundPage {
     width: 100%;
@@ -496,7 +498,7 @@ div.notFoundPage div.pic p {
 #topMenu {
     position: absolute;
     top: 7em;
-    right: 0;
+    right: .5em;
 }
 #catMenu {
     display: block;
