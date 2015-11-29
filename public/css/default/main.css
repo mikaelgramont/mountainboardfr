@@ -237,7 +237,8 @@ a.backLeft {
     box-shadow: 0.0625em 0.0625em 0.0625em #404040
 }
 #facebookLikeBox iframe {
-    margin: 0 18.5px;
+    display: block;
+    margin: 0 auto;
 }
 .homePageGooglePlus {
     padding: 1em;
@@ -436,7 +437,6 @@ footer a {
     right: .5em;
     top: 3.7em;
     text-align: right;
-    vertical-align: center;
     display: table
 }
 #languageBox a {
@@ -1692,6 +1692,7 @@ ul.album {
 }
 ul.album li {
     display: inline-block;
+    vertical-align: middle;
     margin: 1em;
     padding: 1em;
     text-align: center;
@@ -2171,4 +2172,34 @@ p.element-group-simple span.errors {
 p.homePageLoginTitle {
     margin: 0 0 1em 1em;
     font-weight: bold;
+}
+
+@media screen and (max-width: 667px) {
+    header {
+        height: 10.5em;
+    }
+
+    #topMenu,
+    #languageBox,
+    #simpleSearch
+     {
+        display: none;
+    }
+
+    #contentWrapper {
+        display: block;
+    }
+
+    .twoColumns #firstContent,
+    .twoColumns #secondContent,
+    .twoColumns #thirdContent {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 580px) {
+    a#logo {
+        margin: 0 auto;
+    }
 }
