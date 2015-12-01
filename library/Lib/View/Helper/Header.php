@@ -106,7 +106,7 @@ HTML;
 	         * Main menu
 	         */
 	        $menuClass = empty($options['menuClass']) ? '' : " class='{$options['menuClass']}'";
-	        $content  = '<nav role="navigation" class="clearfix">';
+	        $content  = '<nav class="clearfix">';
 	        $content .= "<ul id='{$options['menuId']}'$menuClass>".PHP_EOL;
 	        foreach($config->categories->category as $category){
 	            $content .= $this->_getCategoryContent($category, $currentCategoryId, $currentSubCategoryId, $options);
@@ -180,10 +180,15 @@ HTML;
             $catString = $this->view->routeLink($category->route, $title, array()).PHP_EOL;
             $content .= "<li$catClass>".PHP_EOL;
             $content .= "        ".$catString . PHP_EOL;
-            $content .= "</li>";
             if($category->subCategories){
+                // Just another subcategory, but only for mobile menus.
+                $content .= "<ul class=\"mobileOnlySubCategory\">";
+                $content .= $this->_getSubCategoriesContent($category, $currentCategoryId, $currentSubCategoryId, $category->subCategories, $options);
+                $content .= "</ul>";
+                // The dropdown for desktop.
                 $this->_currentCategoryContent = $this->_getSubCategoriesContent($category, $currentCategoryId, $currentSubCategoryId, $category->subCategories, $options);
             }
+            $content .= "</li>";
         } else {
             // Other categories
             $catClass = " class='category {$options['inactiveCategoryClass']}'";
@@ -309,15 +314,26 @@ HTML;
      */
     protected function _getJavascript($menuId)
     {
+        $mobileMediaQuery = "screen and (max-width: 667px)";
+
         $js = '
-$("#'.$menuId.' li").click(function(e){
-    if(!$(e.target).parent().is("li.inactiveSubCat")){
+var mobileMatch = window.matchMedia("'.$mobileMediaQuery.'");
+$("#'.$menuId.' li").click(function(e) {
+    if (mobileMatch.matches) {
+        return;
+    }
+    if(!$(e.target).parent().is("li.inactiveSubCat")) {
 		$(this).addClass("active").children("ul").toggle();
 		return false;
 	}
 }).hover(
-	function(){},
-	function(){$(this).removeClass("active").children("ul").hide()}
+	function() {},
+	function() {
+        if (mobileMatch.matches) {
+            return;
+        }
+        $(this).removeClass("active").children("ul").hide()
+    }
 );';
         return $js;
     }

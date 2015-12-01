@@ -508,130 +508,6 @@ div.notFoundPage div.pic p {
 }
 /** Menu */
 
-#topMenu {
-    position: absolute;
-    top: 7em;
-    right: .5em;
-}
-#catMenu {
-    display: block;
-    right: 0;
-    position: relative;
-    z-index: 2;
-    box-shadow: 0.0625em 0.0625em 0.0625em #404040;
-    border-radius: 1em;
-}
-#catMenu .category {
-    background: white;
-    display: inline-block;
-    position: relative;
-    min-width: 7em;
-    border-right: 0.0625em solid #8f8f8f
-}
-#catMenu .category:first-child {
-    border-radius: 1em 0em 0em 1em;
-}
-#catMenu .category:last-child {
-    border-radius: 0em 1em 1em 0em;
-}
-#catMenu .category:hover {
-    background-color: #D0D0D0;
-}
-#catMenu .inactiveCat.active:first-child:hover {
-    border-radius: 1em 0em 0em;
-}
-#catMenu .inactiveCat.active:last-child:hover {
-    border-radius: 0em 1em 0em;
-}
-img.menuItemImage {
-    position: relative;
-    left: 0.5em;
-    top: -0.1875em;
-}
-#catMenu li a {
-    display: block;
-    padding: 0.6875em 1em;
-    color: black;
-    text-decoration: none;
-    text-align: center;
-}
-#catMenu li a:active {
-    color: #ffff00
-}
-#catMenu li.activeCat {
-    background-color: #EFEF20;
-}
-#catMenu li.activeCat a {
-    color: #000000;
-}
-#catMenu li ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: white;
-    width: 100%;
-    border: 0.0625em solid #CCCCCC;
-}
-#catMenu li ul li {
-    display: inline;
-    position: relative;
-    background-color: white;
-    box-shadow: 0.0625em 0.0625em 0.0625em #404040
-}
-#catMenu li ul:first-child,
-#catMenu li ul:last-child {
-    border-radius: 0;
-}
-#catMenu li ul li a {
-    display: block;
-    padding: 0.5em 0 0.5em 0.25em;
-    color: #000000;
-    text-align: left;
-}
-#catMenu li ul li a:hover {
-    background-color: #D0D0D0;
-}
-/*#catMenu li:hover ul{display:block;}*/
-
-#catMenu li.selected ul {
-    display: block;
-}
-/** Current category menu */
-
-#currentCategoryMenu {
-    display: block;
-    height: 3em;
-    position: absolute;
-    min-width: 43em;
-    top: 4em;
-    right: 0;
-    z-index: 1;
-    font-size: 0.85em;
-}
-#currentCategoryMenu li {
-    display: block;
-    float: left;
-}
-#currentCategoryMenu li a {
-    display: block;
-    text-decoration: underline;
-    padding: 0.75em;
-    line-height: 1.5em;
-}
-#currentCategoryMenu li a:hover {
-    text-decoration: none
-}
-#currentCategoryMenu li.activeSubCat {
-    border-radius: 1em;
-}
-#currentCategoryMenu li.activeSubCat a {
-    color: #000000;
-    text-decoration: none;
-}
-#currentCategoryMenu li.inactiveSubCat a {
-    color: #ffffff;
-}
 /** New stuff */
 
 #notificationRange {
@@ -2187,14 +2063,185 @@ p.homePageLoginTitle {
     font-weight: bold;
 }
 
+
+@media screen and (min-width: 668px) {
+/** Menu */
+    #topMenu {
+        position: absolute;
+        top: 7em;
+        right: .5em;
+    }
+    #catMenu {
+        display: block;
+        right: 0;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0.0625em 0.0625em 0.0625em #404040;
+        border-radius: 1em;
+    }
+    #catMenu .category {
+        background: white;
+        display: inline-block;
+        position: relative;
+        min-width: 7em;
+        border-right: 0.0625em solid #8f8f8f
+    }
+    #catMenu .category:first-child {
+        border-radius: 1em 0em 0em 1em;
+    }
+    #catMenu .category:last-child {
+        border-radius: 0em 1em 1em 0em;
+    }
+    #catMenu .category:hover {
+        background-color: #D0D0D0;
+    }
+    #catMenu .inactiveCat.active:first-child:hover {
+        border-radius: 1em 0em 0em;
+    }
+    #catMenu .inactiveCat.active:last-child:hover {
+        border-radius: 0em 1em 0em;
+    }
+    .mobileOnlySubCategory {
+        display: none;
+    }
+    .menuItemImage {
+        position: relative;
+        left: 0.5em;
+        top: -0.1875em;
+    }
+    #catMenu li a {
+        display: block;
+        padding: 0.6875em 1em;
+        color: black;
+        text-decoration: none;
+        text-align: center;
+    }
+    #catMenu li a:active {
+        color: #ffff00
+    }
+    #catMenu li.activeCat {
+        background-color: #EFEF20;
+    }
+    #catMenu li.activeCat a {
+        color: #000000;
+    }
+    #catMenu li ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        width: 100%;
+        border: 0.0625em solid #CCCCCC;
+    }
+    #catMenu li ul li {
+        display: inline;
+        position: relative;
+        background-color: white;
+        box-shadow: 0.0625em 0.0625em 0.0625em #404040
+    }
+    #catMenu li ul:first-child,
+    #catMenu li ul:last-child {
+        border-radius: 0;
+    }
+    #catMenu li ul li a {
+        display: block;
+        padding: 0.5em 0 0.5em 0.25em;
+        color: #000000;
+        text-align: left;
+    }
+    #catMenu li ul li a:hover {
+        background-color: #D0D0D0;
+    }
+
+    #catMenu li.selected ul {
+        display: block;
+    }
+
+    /** Current category menu */
+    #currentCategoryMenu {
+        display: block;
+        height: 3em;
+        position: absolute;
+        min-width: 43em;
+        top: 4em;
+        right: 0;
+        z-index: 1;
+        font-size: 0.85em;
+    }
+    #currentCategoryMenu li {
+        display: block;
+        float: left;
+    }
+    #currentCategoryMenu li a {
+        display: block;
+        text-decoration: underline;
+        padding: 0.75em;
+        line-height: 1.5em;
+    }
+    #currentCategoryMenu li a:hover {
+        text-decoration: none
+    }
+    #currentCategoryMenu li.activeSubCat {
+        border-radius: 1em;
+    }
+    #currentCategoryMenu li.activeSubCat a {
+        color: #000000;
+        text-decoration: none;
+    }
+    #currentCategoryMenu li.inactiveSubCat a {
+        color: #ffffff;
+    }
+}
+
+
+/* iPhone 6 - landscape mode, menu fits above this. */
 @media screen and (max-width: 667px) {
+    #topMenu {
+        position: fixed;
+        z-index: 1;
+        background: #ccc;
+        top: 1.75em;
+        left: 2.375em;
+        right: 0;
+        bottom: 0;
+        border-left: 1px solid #333;
+        border-right: 1px solid #333;
+    }
+    #topMenu a {
+        display: block;
+        padding: 1em;
+        text-decoration: none;  
+    }
+    #topMenu .category > a {
+        border-top: 1px solid #333;
+        border-bottom: 1px solid #333;
+    }
+    #topMenu a img {
+        display: none;
+    }
+    .category ul {
+        padding: 0 1em;
+    }
+    .category li {
+        margin: .5em;
+    }
+    #currentCategoryMenu {
+        display: none;
+    }
+
+
+
+
+
+
+
+
     header {
         height: 10.5em;
     }
 
-    #topMenu,
-    #simpleSearch
-     {
+    #simpleSearch {
         display: none;
     }
 
@@ -2221,7 +2268,7 @@ p.homePageLoginTitle {
 }
 
 @media screen and (max-width: 580px) {
-     .headerButton {
+    .headerButton {
         display: initial;
     }
     .mediaBlock,
@@ -2231,11 +2278,14 @@ p.homePageLoginTitle {
 
 }
 
+/* Language box doesn't fit everywhere */
 @media screen and (max-width: 400px) {
     #languageBox {
         display: none;
     }
 }
+
+/* iPhone 4 - portrait mode */
 @media screen and (max-width: 374px) {
     #languageBox {
         display: none;
