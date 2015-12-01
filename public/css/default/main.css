@@ -351,16 +351,12 @@ header.noCategoryContent #headerContent {
 }
 #logo {
     display: block;
-    margin-top: 1em;
-    width: 19.375em;
-    height: 3.875em;
-    transform-origin: 50% 53px;
-    transform: scale(.8);
 }
 #logoImage {
     display: block;
+    margin-top: 1em;
     width: 19.375em;
-    height: 3.875em
+    height: 3.875em;
 }
 #contentWrapper {
     display: flex;
@@ -2197,7 +2193,6 @@ p.homePageLoginTitle {
     }
 
     #topMenu,
-    #languageBox,
     #simpleSearch
      {
         display: none;
@@ -2212,11 +2207,49 @@ p.homePageLoginTitle {
     .twoColumns #thirdContent {
         width: 100%;
     }
+}
 
+@media screen and (min-width: 581px) and (max-width: 666px) {
+    #headerContent .title {
+        justify-content: initial;
+    }
+
+    #simpleSearch,
+    #menuButton {
+        display: initial;
+    }
 }
 
 @media screen and (max-width: 580px) {
      .headerButton {
         display: initial;
+    }
+    .mediaBlock,
+    .bd {
+        overflow: initial;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+    #languageBox {
+        display: none;
+    }
+}
+@media screen and (max-width: 374px) {
+    #languageBox {
+        display: none;
+    }
+    #headerContent {
+        margin-top: -1em;
+    }
+    #wrapper {
+        margin-top: -5em;
+    }
+    #logoImage {
+        display: block;
+        margin-top: 1.6em;
+        width: 248px;
+        height: 49.6px;
     }
 }
