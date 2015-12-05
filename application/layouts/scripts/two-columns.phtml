@@ -48,10 +48,6 @@ echo $header;
 	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN2).PHP_EOL;
 	if($this->isHomePage){
 		echo $this->facebook_LikeBox(FACEBOOK_PAGE_URL);
-		echo '<div class="homePageGooglePlus">'.PHP_EOL;
-		echo '<p>'.ucfirst(sprintf($this->translate('likeUsOnGoogle'), APP_NAME)).'</p>'.PHP_EOL;
-		echo $this->shareButtons()->google().PHP_EOL;
-		echo '</div>'.PHP_EOL;
 	}
 ?>
 			</aside>
@@ -70,6 +66,7 @@ echo $header;
   	</div>
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 	<div id="overlay"></div>
+	<div id="menuOverlay"></div>
 <?php
 $this->google_Analytics().PHP_EOL;
 echo $this->jQuery().PHP_EOL;

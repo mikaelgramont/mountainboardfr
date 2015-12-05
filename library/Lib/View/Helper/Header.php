@@ -315,8 +315,18 @@ HTML;
     protected function _getJavascript($menuId)
     {
         $mobileMediaQuery = "screen and (max-width: 667px)";
-
+// TODO: switch overflow:hidden on when menu is displayed.
         $js = '
+
+$("#menuOverlay").click(function(e) {
+    document.body.classList.remove("menuVisible");
+    document.body.classList.remove("searchVisible");
+});
+
+$("#menuButton").click(function(e) {
+    document.body.classList.toggle("menuVisible");
+});
+
 var mobileMatch = window.matchMedia("'.$mobileMediaQuery.'");
 $("#'.$menuId.' li").click(function(e) {
     if (mobileMatch.matches) {

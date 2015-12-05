@@ -230,11 +230,9 @@ a.backLeft {
     padding-left: 0;
 }
 #facebookLikeBox {
-    background: white;
     position: relative;
     margin-top: 1em;
     height: 15.9375em;
-    box-shadow: 0.0625em 0.0625em 0.0625em #404040
 }
 #facebookLikeBox iframe {
     display: block;
@@ -697,7 +695,6 @@ div.additionalContent:li:last-child {
 }
 #items li {
     margin-bottom: 1.5em;
-    padding: 0.5em 1em 1.5em;
     position: relative;
 }
 #items li p.postInformation {
@@ -2043,7 +2040,8 @@ p.element-group-simple span.errors {
     font-size: 1.5em;
     font-weight: bold;
 }
-#overlay {
+#overlay,
+#menuOverlay {
     display: none;
     background: none repeat scroll 0 0 black;
     height: 100%;
@@ -2052,7 +2050,7 @@ p.element-group-simple span.errors {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 3000;
+    z-index: 1;
 }
 #modalInfo div.connectionLinks {
     margin-left: -2em;
@@ -2197,23 +2195,45 @@ p.homePageLoginTitle {
 
 /* iPhone 6 - landscape mode, menu fits above this. */
 @media screen and (max-width: 667px) {
+    body.menuVisible {
+        overflow: hidden;
+    }
+
+    .menuVisible #menuOverlay {
+        display: initial;
+    }
+    .menuVisible #menuButton {
+        z-index: 4;
+    }    
     #topMenu {
         position: fixed;
-        z-index: 1;
-        background: #ccc;
-        top: 1.75em;
-        left: 2.375em;
+        z-index: 2;
+        top: 0;
+        left: 3em;
         right: 0;
         bottom: 0;
-        border-left: 1px solid #333;
-        border-right: 1px solid #333;
+        border: 0;
+        transition: transform 300ms;
+        transform: translateX(100%);
+    }
+    .menuVisible #topMenu {
+        transform: translateX(0);   
+    }
+    #topMenu nav {
+        background: #ccc;
+        background: linear-gradient(#ccc, #aaa);
+        min-height: 100%;
+        border-left: 1px solid #333;        
     }
     #topMenu a {
         display: block;
-        padding: 1em;
+        padding: 0.125em 1em;
         text-decoration: none;  
     }
     #topMenu .category > a {
+        padding: .5em 1em;
+        background: #999;
+        color: #eee;
         border-top: 1px solid #333;
         border-bottom: 1px solid #333;
     }
@@ -2224,18 +2244,11 @@ p.homePageLoginTitle {
         padding: 0 1em;
     }
     .category li {
-        margin: .5em;
+        margin: 1em;
     }
     #currentCategoryMenu {
         display: none;
     }
-
-
-
-
-
-
-
 
     header {
         height: 10.5em;
@@ -2264,7 +2277,9 @@ p.homePageLoginTitle {
     #simpleSearch,
     #menuButton {
         display: initial;
+        position: relative;        
     }
+
 }
 
 @media screen and (max-width: 580px) {
@@ -2279,7 +2294,7 @@ p.homePageLoginTitle {
 }
 
 /* Language box doesn't fit everywhere */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 410px) {
     #languageBox {
         display: none;
     }
