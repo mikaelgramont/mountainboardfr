@@ -58,6 +58,7 @@ $searchForm
 	    <div id="topMenu">
 $menu
 		</div>
+        <div id="headerOverlay"></div>
 	</div>
 </header>
 HTML;

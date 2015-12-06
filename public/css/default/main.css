@@ -324,7 +324,6 @@ header.noCategoryContent #headerContent {
 #headerContent .title {
     display: flex;
     padding: 0 .5em;
-    height: 8em;
     clear: both;
     justify-content: space-between;
 }
@@ -2041,7 +2040,8 @@ p.element-group-simple span.errors {
     font-weight: bold;
 }
 #overlay,
-#menuOverlay {
+#menuOverlay,
+#headerOverlay {
     display: none;
     background: none repeat scroll 0 0 black;
     height: 100%;
@@ -2052,6 +2052,10 @@ p.element-group-simple span.errors {
     width: 100%;
     z-index: 1;
 }
+#headerOverlay {
+    position: absolute;
+}
+
 #modalInfo div.connectionLinks {
     margin-left: -2em;
     margin-top: 2em;
@@ -2199,7 +2203,8 @@ p.homePageLoginTitle {
         overflow: hidden;
     }
 
-    .menuVisible #menuOverlay {
+    .menuVisible #menuOverlay,
+    .menuVisible #headerOverlay {
         display: initial;
     }
     .menuVisible #menuButton {
@@ -2215,6 +2220,7 @@ p.homePageLoginTitle {
         border: 0;
         transition: transform 300ms;
         transform: translateX(100%);
+        overflow-y: auto;
     }
     .menuVisible #topMenu {
         transform: translateX(0);   
@@ -2251,17 +2257,24 @@ p.homePageLoginTitle {
     }
 
     header {
-        height: 10.5em;
+        height: auto;
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        width: 100%;
     }
-
+    #headerContent {
+       height: 5.5em;
+    }
+    #wrapper {
+        margin-top: 5.5em;
+    }
     #simpleSearch {
         display: none;
     }
-
     #contentWrapper {
         display: block;
     }
-
     .twoColumns #firstContent,
     .twoColumns #secondContent,
     .twoColumns #thirdContent {
@@ -2305,12 +2318,12 @@ p.homePageLoginTitle {
     #languageBox {
         display: none;
     }
-    #headerContent {
+    header {
         margin-top: -1em;
     }
     #wrapper {
-        margin-top: -5em;
-    }
+        margin-top: 4.5em;
+    }    
     #logoImage {
         display: block;
         margin-top: 1.6em;
