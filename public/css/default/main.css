@@ -461,7 +461,7 @@ footer a {
 #languageBox a.currentLanguage img {
     border: 0.125em solid white;
 }
-form#simpleSearch {
+#simpleSearch {
     position: absolute;
     top: 1.5em;
     right: .5em
@@ -2204,10 +2204,13 @@ p.homePageLoginTitle {
     }
 
     .menuVisible #menuOverlay,
-    .menuVisible #headerOverlay {
+    .menuVisible #headerOverlay,
+    .searchVisible #menuOverlay,
+    .searchVisible #headerOverlay {
         display: initial;
     }
-    .menuVisible #menuButton {
+    .menuVisible #menuButton,
+    .searchVisible #searchButton {
         z-index: 4;
     }    
     #topMenu {
@@ -2255,7 +2258,6 @@ p.homePageLoginTitle {
     #currentCategoryMenu {
         display: none;
     }
-
     header {
         height: auto;
         position: fixed;
@@ -2280,6 +2282,35 @@ p.homePageLoginTitle {
     .twoColumns #thirdContent {
         width: 100%;
     }
+    #simpleSearch {        
+        display: initial;
+        left: 0;
+        top: 0;
+        height: 100%;
+        z-index: 2;
+        padding: 1em;
+        box-sizing: border-box;
+        font-size: 1.5em;
+        transition: transform 300ms;
+        transform: translateX(-100%);
+    }
+    .searchVisible #simpleSearch {
+        transform: translateX(0);   
+    }
+    .searchVisible #simpleSearch input {
+        vertical-align: middle;
+    }
+    .searchVisible #searchTerms {
+        font-size: 1em;
+    }
+    .searchVisible #searchSubmit {
+        font-size: .75em;
+        -webkit-appearance: none;
+        border: none;
+        border-radius: .75em;
+        vertical-align: middle;
+        padding: .5em;
+    }    
 }
 
 @media screen and (min-width: 581px) and (max-width: 666px) {
@@ -2292,7 +2323,6 @@ p.homePageLoginTitle {
         display: initial;
         position: relative;        
     }
-
 }
 
 @media screen and (max-width: 580px) {
@@ -2303,7 +2333,6 @@ p.homePageLoginTitle {
     .bd {
         overflow: initial;
     }
-
 }
 
 /* Language box doesn't fit everywhere */

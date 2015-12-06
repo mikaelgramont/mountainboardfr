@@ -43,7 +43,7 @@ class Lib_View_Helper_Header extends Zend_View_Helper_Abstract
                     <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
                 </svg>                
             </button>
-	        <a id="logo" href="{$this->view->baseUrl}/"><img src="{$logoUrl}" id="logoImage" alt="$alt" title="$title"/></a>
+	        <a id="logo" href="{$this->view->baseUrl}/"><img src="{$logoUrl}" id="logoImage" alt="$alt" /></a>
             <button id="searchButton" class="headerButton" title="Search">
                 <svg version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <path d="M20.194,3.46c-4.613-4.613-12.121-4.613-16.734,0c-4.612,4.614-4.612,12.121,0,16.735
@@ -316,16 +316,22 @@ HTML;
     protected function _getJavascript($menuId)
     {
         $mobileMediaQuery = "screen and (max-width: 667px)";
-// TODO: switch overflow:hidden on when menu is displayed.
         $js = '
 
-$("#menuOverlay").click(function(e) {
+$("#menuOverlay").bind("touchstart click", function(e) {
     document.body.classList.remove("menuVisible");
     document.body.classList.remove("searchVisible");
 });
 
-$("#menuButton").click(function(e) {
+$("#menuButton").bind("touchstart click", function(e) {
     document.body.classList.toggle("menuVisible");
+});
+
+$("#searchButton").bind("touchstart click", function(e) {
+    document.body.classList.toggle("searchVisible");
+    if (document.body.classList.contains("searchVisible")) {
+        $("#searchTerms").focus();
+    }
 });
 
 var mobileMatch = window.matchMedia("'.$mobileMediaQuery.'");
