@@ -2190,7 +2190,6 @@ p.homePageLoginTitle {
         position: fixed;
         z-index: 2;
         top: 0;
-        left: 3em;
         right: 0;
         bottom: 0;
         border: 0;
@@ -2199,6 +2198,7 @@ p.homePageLoginTitle {
         overflow-y: auto;
     }
     .menuVisible #topMenu {
+        left: 3em;
         transform: translateX(0);   
     }
     #topMenu nav {
