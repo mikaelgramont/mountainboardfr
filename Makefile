@@ -10,8 +10,7 @@ update:
 	svn up
 
 assets:
-	cd public
-	git ls-tree -r master |php bin/gitassets.php > data/lookupTable.php
+	cd public && git ls-tree -r master |php ../bin/gitassets.php > ../data/lookupTable.php
 
 cleancache:
 	curl "$(SITE)admin/clear-apc-cache?authCheck=ra45HuiB@&mode=user"
