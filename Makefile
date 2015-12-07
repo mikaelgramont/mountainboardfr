@@ -11,7 +11,7 @@ update:
 
 assets:
 	cd public
-	svn status --verbose --xml |php bin/svnassets.php > data/lookupTable.php
+	git ls-tree -r master |php bin/gitassets.php > data/lookupTable.php
 
 cleancache:
 	curl "$(SITE)admin/clear-apc-cache?authCheck=ra45HuiB@&mode=user"
