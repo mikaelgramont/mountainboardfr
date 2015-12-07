@@ -66,7 +66,7 @@ class Lib_View_Helper_Asset extends Zend_View_Helper_Abstract
 
 	protected function _getFile($path)
 	{
-		if (APPLICATION_ENV != 'development') {
+		if (APPLICATION_ENV == 'development') {
 			return $path;
 		}
 		$lookupTable = Lib_AssetCache::getLookupTable();
