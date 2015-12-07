@@ -50,6 +50,9 @@ switch($this->album->id){
 
 $commentClass = in_array($this->album->id, array(Media_Album_PhotoMain::ID, Media_Album_VideoMain::ID, Media_Album_Portfolio::ID)) ? '' : ' withComments';
 
+if($paginationControl){
+	echo '<div class="album paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+}
 echo '<ul class="album">'.PHP_EOL;
 foreach($medias as $media){
 	$angle = rand(THUMBNAIL_ROTATION_MIN, THUMBNAIL_ROTATION_MAX);
@@ -64,7 +67,6 @@ foreach($medias as $media){
 echo '</ul>'.PHP_EOL;
 
 if($paginationControl){
-	echo '<div class="album paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
 	echo "<div class=\"album paginationControl bottom$commentClass\">".PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
 }
 if(!in_array($this->album->id, array(Media_Album_PhotoMain::ID, Media_Album_VideoMain::ID, Media_Album_Portfolio::ID, ))){

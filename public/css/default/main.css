@@ -198,7 +198,7 @@ a.backLeft {
     color: white
 }
 #registerForComment {
-    margin: 1.5em 0;
+    /* margin: 1.5em; */
     text-align: center;
     display: inline-block;
 }
@@ -725,9 +725,11 @@ div.additionalContent:li:last-child {
     text-align: justify;
 }
 h2.description {
-    font-weight: normal
+    font-weight: normal;
+    margin-bottom: 1em;
 }
 div.paginationControl {
+    display: inline-block;
     padding: 0.625em;
     background-color: #A0A0A0;
     border-radius: 1em;
@@ -1173,7 +1175,7 @@ ul#photoRotationLinks li a {
 div.mediaTitle {
     max-width: 45em;
     padding: 0.5em;
-    margin-top: 7em;
+    margin-top: 2em;
     background-color: #A0A0A0;
     border-radius: 1em 1em 0 0;
     color: white;
@@ -1203,7 +1205,7 @@ div.mediaTitle a:visited {
 div.mediaMetadata {
     text-align: left;
     width: 100%;
-    margin-bottom: 1em;
+    /* margin-bottom: 1em; */
     background-color: #F0F0F0;
     border-radius-bottomleft: 0.5em;
     border-radius-bottomright: 0.5em;
@@ -1239,18 +1241,19 @@ div.mediaMetadataNoMap {
     padding: 0.5em 0.5em 0.5em 0;
 }
 #mediaNavigation {
-    position: absolute;
-    top: -7em;
+    /* position: absolute; */
+    /* top: -7em; */
     right: 1em;
     display: inline-block;
     max-width: 37em;
 }
 #backToAlbum {
-    position: absolute;
-    top: -7em;
-    left: 1em;
-    display: inline-block;
+    /* position: absolute; */
+    /* top: 2em; */
+    /* left: 1em; */
+    display: block;
     max-width: 23em;
+    margin-bottom: 1em;
 }
 #backToAlbum.uploadPage {
     right: 1em;
@@ -1321,23 +1324,12 @@ div.albumPreviewLink {
     display: inline-block;
 }
 ul#items.spotListItem {
-    padding-top: 6.5em;
-    padding-bottom: 3.5em;
+    padding: 1.5em 0;
 }
 ul#items.spotListItem li {
     margin: 0 0em 1em 0em;
     padding: 0.5em 0.5em 1em;
     position: relative;
-}
-div.spot.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 5em;
-}
-div.spot.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
 }
 #register.spot {
     top: 1em
@@ -1533,30 +1525,20 @@ div.blog.paginationControl.bottom {
 /** Blog Posts */
 
 ul#items.blogPostListItem {
-    padding-top: 7.5em;
-    padding-bottom: 3.5em;
+    padding-top: 2.5em;
 }
 ul#items.blogPostListItem li {
     margin: 0 0em 1em 0em;
-    padding: 0.5em 0.5em 1em;
     position: relative;
 }
-div.blogpost.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 6em;
+ul#items.blogPostListItem li a {
+    display: inline-block;
 }
-div.blogpost.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
-}
-h1.blogTitle,
 h2.blogDescription {
-    margin-left: 8em;
+    font-size: 1.5em;
 }
 div.blogOwner {
-    position: absolute;
+    /* position: absolute; */
     top: 1em;
     left: 1em;
     width: 6em;
@@ -1572,8 +1554,6 @@ div.blogOwner {
 /** Album */
 
 ul.album {
-    margin-top: 6em;
-    padding-bottom: 4em;
 }
 ul.album li {
     display: inline-block;
@@ -1598,23 +1578,16 @@ ul.album li a.mediaThumbnailTitle {
     max-width: 12em;
 }
 div.album.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 5em;
 }
 div.album.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
 }
 div.album.paginationControl.bottom.withComments {
     bottom: 31em;
 }
 div.addPhotoContainer,
 div.addVideo {
-    position: absolute;
-    left: 3em;
-    top: 5em;
+    margin: 1em 0;
+    display: inline-block;
 }
 div.addPhoto,
 div.addVideo {

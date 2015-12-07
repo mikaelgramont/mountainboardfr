@@ -2,9 +2,6 @@
 $paginationControl = $this->paginationControl($this->items, null, null, array('dataType' => $this->dataType));
 
 $item = $this->items->getItem(0);
-if(!($item instanceof Article_Row)){
-	echo $this->addNewDataLink($this->dataType);
-}
 
 $listTitle = ucfirst($this->translate($this->dataType.'ListTitle'));
 $this->headTitle($listTitle);
@@ -22,9 +19,16 @@ if($this->dataType == Event::ITEM_TYPE){
 	$params['showDate'] = false;
 }
 
+if($paginationControl){
+	echo '<div class="'.$this->dataType.' paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+}
+
+if(!($item instanceof Article_Row)){
+	echo $this->addNewDataLink($this->dataType);
+}
+
 echo $this->itemList($this->items, $params);
 
 if($paginationControl){
-	echo '<div class="'.$this->dataType.' paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
 	echo '<div class="'.$this->dataType.' paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
 }

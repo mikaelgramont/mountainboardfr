@@ -29,6 +29,22 @@ if(!empty($this->nextMedia)){
 		'href' => $this->nextMedia->getLink()
 	));
 }
+echo '	<div id="backToAlbum" class="actionLinkContainer">'.$this->itemLink(array('name'=>$backToAlbum, 'link'=>$this->album->getLink(), 'itemType' => Constants_DataTypes::MEDIAALBUM), 'dataLink album').'</div>'.PHP_EOL;
+
+if(!empty($this->previousMedia) || !empty($this->nextMedia)){
+	echo '	<div id="mediaNavigation">'.PHP_EOL;
+	if(!empty($this->previousMedia)){
+		$link = $this->previousMedia->getLink();
+		$img = '/'.$this->baseUrl . IMAGES_PATH . 'left.png';
+		echo '		<div class="actionLinkContainer prevMedia">'.$this->itemLink($this->previousMedia, 'linkLeft', 'prev').'</div>'.PHP_EOL;
+	}
+	if(!empty($this->nextMedia)){
+		$link = $this->nextMedia->getLink();
+		$img = '/'.$this->baseUrl . IMAGES_PATH . 'right.png';
+		echo '		<div class="actionLinkContainer nextMedia">'.$this->itemLink($this->nextMedia, 'linkRight', 'next').'</div>'.PHP_EOL;
+	}
+	echo '	</div>'.PHP_EOL;
+}
 
 ?>
 <div class="mediaTitle"><?php
@@ -104,19 +120,3 @@ echo '	</div>'.PHP_EOL;
 echo '</div>'.PHP_EOL;
 
 echo $this->renderComments($this->comments, $this->media, $this->lastLogin);
-echo '	<div id="backToAlbum" class="actionLinkContainer">'.$this->itemLink(array('name'=>$backToAlbum, 'link'=>$this->album->getLink(), 'itemType' => Constants_DataTypes::MEDIAALBUM), 'dataLink album').'</div>'.PHP_EOL;
-
-if(!empty($this->previousMedia) || !empty($this->nextMedia)){
-	echo '	<div id="mediaNavigation">'.PHP_EOL;
-	if(!empty($this->previousMedia)){
-		$link = $this->previousMedia->getLink();
-		$img = '/'.$this->baseUrl . IMAGES_PATH . 'left.png';
-		echo '		<div class="actionLinkContainer prevMedia">'.$this->itemLink($this->previousMedia, 'linkLeft', 'prev').'</div>'.PHP_EOL;
-	}
-	if(!empty($this->nextMedia)){
-		$link = $this->nextMedia->getLink();
-		$img = '/'.$this->baseUrl . IMAGES_PATH . 'right.png';
-		echo '		<div class="actionLinkContainer nextMedia">'.$this->itemLink($this->nextMedia, 'linkRight', 'next').'</div>'.PHP_EOL;
-	}
-	echo '	</div>'.PHP_EOL;
-}

@@ -14,7 +14,6 @@ class Lib_View_Helper_ShareButtons extends Zend_View_Helper_Abstract
 		}
 
 		$ret  = '<div id="shareButtons"'.$classAttr.'>'.PHP_EOL;
-		$ret .= '<div id="googlePlusOneButton"'.$classAttr.'>'.PHP_EOL.$this->google($class).'</div>'.PHP_EOL;
 		$ret .= '<div id="facebookLikeButton"'.$classAttr.'>'.PHP_EOL.$this->facebook($url, $class).'</div>'.PHP_EOL;
 		$ret .= '</div>'.PHP_EOL;
 
