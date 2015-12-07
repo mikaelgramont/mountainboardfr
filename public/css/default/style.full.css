@@ -2196,6 +2196,7 @@ p.homePageLoginTitle {
         transition: transform 300ms;
         transform: translateX(100%);
         overflow-y: auto;
+        left: 100%;
     }
     .menuVisible #topMenu {
         left: 3em;
