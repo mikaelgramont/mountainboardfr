@@ -42,13 +42,13 @@ echo $header;
 		<div id="contentWrapper" aria-labelledby="mainTitle" class="oneColumn">
 			<main id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
+    		</main>
+		</div>
 <?php if($this->layout()->comments){?>
 				<div id="comments">
 <?php echo $this->layout()->comments . PHP_EOL; ?>
 				</div>
 <?php } ?>
-    		</main>
-    	</div>
     	<div id="modalInfo">
 			<a class="close" href="javascript:void(0);"></a>
 			<div class="modalContent">
@@ -58,6 +58,7 @@ echo $header;
   	</div>
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 	<div id="overlay"></div>
+	<div id="menuOverlay"></div>
 <?php
 $this->google_Analytics().PHP_EOL;
 echo $this->jQuery().PHP_EOL;
