@@ -619,7 +619,7 @@ class MediaController extends Lib_Controller_Action
 		if(empty($file)){
 			return $params;
 		}
-		$destination = APP_MEDIA_THUMBNAILS_DIR .'/'. md5(uniqid(rand())).'.jpg';
+		$destination = md5(uniqid(rand())).'.jpg';
 		file_put_contents($destination, $file);
 		$thumbnail = new File_Photo($destination);
 		$thumbnail->resize(200, 150);
