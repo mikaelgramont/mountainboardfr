@@ -318,16 +318,16 @@ HTML;
         $mobileMediaQuery = "screen and (max-width: 667px)";
         $js = '
 
-$("#menuOverlay").bind("touchstart click", function(e) {
+$("#menuOverlay").bind("click", function(e) {
     document.body.classList.remove("menuVisible");
     document.body.classList.remove("searchVisible");
 });
 
-$("#menuButton").bind("touchstart click", function(e) {
+$("#menuButton").bind("click", function(e) {
     document.body.classList.toggle("menuVisible");
 });
 
-$("#searchButton").bind("touchstart click", function(e) {
+$("#searchButton").bind("click", function(e) {
     document.body.classList.toggle("searchVisible");
     if (document.body.classList.contains("searchVisible")) {
         $("#searchTerms").focus();

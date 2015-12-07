@@ -2101,7 +2101,7 @@ p.homePageLoginTitle {
         border-radius: 1em 0em 0em;
     }
     #catMenu .inactiveCat.active:last-child:hover {
-        border-radius: 0em 1em 0em;
+        border-radius: 0 1em 0em 0;
     }
     .mobileOnlySubCategory {
         display: none;
@@ -2271,9 +2271,6 @@ p.homePageLoginTitle {
     #wrapper {
         margin-top: 5.5em;
     }
-    #simpleSearch {
-        display: none;
-    }
     #contentWrapper {
         display: block;
     }
@@ -2302,8 +2299,10 @@ p.homePageLoginTitle {
     }
     .searchVisible #searchTerms {
         font-size: 1em;
+        width: 180px;
     }
     .searchVisible #searchSubmit {
+        width: 120px;
         font-size: .75em;
         -webkit-appearance: none;
         border: none;
@@ -2314,12 +2313,9 @@ p.homePageLoginTitle {
 }
 
 @media screen and (min-width: 581px) and (max-width: 666px) {
-    #headerContent .title {
-        justify-content: initial;
-    }
 
-    #simpleSearch,
-    #menuButton {
+    #menuButton,
+    #searchButton {
         display: initial;
         position: relative;        
     }
@@ -2359,4 +2355,7 @@ p.homePageLoginTitle {
         width: 248px;
         height: 49.6px;
     }
+    .searchVisible #searchTerms {
+        width: 120px;
+    }    
 }
