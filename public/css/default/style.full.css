@@ -389,6 +389,9 @@ header.noCategoryContent #headerContent {
 #firstContent p.description {
     text-align: justify
 }
+#firstContent img {
+    max-width: 100%;
+}
 footer {
     height: 4.5em;
     padding-top: 3.5em;
