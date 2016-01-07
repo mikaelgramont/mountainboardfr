@@ -140,7 +140,7 @@ SCRIPT;
         $content .= '<p class="description">'.$article->getDescription().'</p>'.PHP_EOL;
         $content .= '<div class="clear"></div>'.PHP_EOL;
 
-        $content .= $article->getContentFromCdn($this->view->cdnHelper).PHP_EOL;
+        $content .= $article->getContentFromCdn($this->view->cdnHelper, Zend_Registry::get('Zend_Locale')).PHP_EOL;
         if($hasMap){
             $content .= $this->_getMap($article);
         }

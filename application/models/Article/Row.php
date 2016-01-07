@@ -44,10 +44,10 @@ abstract class Article_Row extends Document_Row implements Data_Row_ArticleInter
         return $content;
     }
 
-    public function getContentFromCdn($cdnHelper)
+    public function getContentFromCdn($cdnHelper, $lang)
     {
     	$cache = $this->getCache();
-    	$cacheId = $this->getCacheIdForContentDisplay();
+    	$cacheId = $this->getCacheIdForContentDisplay($lang);
 		$cachedContent = $cache->load($cacheId);
 
 	    if($cachedContent === false){
@@ -130,9 +130,9 @@ abstract class Article_Row extends Document_Row implements Data_Row_ArticleInter
 		return $thumb;
 	}
 
-	public function getCacheIdForContentDisplay()
+	public function getCacheIdForContentDisplay($lang)
 	{
-		return 'articleContentFromCdn_'.$this->getItemType().'_'.$this->getId();
+		return 'articleContentFromCdn_'.$this->getItemType().'_'.$this->getId().'_'.$lang;
 	}
 
 	protected function _getCacheIdsForClear()
