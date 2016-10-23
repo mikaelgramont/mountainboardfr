@@ -6,6 +6,7 @@ class Lib_View_Helper_Cdn extends Zend_View_Helper_Abstract
 
 	protected $_cdnUrl;
 	protected $_cssCdnUrl;
+	protected $_imgCdnUrl;
 	protected $_jsCdnUrl;
 	protected $_siteUrl;
 	protected $_mode;
@@ -24,6 +25,11 @@ class Lib_View_Helper_Cdn extends Zend_View_Helper_Abstract
 	{
 		$this->_cssCdnUrl = $url;
 	}
+
+        public function setImgCdnUrl($url)
+        {
+                $this->_imgCdnUrl = $url;
+        }
 
 	public function setJsCdnUrl($url)
 	{
@@ -95,7 +101,6 @@ class Lib_View_Helper_Cdn extends Zend_View_Helper_Abstract
 		if(!$cdnUrl){
 			$cdnUrl = $this->_cdnUrl;
 		}
-
 		$pattern = "/^(".str_replace('/', '\/', $this->_siteUrl).'|\/)(.*)$/';
 		$return = preg_replace($pattern, $cdnUrl.'${2}', $assetPath);
 		return $return;
@@ -106,6 +111,12 @@ class Lib_View_Helper_Cdn extends Zend_View_Helper_Abstract
 		$return = $this->url($assetPath, $this->_cssCdnUrl);
 		return $return;
 	}
+
+        public function imgUrl($assetPath)
+        {
+                $return = $this->url($assetPath, $this->_imgCdnUrl);
+                return $return;
+        }
 
 	public function jsUrl($assetPath)
 	{

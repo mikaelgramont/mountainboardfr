@@ -32,7 +32,7 @@ foreach($constants as $name => $value){
 	defined($constantName) || define($constantName, $value);
 }
 
-
+define('APP_URL', (USE_CDN ? 'https://' : 'http://').APP_URL_NO_PROTOCOL);
 
 $db = Globals::getMainDatabase();
 $db->query("SET NAMES ".GLOBAL_DB_ENCODING);

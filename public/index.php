@@ -25,4 +25,6 @@ $application = new Zend_Application(
 );
 
 $application->bootstrap();
+define('APP_URL', (USE_CDN ? 'https://' : 'http://').APP_URL_NO_PROTOCOL);
+
 $application->run();

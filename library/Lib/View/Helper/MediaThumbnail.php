@@ -96,7 +96,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 
 		switch($media->thumbnailSubType){
 		    case Media_Item_Photo::SUBTYPE_JPG:
-				$src = $media->getThumbnailURI(false);
+				$src = $media->getThumbnailURI();
 		        break;
 
 		    case Media_Item_Photo::SUBTYPE_VIMEO_THUMBNAIL:
@@ -121,7 +121,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		}
 
 		$alt = "";
-		$src = $this->view->baseUrl .'/'. $this->view->cdnHelper->url($src);
+		$src = $this->view->cdnHelper->imgUrl($src);
 		$img = "<img src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title $viewsText\" class=\"media video\"/>";
 		$link = $media->getLink();
 		$content = $this->_mediaLink($link, $img);

@@ -88,8 +88,9 @@ class Lib_Controller_Action extends Zend_Controller_Action
         $prefix = USE_SSL ? 'https://' : 'http://';
         $cdnHelper->setCdnUrl($prefix.CDN_URL);
         $cdnHelper->setCssCdnUrl($prefix.CSS_CDN_URL);
+	$cdnHelper->setImgCdnUrl($prefix.IMG_CDN_URL);
         $cdnHelper->setJsCdnUrl($prefix.JS_CDN_URL);
-        $cdnHelper->setSiteUrl($prefix.APP_URL);
+        $cdnHelper->setSiteUrl(APP_URL);
         $this->view->cdnHelper = $cdnHelper;
 
 		$this->view->favicon = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
