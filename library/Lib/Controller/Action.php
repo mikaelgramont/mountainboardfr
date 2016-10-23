@@ -99,6 +99,7 @@ class Lib_Controller_Action extends Zend_Controller_Action
         // JQUERY CONFIGURATION
         ZendX_JQuery::enableView($this->view);
         $jQueryHelper = $this->view->jQuery();
+        $jQueryHelper->setCdnSsl(USE_SSL);
         $jQueryHelper->useCdn(JQUERY_USE_CDN);
         $jQueryHelper->useUiCdn(JQUERY_USE_UI_CDN);
         $jQueryHelper->setRenderMode(ZendX_JQuery::RENDER_ALL & ~ZendX_JQuery::RENDER_STYLESHEETS );
