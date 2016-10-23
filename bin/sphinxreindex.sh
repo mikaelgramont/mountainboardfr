@@ -1,2 +1,2 @@
 #!/bin/sh
-/usr/local/bin/indexer --config /var/www/www.mountainboard.fr/current/application/configs/sphinx.conf --all --rotate
+indexer --config /home/mountainboardfr/www/current/application/configs/sphinx.conf --all --rotate
