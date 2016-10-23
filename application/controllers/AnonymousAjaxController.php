@@ -16,10 +16,11 @@ class AnonymousAjaxController
 		if(APPLICATION_ENV == 'development' || !USE_CDN){
 			$cdnHelper->setDevMode();
 		}
-        $cdnHelper->setCdnUrl(CDN_URL);
-        $cdnHelper->setCssCdnUrl(CSS_CDN_URL);
-        $cdnHelper->setJsCdnUrl(JS_CDN_URL);
-        $cdnHelper->setSiteUrl(APP_URL);
+        $prefix = USE_SSL ? 'https://' : 'http://';
+        $cdnHelper->setCdnUrl($prefix.CDN_URL);
+        $cdnHelper->setCssCdnUrl($prefix.CSS_CDN_URL);
+        $cdnHelper->setJsCdnUrl($prefix.JS_CDN_URL);
+        $cdnHelper->setSiteUrl($prefix.APP_URL);
 		$this->view->cdnHelper = $cdnHelper;
     }
 
