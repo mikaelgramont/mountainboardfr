@@ -5,10 +5,13 @@ application/configs/sphinx.conf
 .settings
 .project
 *.log
+data/logs/access_log
+data/logs/error_log
 data/cache/*
 public/content
 public/media
 public/contenu
+public/text.html
 todo.txt
 public/info.php
 data/backups/*
