@@ -5,7 +5,7 @@ class TempController extends Lib_Controller_Action
     {
     	parent::init();
     	if($this->_user->getId() != 1){
-    		//die();
+    		die();
     	}
     }
 
