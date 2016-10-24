@@ -200,7 +200,9 @@ class Lib_Plugin_Init_User extends Zend_Controller_Plugin_Abstract
             Utils::deleteCookie(User::COOKIE_REMEMBER);
         }
 
-        session_regenerate_id();
+	// Do not regenerate session id since that causes an issue with memcache.
+	// https://bugs.php.net/bug.php?id=71187
+        // session_regenerate_id();
 
         $routeName = Globals::getRouter()->getCurrentRouteName();
         
