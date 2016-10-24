@@ -70,7 +70,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		}
 
 		$alt = '';
-		$src = $this->view->cdnHelper->url($src);
+		$src = $this->view->cdnHelper->imgUrl($src);
 		$img = "<img class=\"media photo\" src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title $viewsText\" />";
 		$link = $media->getLink();
 		$content  = $this->_mediaLink($link, $img);

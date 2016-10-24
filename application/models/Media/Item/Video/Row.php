@@ -77,13 +77,13 @@ class Media_Item_Video_Row extends Media_Item_Row
 		$uri = '';
 		switch($this->mediaSubType){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
-				$uri = 'http://www.youtube.com/v/'.$this->uri.'&fs=1';
+				$uri = '//www.youtube.com/embed/'.$this->uri.'&fs=1';
 				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
-				$uri = 'http://vimeo.com/moogaloop.swf?clip_id='.$this->uri.'&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=ffd500&amp;fullscreen=1';
+				$uri = '//vimeo.com/moogaloop.swf?clip_id='.$this->uri.'&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=ffd500&amp;fullscreen=1';
 				break;
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
-				$uri = 'http://www.dailymotion.com/swf/video/'.$this->uri;
+				$uri = '//www.dailymotion.com/swf/video/'.$this->uri;
 				break;
 			default:
 				throw new Lib_Exception_Media("Unsupported mediaSubType '$this->mediaSubType' for video '$this->id'");
@@ -105,7 +105,7 @@ class Media_Item_Video_Row extends Media_Item_Row
 		switch($this->mediaSubType){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
 				$code = <<<CODE
-<object width="{$this->width}" height="{$this->height}"><param name="movie" value="http://www.youtube.com/v/{$this->uri}&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/{$this->uri}&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="{$this->width}" height="{$this->height}"></embed></object>
+<iframe width="{$this->width}" height="{$this->height}" src="https://www.youtube.com/embed/{$this->uri}" frameborder="0" allowfullscreen></iframe>
 CODE;
 				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
@@ -131,13 +131,13 @@ CODE;
 		$uri = '';
 		switch($this->mediaSubType){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
-				$uri = 'http://www.youtube.com/?v='.$this->uri;
+				$uri = '//www.youtube.com/watch?v='.$this->uri;
 				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
-				$uri = 'http://vimeo.com/'.$this->uri;
+				$uri = '//vimeo.com/'.$this->uri;
 				break;
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
-				$uri = 'http://www.dailymotion.com/video/'.$this->uri;
+				$uri = '//www.dailymotion.com/video/'.$this->uri;
 				break;
 			default:
 				throw new Lib_Exception_Media("Unsupported mediaSubType '$this->mediaSubType' for video '$this->id'");

@@ -16,7 +16,7 @@ class Lib_View_Helper_SWFObject extends Zend_View_Helper_Abstract
 
 		// SWFObject library
 		if(SWFOBJECT_USE_CDN){
-			$swfObject = 'http://ajax.googleapis.com/ajax/libs/swfobject/'.SWFOBJECT_VERSION.'/swfobject.js';
+			$swfObject = '//ajax.googleapis.com/ajax/libs/swfobject/'.SWFOBJECT_VERSION.'/swfobject.js';
 			$this->view->headScript()->appendFile($swfObject);
 		} else {
 			$this->view->JQuery()->addJavascriptFile($this->view->asset()->script(SWFOBJECT_LOCAL_PATH));

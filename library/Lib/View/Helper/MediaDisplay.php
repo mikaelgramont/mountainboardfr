@@ -88,9 +88,20 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 		$title = strip_tags($media->getTitle());
 
 		$id = $media->getCleanTitle().'_'.$media->id;
-		$movie = $media->getURI();
+		$uri = $media->getURI();
 
-		$video = $this->view->SWFObject($id, $movie, $targetWidth, $targetHeight, '<h1>'.$title.'</h1>');
+		switch($media->mediaSubType){
+			case Media_Item_Video::SUBTYPE_YOUTUBE:
+				$video = $media->getProviderCode();
+				break;
+			case Media_Item_Video::SUBTYPE_VIMEO:
+			case Media_Item_Video::SUBTYPE_DAILYMOTION:
+				$video = $this->view->SWFObject($id, $uri, $targetWidth, $targetHeight, '<h1>'.$title.'</h1>');
+				break;
+			default:
+				throw new Lib_Exception_Media("Unsupported mediaSubType '$this->mediaSubType' for video '$this->id'");
+				break;
+		}
 		return $video;
 	}
 
