@@ -26,7 +26,26 @@ class AdminController extends Lib_Controller_Action
     	}
 
     	apc_clear_cache($mode);
-    	die('ok');
+        echo('ok');
+        exit();
+    }
+
+    /**
+     * Called from commandline script or directly
+     */
+    public function clearMemcacheAction()
+    {
+        $memcache = new Memcache();
+        $memcache->connect('127.0.0.1',11211);
+        if (!$memcache) {
+                echo ("Could not connect");
+                exit();
+        }
+        if (!$memcache->flush()) {
+                echo ("Could not flush");
+        }
+        echo('ok');
+        exit();
     }
 
 	public function generateAssetVersionsAction()
