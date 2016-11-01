@@ -85,92 +85,109 @@ a:hover {
 a:active {
     color: #E0E000
 }
-.dataLink {
-    padding-left: 1.125em;
+.dataLink::before {
+    position: relative;
+    display: inline-block;
+    width: 1.125em;
+    height: 1em;
+    margin-right: .25em;
+    content: '';
 }
-a.user,
-a.author,
-span.user,
-span.author {
+a.user::before,
+a.author::before,
+span.user::before,
+span.author::before {
     background: url("../../images/default/linkSprites.png") -10px -46px no-repeat;
 }
 span.user,
 span.author {
     cursor: pointer;
 }
-div.posterInfo a.user {
-    padding-left: 0;
+div.posterInfo a.user::before {
+    width: 0;
     background: none;
 }
-a.spot {
-    padding-left: 0.875em;
+a.spot::before {
+    width: 0.875em;
+    margin-right: 0;
     background: url("../../images/default/linkSprites.png")-10px -82px no-repeat;
 }
-a.trick {
-    padding-left: 1.25em;
+a.trick::before {
+    top: 2px;
+    width: 1.25em;
     background: url("../../images/default/linkSprites.png") -10px -118px no-repeat;
 }
-a.photo {
+a.photo::before {
     background: url("../../images/default/linkSprites.png") -10px -154px no-repeat;
 }
-a.video {
+a.video::before {
     background: url("../../images/default/linkSprites.png") -10px -190px no-repeat;
 }
-a.album {
+a.album::before {
     background: url("../../images/default/linkSprites.png") -10px -226px no-repeat;
 }
-a.test {
+a.test::before {
     background: url("../../images/default/linkSprites.png") -10px -262px no-repeat;
 }
-a.blogpost {
+a.blogpost::before {
     background: url("../../images/default/linkSprites.png") -10px -298px no-repeat;
 }
-a.blog {
+a.blog::before {
     background: url("../../images/default/linkSprites.png") -10px -298px no-repeat;
 }
-a.topic {
+a.topic::before {
     background: url("../../images/default/linkSprites.png") -10px -334px no-repeat;
 }
-a.forum {
+a.forum::before {
+    top: 2px;
     background: url("../../images/default/linkSprites.png") -10px -334px no-repeat;
 }
-a.news {
+a.news::before {
     background: url("../../images/default/linkSprites.png") -10px -370px no-repeat;
 }
-a.dpt {
+a.dpt::before {
     background: url("../../images/default/linkSprites.png") -10px -10px no-repeat;
 }
-a.post {
+a.post::before {
     background: url("../../images/default/linkSprites.png") -10px -402px no-repeat;
 }
-a.comment {
+a.comment::before {
     background: url("../../images/default/linkSprites.png") -10px -438px no-repeat;
 }
-a.dossier {
+a.dossier::before {
     background: url("../../images/default/linkSprites.png") -10px -478px no-repeat;
 }
-a.privatemessage {
+a.privatemessage::before {
     background: url("../../images/default/linkSprites.png") -10px -438px no-repeat;
 }
-a.event {
+a.event::before {
     background: url("../../images/default/linkSprites.png") -10px -656px no-repeat;
 }
-a.facebook {
+a.facebook::before {
     background: url("../../images/default/linkSprites.png") -10px -728px no-repeat;
     text-decoration: none;
 }
-a.close {
+a.close::before {
     background: url("../../images/default/linkSprites.png") -7px -765px no-repeat;
     display: block;
     width: 1.5em;
     height: 1.5em;
 }
-a.linkRight {
-    padding-right: 1.125em;
+a.linkRight::after,
+a.linkLeft::before {
+    position: relative;
+    top: 4px;
+    display: inline-block;
+    width: 1.125em;
+    height: 1.25em;
+    content: '';
+}
+a.linkRight::after {
+    margin-left: 0.125em;
     background: url("../../images/default/linkSprites.png") right -511.5px no-repeat;
 }
-a.linkLeft {
-    padding-left: 1.125em;
+a.linkLeft::before {
+    margin-right: 0.125em;
     background: url("../../images/default/linkSprites.png") -10px -547.5px no-repeat;
 }
 a.backLeft {
@@ -562,7 +579,6 @@ form.goToForm select {
 }
 form.goToForm input[type=submit] {
     border: 0.0625em solid #CCC;
-    height: 1.25em
 }
 p.element-group,
 #mapTools {
