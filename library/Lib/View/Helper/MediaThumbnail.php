@@ -71,7 +71,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 
 		$alt = '';
 		$src = $this->view->cdnHelper->imgUrl($src);
-		$img = "<img class=\"media photo\" src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title $viewsText\" />";
+		$img = "<img class=\"media photo\" src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title $viewsText\" onerror=\"this.style.display='none'\"/>";
 		$link = $media->getLink();
 		$content  = $this->_mediaLink($link, $img);
 
@@ -122,7 +122,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 
 		$alt = "";
 		$src = $this->view->cdnHelper->imgUrl($src);
-		$img = "<img src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title $viewsText\" class=\"media video\"/>";
+		$img = "<img src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title $viewsText\" class=\"media video\" onerror=\"this.style.display='none'\"/>";
 		$link = $media->getLink();
 		$content = $this->_mediaLink($link, $img);
 
