@@ -1587,6 +1587,7 @@ ul.albumPreview li {
 ul.album li a.mediaLinkThumbnail {
     display: block;
     width: 12.5em;
+    margin-bottom: .5em;
     background: black;
 }
 ul.album li a.mediaThumbnailComments {
@@ -1624,23 +1625,27 @@ div.addPhotoFacebook {
     padding: 0.5em 0.25em;
     border-radius: 1em;
 }
-div.addPhotoFacebook a {
-    color: white;
-}
+div.addPhotoFacebook a,
 div.addPhoto a,
-div.addVideo a {
-    padding-left: 1.125em;
-    color: white;
-}
+div.addVideo a,
 div.addPhoto a:visited,
 div.addVideo a:visited {
     color: white;
 }
-div.addPhoto a {
-    background: url('../../images/default/linkSprites.png') no-repeat -10px -154px;
+.addPhoto a::before,
+.addVideo a::before {
+    position: relative;
+    display: inline-block;
+    width: 1.125em;
+    height: 1em;
+    margin-right: .25em;
+    content: '';
 }
-div.addVideo a {
-    background: url('../../images/default/linkSprites.png') no-repeat -10px -190px;
+.addPhoto a::before {
+    background: url("../../images/default/linkSprites.png") -10px -154px no-repeat;
+}
+.addVideo a::before {
+    background: url("../../images/default/linkSprites.png") -10px -190px no-repeat;
 }
 div.ac_results {
     z-index: 3;
