@@ -1,3 +1,4 @@
+Makefile
 application/configs/application.ini
 application/configs/sphinx.conf
 .DS_Store
