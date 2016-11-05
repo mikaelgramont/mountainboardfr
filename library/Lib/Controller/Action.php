@@ -88,12 +88,21 @@ class Lib_Controller_Action extends Zend_Controller_Action
         $prefix = USE_SSL ? 'https://' : 'http://';
         $cdnHelper->setCdnUrl($prefix.CDN_URL);
         $cdnHelper->setCssCdnUrl($prefix.CSS_CDN_URL);
-	$cdnHelper->setImgCdnUrl($prefix.IMG_CDN_URL);
+        $cdnHelper->setImgCdnUrl($prefix.IMG_CDN_URL);
         $cdnHelper->setJsCdnUrl($prefix.JS_CDN_URL);
         $cdnHelper->setSiteUrl(APP_URL);
         $this->view->cdnHelper = $cdnHelper;
 
-		$this->view->favicon = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
+		$favicons = array();
+        $favicons['favicon.ico'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
+        $favicons['apple-touch-icon.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
+        $favicons['apple-touch-icon.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
+        $favicons['favicon-32x32.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon-32x32.png');
+        $favicons['favicon-16x16.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon-16x16.png');
+        $favicons['safari-pinned-tab.svg'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'safari-pinned-tab.svg');
+        $favicons['browserconfig.xml'] = $cdnHelper->url($baseUrl.'/'.'browserconfig.xml');
+
+        $this->view->favicons = $favicons;
 
         $this->_helper->layout->setLayout(APP_DEFAULT_LAYOUT);
 
