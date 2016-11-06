@@ -95,8 +95,7 @@ class Lib_Controller_Action extends Zend_Controller_Action
 
 		$favicons = array();
         $favicons['favicon.ico'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
-        $favicons['apple-touch-icon.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
-        $favicons['apple-touch-icon.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
+        $favicons['apple-touch-icon.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'apple-touch-icon.png');
         $favicons['favicon-32x32.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon-32x32.png');
         $favicons['favicon-16x16.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon-16x16.png');
         $favicons['safari-pinned-tab.svg'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'safari-pinned-tab.svg');
