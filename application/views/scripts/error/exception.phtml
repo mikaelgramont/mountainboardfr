@@ -1,5 +1,8 @@
-exception <?php
-echo ucfirst($this->translate('defaultExceptionMessage')).'<br/>'.PHP_EOL;
-echo '<pre>'.PHP_EOL;
-echo $this->message;
-echo '</pre>'.PHP_EOL;
+<div class="error-container">
+<?php
+	echo ucfirst($this->translate('defaultExceptionMessage')).'<br/>'.PHP_EOL;
+	echo '<div class="pre">'.PHP_EOL;
+	echo nl2br($this->message);
+	echo '</div>'.PHP_EOL;
+?>
+</div>

@@ -667,6 +667,16 @@ ul.errors {
 .errors {
     color: #CC2222;
 }
+.error-container {
+    min-height: 24em;
+}
+.pre {
+    font-family: monospace;
+    white-space: nowrap;
+    width: 58em;
+    overflow-x: auto;    
+    margin-top: 2em;
+}
 #uploadifyUploader {
     margin-left: 13em
 }
