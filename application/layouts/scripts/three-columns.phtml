@@ -77,7 +77,8 @@ echo $header;
 	<div id="overlay"></div>
 	<div id="menuOverlay"></div>
 <?php
-$this->google_Analytics().PHP_EOL;
+$this->google_Analytics();
+$this->imageErrorHandler();
 echo $this->jQuery().PHP_EOL;
 echo $this->inlineScript().PHP_EOL;
 ?>
