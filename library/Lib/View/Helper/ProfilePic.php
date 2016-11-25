@@ -9,7 +9,7 @@ class Lib_View_Helper_ProfilePic extends Zend_View_Helper_Abstract
 		$link = $user->getLink();
 		$return = <<<PIC
         <div class="avatar">
-            <a href="$link"><img src="$avatar" alt="" title="$name" onerror="this.style.display='none'"></a>
+            <a href="$link"><img src="$avatar" alt="" title="$name"></a>
         </div>
 PIC;
 		$return .= $this->view->userLink($user);
