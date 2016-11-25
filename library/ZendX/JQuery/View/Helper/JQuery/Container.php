@@ -194,7 +194,7 @@ class ZendX_JQuery_View_Helper_JQuery_Container
      */
     public function setVersion($version)
     {
-        if (is_string($version) && preg_match('/^[1-9]\.[0-9](\.[0-9])?$/', $version)) {
+        if (is_string($version) && preg_match('/^[1-9]\.[0-9]*(\.[0-9])?$/', $version)) {
             $this->_version = $version;
         }
         return $this;
@@ -837,7 +837,6 @@ class ZendX_JQuery_View_Helper_JQuery_Container
                 $this->getCdnVersion() .
             	ZendX_JQuery::CDN_JQUERY_PATH_GOOGLE;
         }
-
         return $source;
     }
 
