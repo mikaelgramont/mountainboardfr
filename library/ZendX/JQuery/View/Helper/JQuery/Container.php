@@ -709,9 +709,9 @@ class ZendX_JQuery_View_Helper_JQuery_Container
     protected function _openScriptTag()
     {
         $nonce = $this->view->cspNonce;
-        $ret = "<script ";
+        $ret = "<script";
         if ($nonce) {
-            $ret .= 'nonce="' . $nonce . '" ';
+            $ret .= ' nonce="' . $nonce . '"';
         }
         return $ret;
     }

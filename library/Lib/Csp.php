@@ -2,7 +2,13 @@
 class Lib_Csp
 {
 	public static function generateNonce() {
-		return 'yomama2';
+		$keys = array_merge(range(0,9), range('a', 'z'));
+
+		$key = "";
+		for($i=0; $i < 32; $i++) {
+			$key .= $keys[mt_rand(0, count($keys) - 1)];
+		}
+		return $key;
 	}
 
 	public static function header($nonce) {
