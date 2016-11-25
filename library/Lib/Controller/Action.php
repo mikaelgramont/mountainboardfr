@@ -47,7 +47,9 @@ class Lib_Controller_Action extends Zend_Controller_Action
 
 		// SEARCH RANK
         if (isset($_SERVER["HTTP_REFERER"]) && strpos($_SERVER["HTTP_REFERER"],"google")) {
-			$this->_helper->googleSearchLogger()->log($_SERVER["HTTP_REFERER"], $this->_user);
+            // Disabled on Nov 25th 2016: referer policy changed a while back and this info
+            // is available in Google Webmaster Tools.
+			// $this->_helper->googleSearchLogger()->log($_SERVER["HTTP_REFERER"], $this->_user);
 		}
 
         // ACL
