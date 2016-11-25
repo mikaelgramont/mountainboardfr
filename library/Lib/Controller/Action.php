@@ -128,6 +128,7 @@ class Lib_Controller_Action extends Zend_Controller_Action
         }
 
         header('Content-Type: text/html; charset=UTF-8');
+        Lib_Csp::header();
 
         if($this->_request->getControllerName() != 'Search'){
 			$this->view->searchForm = new Search_Form_Simple();
