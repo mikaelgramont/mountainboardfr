@@ -1,26 +1,9 @@
 <?php
 class Lib_View_Helper_Google_Analytics extends Zend_View_Helper_Abstract
 {
-    public function google_Analytics($useAsynchronous = true)
+    public function google_Analytics()
     {
-    	$this->view->JQuery()->addJavascript($useAsynchronous ? $this->_asynchronous() : $this->_synchronous());
-    }
-
-    protected function _synchronous()
-    {
-        $trackingCode = ANALYTICS_CODE;
-    	$js = <<<JS
-	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-	<script type="text/javascript">
-	try{
-	var pageTracker = _gat._getTracker("UA-$trackingCode");
-	pageTracker._trackPageview();
-	} catch(err) {}
-
-JS;
-		return $js;
+    	$this->view->JQuery()->addJavascript($this->_asynchronous());
     }
 
     protected function _asynchronous()
