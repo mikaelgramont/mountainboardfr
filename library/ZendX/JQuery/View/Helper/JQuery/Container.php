@@ -706,6 +706,16 @@ class ZendX_JQuery_View_Helper_JQuery_Container
         return $style;
     }
 
+    protected function _openScriptTag()
+    {
+        $nonce = $this->view->cspNonce;
+        $ret = "<script ";
+        if ($nonce) {
+            $ret .= 'nonce="' . $nonce . '" ';
+        }
+        return $ret;
+    }
+
     /**
      * Renders all javascript file related stuff of the jQuery enviroment.
      *
@@ -725,7 +735,7 @@ class ZendX_JQuery_View_Helper_JQuery_Container
 	        }
 
 	        if(ZendX_JQuery_View_Helper_JQuery::getNoConflictMode() == true) {
-	        	$scriptTags .= '<script type="text/javascript">var $j = jQuery.noConflict();</script>'.PHP_EOL;
+	        	$scriptTags .= $this->_openScriptTag().'>var $j = jQuery.noConflict();</script>'.PHP_EOL;
 	        }
     	}
 
@@ -777,7 +787,7 @@ class ZendX_JQuery_View_Helper_JQuery_Container
             return '';
         }
 
-        $html = '<script type="text/javascript">' . PHP_EOL
+        $html = $this->_openScriptTag().'>' . PHP_EOL
               . (($this->_isXhtml) ? '//<![CDATA[' : '//<!--') . PHP_EOL
               . $content
               . (($this->_isXhtml) ? '//]]>' : '//-->') . PHP_EOL
