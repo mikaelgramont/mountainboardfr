@@ -7,7 +7,7 @@ class Lib_View_Helper_ImageErrorHandler extends Zend_View_Helper_Abstract
 	 */
 	public function imageErrorHandler()
 	{
-		$log = LOG_IMG_ERRORS ? "console.log('error', e);" : "";
+		$log = LOG_IMG_ERRORS ? "console.log('Image error', e.target.src, e);" : "";
 
 		$js = "
 document.body.addEventListener('error', function(e) {
