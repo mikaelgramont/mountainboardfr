@@ -83,6 +83,7 @@ class Lib_Controller_Action extends Zend_Controller_Action
         // this is to add a class to content divs to allow user-submitted content to be styled
         $this->view->richTextContent = false;
 
+        // ASSERT SERVING
         $cdnHelper = new Lib_View_Helper_Cdn($this->view);
 		if(APPLICATION_ENV == 'development' || !USE_CDN){
 			$cdnHelper->setDevMode();
@@ -100,6 +101,7 @@ class Lib_Controller_Action extends Zend_Controller_Action
         $this->view->cspNonce = $nonce;
         Lib_Csp::header($nonce);
 
+        // FAVICONS
 		$favicons = array();
         $favicons['favicon.ico'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon.ico');
         $favicons['apple-touch-icon.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'apple-touch-icon.png');
@@ -107,7 +109,6 @@ class Lib_Controller_Action extends Zend_Controller_Action
         $favicons['favicon-16x16.png'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'favicon-16x16.png');
         $favicons['safari-pinned-tab.svg'] = $cdnHelper->url($baseUrl.'/'.IMAGES_PATH.'safari-pinned-tab.svg');
         $favicons['browserconfig.xml'] = $cdnHelper->url($baseUrl.'/'.'browserconfig.xml');
-
         $this->view->favicons = $favicons;
 
         $this->_helper->layout->setLayout(APP_DEFAULT_LAYOUT);
@@ -121,15 +122,20 @@ class Lib_Controller_Action extends Zend_Controller_Action
         $jQueryHelper->setRenderMode(ZendX_JQuery::RENDER_ALL & ~ZendX_JQuery::RENDER_STYLESHEETS );
         $jQueryHelper->enable();
 
-        if(!JQUERY_USE_CDN){
-            $jQueryHelper->setLocalPath($baseUrl . '/' .JQUERY_LOCAL_PATH);
+        if (JQUERY_USE_CDN) {
+            if (JQUERY_USE_OWN_CDN) {
+                $jQueryHelper->setUiLocalPath($this->view->cdnHelper->jsUrl('/'.SCRIPTS_PATH.'jquery/'.JQUERY_VERSION.'/jquery.min.js'));
+            } else {
+                $jQueryHelper->setCdnVersion(JQUERY_VERSION);
+            }
         } else {
-            $jQueryHelper->setCdnVersion(JQUERY_VERSION);
+            $jQueryHelper->setUiLocalPath($baseUrl . '/' .JQUERY_LOCAL_PATH);
         }
-        if(!JQUERY_USE_UI_CDN){
-            $jQueryHelper->setUiLocalPath($baseUrl . '/' .JQUERYUI_LOCAL_PATH);
-        } else {
+
+        if(JQUERY_USE_UI_CDN){
             $jQueryHelper->setUiCdnVersion(JQUERYUI_VERSION);
+        } else {
+            $jQueryHelper->setUiLocalPath($baseUrl . '/' .JQUERYUI_LOCAL_PATH);
         }
 
         header('Content-Type: text/html; charset=UTF-8');
