@@ -3,7 +3,7 @@ class Lib_View_Helper_TinyMce extends Zend_View_Helper_FormTextarea
 {
 	public function TinyMce($id, $value = null, array $params = array(), $attribs = array())
     {
-        $scriptUrl = $this->view->cdnHelper->jsUrl('/'.SCRIPTS_PATH.'tinymce/tinymce.js');
+        $scriptUrl = $this->view->asset()->script('tinymce/tiny_mce_src.js');
         $lang = Zend_Registry::get('Zend_Locale');
 
         $fileBrowserUrl = Globals::getRouter()->assemble(array(

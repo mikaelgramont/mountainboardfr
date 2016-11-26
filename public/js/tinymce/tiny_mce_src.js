@@ -9570,7 +9570,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			// Create iframe
 			n = DOM.add(o.iframeContainer, 'iframe', {
 				id : t.id + "_ifr",
-				src : u, // Workaround for HTTPS warning in IE6/7
+				src : u || '', // Workaround for HTTPS warning in IE6/7
 				frameBorder : '0',
 				style : {
 					width : '100%',
