@@ -3,7 +3,8 @@ class Lib_View_Helper_TinyMce extends Zend_View_Helper_FormTextarea
 {
 	public function TinyMce($id, $value = null, array $params = array(), $attribs = array())
     {
-        $scriptUrl = $this->view->asset()->script('tinymce/tiny_mce_src.js');
+        $scriptUrl = $this->view->asset()->script('tinymce/tiny_mce.js');
+        $baseUrl = $this->view->cdnHelper->jsUrl('/'.SCRIPTS_PATH.'tinymce/');
         $lang = Zend_Registry::get('Zend_Locale');
 
         $fileBrowserUrl = Globals::getRouter()->assemble(array(
@@ -21,8 +22,9 @@ class Lib_View_Helper_TinyMce extends Zend_View_Helper_FormTextarea
         // The label is currently associated to an element that is going to be replaced, let's fix that:
         $newFor = $id.'_ifr';
 
-    	$js = <<<JS
 
+    	$js = <<<JS
+tinyMCE.baseURL = '$baseUrl';
 tinyMCE.init({
 	mode:'textareas',
 	editor_deselector : "mceNoEditor",
