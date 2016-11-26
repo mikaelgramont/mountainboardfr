@@ -7,10 +7,13 @@ class Lib_View_Helper_ImageErrorHandler extends Zend_View_Helper_Abstract
 	 */
 	public function imageErrorHandler()
 	{
+		$log = LOG_IMG_ERRORS ? "console.log('error', e);" : "";
+
 		$js = "
 document.body.addEventListener('error', function(e) {
-	if (e.target.tagName=='IMG') {
-		e.target.style='display:none';
+	${log}
+	if (e.target.tagName == 'IMG') {
+		e.target.style = 'display:none';
 	}
 }, true);";
     $this->view->jQuery()->addOnLoad($js);
