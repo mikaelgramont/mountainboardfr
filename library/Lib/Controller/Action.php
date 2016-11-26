@@ -117,15 +117,16 @@ class Lib_Controller_Action extends Zend_Controller_Action
         ZendX_JQuery::enableView($this->view);
         $jQueryHelper = $this->view->jQuery();
         $jQueryHelper->setCdnSsl(USE_SSL);
-        $jQueryHelper->useCdn(JQUERY_USE_CDN);
         $jQueryHelper->useUiCdn(JQUERY_USE_UI_CDN);
         $jQueryHelper->setRenderMode(ZendX_JQuery::RENDER_ALL & ~ZendX_JQuery::RENDER_STYLESHEETS );
         $jQueryHelper->enable();
 
         if (JQUERY_USE_CDN) {
             if (JQUERY_USE_OWN_CDN) {
+                $jQueryHelper->useCdn(false);
                 $jQueryHelper->setUiLocalPath($this->view->cdnHelper->jsUrl('/'.SCRIPTS_PATH.'jquery/'.JQUERY_VERSION.'/jquery.min.js'));
             } else {
+                $jQueryHelper->useCdn(true);
                 $jQueryHelper->setCdnVersion(JQUERY_VERSION);
             }
         } else {
