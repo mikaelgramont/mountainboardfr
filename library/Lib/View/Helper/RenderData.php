@@ -408,7 +408,7 @@ HTML;
  <span class="longitude">{$location->longitude}</span>
 </div>
 GEO;
-	        	$content .= '<a href="http://maps.google.com/maps?q='.urlencode(ucfirst($data->getTitle())).'@'.$location->latitude.','.$location->longitude.'">'.ucfirst($this->view->translate('viewOnGoogleMaps')).'</a>'.PHP_EOL;
+	        	$content .= '<a href="https://maps.google.com/maps?q='.urlencode(ucfirst($data->getTitle())).'@'.$location->latitude.','.$location->longitude.'">'.ucfirst($this->view->translate('viewOnGoogleMaps')).'</a>'.PHP_EOL;
 	        }
 		}
 

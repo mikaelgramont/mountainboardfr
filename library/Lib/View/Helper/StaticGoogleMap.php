@@ -12,7 +12,7 @@ class Lib_View_Helper_StaticGoogleMap
      */
     public function staticGoogleMap(Location_Row $location = null, $width = 512, $height = 512, $markers = array())
     {
-        $url = 'http://maps.google.com/staticmap';
+        $url = 'https://maps.google.com/staticmap';
 
         if(empty($location)){
             throw new Lib_Exception('location must not be empty');

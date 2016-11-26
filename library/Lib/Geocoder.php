@@ -4,7 +4,7 @@ class Lib_Geocoder
 	public static function getBounds($address)
 	{
     	$client = new Zend_Http_Client();
-    	$fullUrl = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=".urlencode($address);
+    	$fullUrl = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=".urlencode($address);
 		$client->setUri($fullUrl);
 		$response = $client->request(Zend_Http_Client::GET);
 		$json = Zend_Json_Decoder::decode($response->getBody());    		
@@ -32,7 +32,7 @@ class Lib_Geocoder
 	{
     	$latLon = "$lat,$lon";
 		$client = new Zend_Http_Client();
-    	$fullUrl = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&latlng=$latLon";
+    	$fullUrl = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&latlng=$latLon";
 		$client->setUri($fullUrl);
 		$response = $client->request(Zend_Http_Client::GET);
 		$json = Zend_Json_Decoder::decode($response->getBody());    		
