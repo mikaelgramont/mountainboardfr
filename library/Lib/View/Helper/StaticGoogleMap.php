@@ -12,7 +12,7 @@ class Lib_View_Helper_StaticGoogleMap
      */
     public function staticGoogleMap(Location_Row $location = null, $width = 512, $height = 512, $markers = array())
     {
-        $url = 'https://maps.google.com/staticmap';
+        $url = 'https://maps.googleapis.com/maps/api/staticmap';
 
         if(empty($location)){
             throw new Lib_Exception('location must not be empty');
@@ -38,7 +38,7 @@ class Lib_View_Helper_StaticGoogleMap
 
         $zoom = ($location->mapType >=4) ? 17 : $location->zoom;
 
-        $format = $url.'?center=%s,%s&amp;zoom=%d&amp;size=%dx%d&amp;maptype=%s&amp;markers=%s';
+        $format = $url.'?center=%s,%s&amp;zoom=%d&amp;size=%dx%d&amp;maptype=%s&amp;markers=%s&key=%s';
         $imageUrl = sprintf($format,
             $location->latitude,
             $location->longitude,
@@ -46,8 +46,10 @@ class Lib_View_Helper_StaticGoogleMap
             $width,
             $height,
             Location::$staticMapTypes[$location->mapType],
-            $markerStrings
+            $markerStrings,
+            GOOGLE_APIS_KEY
         );
+
         return $imageUrl;
     }
 

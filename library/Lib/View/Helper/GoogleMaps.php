@@ -92,7 +92,8 @@ class Lib_View_Helper_GoogleMaps extends Zend_View_Helper_Abstract
 
     protected function _addJs()
     {
-    	$this->view->JQuery()->addJavascriptFile(GOOGLEMAPS_URL_NEW);
+        $mapsUrl = GOOGLEMAPS_URL_NEW . '&key=' . GOOGLE_APIS_KEY;
+    	$this->view->JQuery()->addJavascriptFile($mapsUrl);
     	$this->view->JQuery()->addJavascriptFile($this->view->asset()->script('libMaps.js'));
     	$this->view->JQuery()->addJavascriptFile($this->view->asset()->script('jquery.tablesorter.js'));
     }
