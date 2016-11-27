@@ -77,13 +77,13 @@ class Media_Item_Video_Row extends Media_Item_Row
 		$uri = '';
 		switch($this->mediaSubType){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
-				$uri = '//www.youtube.com/embed/'.$this->uri.'&fs=1';
+				$uri = 'https://www.youtube.com/embed/'.$this->uri;
 				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
-				$uri = '//vimeo.com/moogaloop.swf?clip_id='.$this->uri.'&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=ffd500&amp;fullscreen=1';
+				$uri = 'https://player.vimeo.com/video/'.$this->uri;
 				break;
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
-				$uri = '//www.dailymotion.com/swf/video/'.$this->uri;
+				$uri = 'https://www.dailymotion.com/embed/video/'.$this->uri;
 				break;
 			default:
 				throw new Lib_Exception_Media("Unsupported mediaSubType '$this->mediaSubType' for video '$this->id'");
@@ -110,12 +110,12 @@ CODE;
 				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
 				$code = <<<CODE
-<object width="{$this->width}" height="{$this->height}"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id={$this->uri}&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id={$this->uri}&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="{$this->width}" height="{$this->height}"></embed></object>				
+<iframe src="https://player.vimeo.com/video/{$this->uri}" width="{$this->width}" height="{$this->height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 CODE;
 				break;
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
 				$code = <<<CODE
-<object width="{$this->width}" height="{$this->height}" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"><param name="movie" value="http://www.dailymotion.com/swf/video/{$this->uri}&related=0"></param><param name="allowFullScreen" value="true"></param><param name="allowScriptAccess" value="always"></param><embed src="http://www.dailymotion.com/swf/{$this->uri}&related=0" type="application/x-shockwave-flash" width="{$this->width}" height="{$this->height}" allowFullScreen="true" allowScriptAccess="always"></embed></object>
+<iframe frameborder="0" width="{$this->width}" height="{$this->height}" src="//www.dailymotion.com/embed/video/{$this->uri}" allowfullscreen></iframe>				
 CODE;
 				break;
 			default:
@@ -131,13 +131,13 @@ CODE;
 		$uri = '';
 		switch($this->mediaSubType){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
-				$uri = '//www.youtube.com/watch?v='.$this->uri;
+				$uri = 'https://www.youtube.com/watch?v='.$this->uri;
 				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
-				$uri = '//vimeo.com/'.$this->uri;
+				$uri = 'https://vimeo.com/'.$this->uri;
 				break;
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
-				$uri = '//www.dailymotion.com/video/'.$this->uri;
+				$uri = 'https://www.dailymotion.com/video/'.$this->uri;
 				break;
 			default:
 				throw new Lib_Exception_Media("Unsupported mediaSubType '$this->mediaSubType' for video '$this->id'");

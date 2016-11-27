@@ -92,11 +92,9 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 
 		switch($media->mediaSubType){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
-				$video = $media->getProviderCode();
-				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
-				$video = $this->view->SWFObject($id, $uri, $targetWidth, $targetHeight, '<h1>'.$title.'</h1>');
+				$video = $media->getProviderCode();
 				break;
 			default:
 				throw new Lib_Exception_Media("Unsupported mediaSubType '$this->mediaSubType' for video '$this->id'");
