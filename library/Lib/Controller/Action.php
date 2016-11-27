@@ -97,10 +97,9 @@ class Lib_Controller_Action extends Zend_Controller_Action
         $this->view->cdnHelper = $cdnHelper;
 
         // CSP
-        $nonce = Lib_Csp::generateNonce();
-        $this->view->cspNonce = $nonce;
-        $forceCsp = !empty($this->_request->getParam('forceCsp'));
-        Lib_Csp::header($nonce, $forceCsp);
+        $cspManager = new Lib_Csp(CSP_REPORT_ONLY, $this->_request->getParam('forceCsp'));
+        $this->view->cspNonce = $cspManager->getNonce();
+        header($cspManager->getCspHeader());
 
         // FAVICONS
 		$favicons = array();

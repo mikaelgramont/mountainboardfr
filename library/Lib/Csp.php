@@ -1,7 +1,19 @@
 <?php
 class Lib_Csp
 {
-	public static function generateNonce() {
+	const CSP_DIRECTIVE = "Content-Security-Policy";
+	const CSP_DIRECTIVE_REPORT_ONLY = "Content-Security-Policy-Report-Only";
+
+	public function __construct($reportOnly, $forceCsp)
+	{
+		$this->_reportOnly = !empty($reportOnly);
+		$this->_forceCsp = !empty($forceCsp);
+
+		$this->_nonce = $this->_generateNonce();
+	}
+
+	protected function _generateNonce()
+	{
 		$keys = array_merge(range(0,9), range('a', 'z'));
 
 		$key = "";
@@ -11,37 +23,61 @@ class Lib_Csp
 		return $key;
 	}
 
-	public static function header($nonce, $forceCsp) {
-		$content = self::_getHeaderContent($nonce);
-		$name = CSP_REPORT_ONLY ? "Content-Security-Policy-Report-Only" : "Content-Security-Policy";
-		if ($forceCsp) {
-			$name = "Content-Security-Policy";
+	public function getNonce()
+	{
+		return $this->_nonce;
+	}
+
+	public function getCspHeader() {
+		$content = $this->_getHeaderContent();
+
+		$name = $this->_reportOnly ? self::CSP_DIRECTIVE_REPORT_ONLY : self::CSP_DIRECTIVE;
+		// Manual override
+		if ($this->_forceCsp) {
+			$name = self::CSP_DIRECTIVE;
 		}
-		header("$name: $content");
+
+		return "$name: $content";
 	}
 
 	/**
 	 * @see https://developers.google.com/web/fundamentals/security/csp/
 	 */
-	private static function _getHeaderContent($nonce) {
+	protected function _getHeaderContent() {
 		$bits = array();
 		if (CSP_REPORT_ONLY) {
 			$bits[] = "report-uri " . CSP_REPORT_URI;
 		}
+		if (USE_SSL) {
+			$bits[] = "upgrade-insecure-requests";
+		}
 
+		$bits[] = $this->_scripts();
+		$bits[] = $this->_children();
+
+
+		return implode($bits, '; ');
+	}
+
+	/**
+	 * For the script-src directive.
+	 */
+	protected function _scripts() {
 		$jsDomains = array();
 		$jsDomains[] = "'self'";
 		$jsDomains[] = CSP_SCRIPT_SRC;
 		$jsDomains[] = 'https://' . CDN_URL;
-		if ($nonce) {
-			$jsDomains[] = "'nonce-" . $nonce . "'";
-		}
+		$jsDomains[] = "'nonce-" . $this->_nonce . "'";
+		return "script-src " . implode($jsDomains, " ");
+	}
 
-		$bits[] = "script-src " . implode($jsDomains, " ");
-
-		if (USE_SSL) {
-			$bits[] = "upgrade-insecure-requests";
-		}
-		return implode($bits, '; ');
+	/**
+	 * For the child-src directive.
+	 */
+	protected function _children() {
+		$frameDomains = array();
+		$frameDomains[] = "'self'";
+		$frameDomains[] = CSP_FRAME_SRC;
+		return "child-src " . implode($frameDomains, " ");
 	}
 }
