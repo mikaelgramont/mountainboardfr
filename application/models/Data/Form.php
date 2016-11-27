@@ -258,7 +258,9 @@ abstract class Data_Form extends Lib_Form implements Data_Form_DataInterface
 
         if(!empty($this->_object->id)){
             // Get tags
-            $element->setValue(implode(',', $this->_object->getTags()));
+            $tags = $this->_object->getTags();
+            $value = $tags ? implode(',', $tags) : "";
+            $element->setValue($value);
         }
 
         return $element;
