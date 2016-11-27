@@ -20,10 +20,10 @@
  */
 
 /** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
+//require_once 'PHPUnit/Framework/TestCase.php';
 
 /** PHPUnit_Runner_Version */
-require_once 'PHPUnit/Runner/Version.php';
+//require_once 'PHPUnit/Runner/Version.php';
 
 /** Zend_Controller_Front */
 require_once 'Zend/Controller/Front.php';

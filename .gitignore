@@ -25,3 +25,5 @@ bin/crontab.backup
 bin/script.php
 tests/cache/*
 *.zip
+tests/vendor
+tests/composer.phar
