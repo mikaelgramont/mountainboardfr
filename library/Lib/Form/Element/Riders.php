@@ -72,7 +72,7 @@ class Lib_Form_Element_Riders extends Zend_Form_Element_Text
 			$cacheId = User::VALID_USER_LIST_CACHE_ID;
         	$cache = Globals::getGlobalCache();
 		}
-	    if(ALLOW_CACHE && !($list = $cache->load($cacheId))){
+	    if(!ALLOW_CACHE || !($list = $cache->load($cacheId))){
 	        
 			$table = new User();
 	        $statusList = array(
