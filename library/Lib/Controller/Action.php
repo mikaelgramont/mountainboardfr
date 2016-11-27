@@ -124,7 +124,7 @@ class Lib_Controller_Action extends Zend_Controller_Action
         if (JQUERY_USE_CDN) {
             if (JQUERY_USE_OWN_CDN) {
                 $jQueryHelper->useCdn(false);
-                $jQueryHelper->setUiLocalPath($this->view->cdnHelper->jsUrl('/'.SCRIPTS_PATH.'jquery/'.JQUERY_VERSION.'/jquery.min.js'));
+                $jQueryHelper->setLocalPath($this->view->cdnHelper->jsUrl('/'.SCRIPTS_PATH.'jquery/'.JQUERY_VERSION.'/jquery.min.js'));
             } else {
                 $jQueryHelper->useCdn(true);
                 $jQueryHelper->setCdnVersion(JQUERY_VERSION);
