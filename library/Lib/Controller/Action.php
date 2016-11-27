@@ -85,10 +85,10 @@ class Lib_Controller_Action extends Zend_Controller_Action
 
         // ASSERT SERVING
         $cdnHelper = new Lib_View_Helper_Cdn($this->view);
-		if(APPLICATION_ENV == 'development' || !USE_CDN){
+		if(CDN_DEV_MODE || !USE_CDN){
 			$cdnHelper->setDevMode();
 		}
-        $prefix = USE_SSL ? 'https://' : 'http://';
+        $prefix = 'https://';
         $cdnHelper->setCdnUrl($prefix.CDN_URL);
         $cdnHelper->setCssCdnUrl($prefix.CSS_CDN_URL);
         $cdnHelper->setImgCdnUrl($prefix.IMG_CDN_URL);
