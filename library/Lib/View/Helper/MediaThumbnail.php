@@ -96,7 +96,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 
 		switch($media->thumbnailSubType){
 		    case Media_Item_Photo::SUBTYPE_JPG:
-				$src = $media->getThumbnailURI();
+				$src = $media->getThumbnailURI(false);
 		        break;
 
 		    case Media_Item_Photo::SUBTYPE_VIMEO_THUMBNAIL:
