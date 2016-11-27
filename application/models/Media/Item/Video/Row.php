@@ -115,7 +115,7 @@ CODE;
 				break;
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
 				$code = <<<CODE
-<iframe frameborder="0" width="{$this->width}" height="{$this->height}" src="//www.dailymotion.com/embed/video/{$this->uri}" allowfullscreen></iframe>				
+<iframe frameborder="0" width="{$this->width}" height="{$this->height}" src="https://www.dailymotion.com/embed/video/{$this->uri}" allowfullscreen></iframe>
 CODE;
 				break;
 			default:
