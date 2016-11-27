@@ -22,7 +22,7 @@ class Facebook_OauthTest extends ApplicationTest
 			'destination' => 'dummy'
 		));
 
-		$expectedRedirectUrl = 'http://test.redesign-zend.fr/facebook/oauth';
+		$expectedRedirectUrl = 'http://test.mountainboard.dev/facebook/oauth';
 		$this->assertEquals(
 			$expectedRedirectUrl,
 			$oauth->getRedirectUrl()
@@ -51,7 +51,7 @@ class Facebook_OauthTest extends ApplicationTest
 			'type' => 'createAccount'
 		));
 
-		$expectedRedirectUrl = 'http://test.redesign-zend.fr/facebook/oauth/createAccount';
+		$expectedRedirectUrl = 'http://test.mountainboard.dev/facebook/oauth/createAccount';
 		$this->assertEquals(
 			$expectedRedirectUrl,
 			$oauth->getRedirectUrl()
@@ -73,7 +73,7 @@ class Facebook_OauthTest extends ApplicationTest
 		$expectedUriObj = Lib_Uri_Http::fromString($expectedUri);
 
 		$successfulResponseBody = 'bla';
-		$response = $this->getMock('Zend_Http_Response', array(), array(), '', false);
+		$response = $this->createMock('Zend_Http_Response', array(), array(), '', false);
 		$response->expects($this->once())
 			     ->method('isError')
 			     ->will($this->returnValue(false));
@@ -83,7 +83,7 @@ class Facebook_OauthTest extends ApplicationTest
 
 
 
-		$client = $this->getMock('Zend_Http_Client');
+		$client = $this->createMock('Zend_Http_Client');
 		$client->expects($this->once())
 			   ->method('setUri')
 			   ->with($expectedUriObj);
@@ -113,14 +113,14 @@ class Facebook_OauthTest extends ApplicationTest
 		$expectedUri .= '&redirect_uri=http%3A%2F%2Ftata&client_secret='.FACEBOOK_APP_SECRET.'&code='.$code;
 		$expectedUriObj = Lib_Uri_Http::fromString($expectedUri);
 
-		$response = $this->getMock('Zend_Http_Response', array(), array(), '', false);
+		$response = $this->createMock('Zend_Http_Response', array(), array(), '', false);
 		$response->expects($this->once())
 			     ->method('isError')
 			     ->will($this->returnValue(true));
 		$response->expects($this->never())
 			     ->method('getBody');
 
-		$client = $this->getMock('Zend_Http_Client');
+		$client = $this->createMock('Zend_Http_Client');
 		$client->expects($this->once())
 			   ->method('setUri')
 			   ->with($expectedUriObj);
@@ -147,7 +147,7 @@ class Facebook_OauthTest extends ApplicationTest
 		$successfulResponseBody = '{"id":"123"}';
 		$expectedData = Zend_Json::decode($successfulResponseBody);
 
-		$response = $this->getMock('Zend_Http_Response', array(), array(), '', false);
+		$response = $this->createMock('Zend_Http_Response', array(), array(), '', false);
 		$response->expects($this->once())
 			     ->method('isError')
 			     ->will($this->returnValue(false));
@@ -155,7 +155,7 @@ class Facebook_OauthTest extends ApplicationTest
 			     ->method('getBody')
 			     ->will($this->returnValue($successfulResponseBody));
 
-		$client = $this->getMock('Zend_Http_Client');
+		$client = $this->createMock('Zend_Http_Client');
 		$client->expects($this->once())
 			   ->method('setUri')
 			   ->with($expectedUriObj);
@@ -183,7 +183,7 @@ class Facebook_OauthTest extends ApplicationTest
 		$successfulResponseBody = '{data:"ok"}';
 		$expectedData = Zend_Json::decode($successfulResponseBody);
 
-		$response = $this->getMock('Zend_Http_Response', array(), array(), '', false);
+		$response = $this->createMock('Zend_Http_Response', array(), array(), '', false);
 		$response->expects($this->once())
 			     ->method('isError')
 			     ->will($this->returnValue(true));
@@ -191,7 +191,7 @@ class Facebook_OauthTest extends ApplicationTest
 			     ->method('getBody')
 			     ->will($this->returnValue($successfulResponseBody));
 
-		$client = $this->getMock('Zend_Http_Client');
+		$client = $this->createMock('Zend_Http_Client');
 		$client->expects($this->once())
 			   ->method('setUri')
 			   ->with($expectedUriObj);
