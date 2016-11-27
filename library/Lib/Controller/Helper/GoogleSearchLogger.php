@@ -29,7 +29,7 @@ class Lib_Controller_Helper_GoogleSearchLogger extends Zend_Controller_Action_He
 			$row->searchTerm = $searchTerm;
 			$row->rank = $rank;
 			$row->siteUrl = $siteUrl;
-			$row->resultsUrl = 'http://www.google.com/search?q='.urlencode($searchTerm);
+			$row->resultsUrl = 'https://www.google.com/search?q='.urlencode($searchTerm);
 			$row->save();
 		} catch (Exception $e) {
 			$msg = "Could not log google search results info: ".$e->getMessage();
