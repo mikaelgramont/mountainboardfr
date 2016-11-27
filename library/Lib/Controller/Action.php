@@ -99,7 +99,8 @@ class Lib_Controller_Action extends Zend_Controller_Action
         // CSP
         $nonce = Lib_Csp::generateNonce();
         $this->view->cspNonce = $nonce;
-        Lib_Csp::header($nonce);
+        $forceCsp = !empty($this->_request->getParam('forceCsp'));
+        Lib_Csp::header($nonce, $forceCsp);
 
         // FAVICONS
 		$favicons = array();
@@ -116,7 +117,7 @@ class Lib_Controller_Action extends Zend_Controller_Action
         // JQUERY CONFIGURATION
         ZendX_JQuery::enableView($this->view);
         $jQueryHelper = $this->view->jQuery();
-        $jQueryHelper->setCdnSsl(USE_SSL);
+        $jQueryHelper->setCdnSsl(true);
         $jQueryHelper->useUiCdn(JQUERY_USE_UI_CDN);
         $jQueryHelper->setRenderMode(ZendX_JQuery::RENDER_ALL & ~ZendX_JQuery::RENDER_STYLESHEETS );
         $jQueryHelper->enable();

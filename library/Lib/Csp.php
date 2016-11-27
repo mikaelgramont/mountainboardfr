@@ -11,9 +11,12 @@ class Lib_Csp
 		return $key;
 	}
 
-	public static function header($nonce) {
+	public static function header($nonce, $forceCsp) {
 		$content = self::_getHeaderContent($nonce);
 		$name = CSP_REPORT_ONLY ? "Content-Security-Policy-Report-Only" : "Content-Security-Policy";
+		if ($forceCsp) {
+			$name = "Content-Security-Policy";
+		}
 		header("$name: $content");
 	}
 
