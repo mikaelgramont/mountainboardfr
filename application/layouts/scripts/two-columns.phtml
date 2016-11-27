@@ -36,6 +36,7 @@ echo $this->headScript().PHP_EOL;?>
 </head>
 <body>
 <?php
+echo $this->imageErrorHandler($this->cspNonce).PHP_EOL;
 echo $header;
 ?>
 	<div id="wrapper" <?php echo $wrapperClass ?>>
@@ -69,7 +70,6 @@ echo $header;
 	<div id="menuOverlay"></div>
 <?php
 $this->google_Analytics();
-$this->imageErrorHandler();
 echo $this->jQuery().PHP_EOL;
 echo $this->inlineScript().PHP_EOL;
 ?>
