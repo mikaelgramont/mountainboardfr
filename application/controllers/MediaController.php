@@ -563,32 +563,32 @@ class MediaController extends Lib_Controller_Action
 	protected function _saveVideoParameters(Media_Item_Video_Row $video, Lib_Form_Element_Video $videoElement)
 	{
 		$value = $videoElement->getValue();
-		$regex = Media_Item_Video::getCleanVideoCodeRegex();
-
-		$matches = null;
-		$matchCount = preg_match_all($regex,$value,$matches);
-		if(!$matchCount){
-			throw new Lib_Exception_Media("Impossible to get data out of the video regex: value='$value', regex='$regex', videoId:'$video->id'");
+		try {
+			$parser = new VideoInfoParser();
+			$videoInfoObj = $parser->parse($value);
+		} catch (Exception $e) {
+			throw new Lib_Exception_Media("Could not parse video info: '$value'");
 		}
+		
 		$return = array();
-		switch($matches[1][0]){
+		switch($videoInfoObj->getType()){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
-				$youtube = new Zend_Gdata_YouTube(null, YOUTUBE_APPLICATION_ID, YOUTUBE_CLIENT_ID, YOUTUBE_API_KEY);
-		    	$entry = $youtube->getVideoEntry($matches[4][0]);
-		    	$thumbnails = $entry->getVideoThumbnails();
+				$apiClient = new Google_Api(GOOGLE_APIS_KEY);
+				$videoData = $apiClient->getYouTubeVideoInfo($videoInfoObj->getId());
+				$thumbnail = $videoData['items'][0]['snippet']['thumbnails']['standard'];
 		    	$return['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_YOUTUBE_THUMBNAIL;
-				$return['thumbnailUri'] = $thumbnails[3]['url'];
-				$return['thumbnailWidth'] = $thumbnails[3]['width'];
-				$return['thumbnailHeight'] = $thumbnails[3]['height'];
+				$return['thumbnailUri'] = $thumbnail['url'];
+				$return['thumbnailWidth'] = $thumbnail['width'];
+				$return['thumbnailHeight'] = $thumbnail['height'];
 				break;
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
 				$return['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_DAILYMOTION_THUMBNAIL;
-				$return['thumbnailUri'] = 'http://www.dailymotion.com/thumbnail/320x240/video/'.$matches[4][0];
+				$return['thumbnailUri'] = 'https://www.dailymotion.com/thumbnail/320x240/video/'.$videoInfoObj->getId();
 				$return['thumbnailWidth'] = 320;
 				$return['thumbnailHeight'] = 240;
 				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
-				$uri = 'http://vimeo.com/api/v2/video/'.$matches[4][0].'.php';
+				$uri = 'https://vimeo.com/api/v2/video/'.$videoInfoObj->getId().'.php';
 				$client = new Zend_Http_Client($uri);
 				$response = $client->request();
 				$vimeo = unserialize($response->getBody());
@@ -598,14 +598,14 @@ class MediaController extends Lib_Controller_Action
 				$return['thumbnailHeight'] = floor($vimeo[0]['width'] * 0.234375); // 150 / 200 * ( 200 / 640 )
 				break;
 			default:
-				throw new Lib_Exception_Media("Unsupported video provider: '{$matches[1][1]}'");
+				throw new Lib_Exception_Media("Unsupported video provider: '".$videoInfoObj->getType()."'");
 				break;
 		}
 
-		$return['mediaSubType'] = $matches[1][0];
-		$return['width'] = $matches[2][0];
-		$return['height'] = $matches[3][0];
-		$return['uri'] = $matches[4][0];
+		$return['mediaSubType'] = $videoInfoObj->getType();
+		$return['width'] = $videoInfoObj->getWidth();
+		$return['height'] = $videoInfoObj->getHeight();
+		$return['uri'] = $videoInfoObj->getId();
 		$return['size'] = 0;
 
 		$return = $this->_saveLocalVideoThumbnail($return);
@@ -619,15 +619,16 @@ class MediaController extends Lib_Controller_Action
 		if(empty($file)){
 			return $params;
 		}
-		$destination = md5(uniqid(rand())).'.jpg';
-		file_put_contents($destination, $file);
+		$filename = md5(uniqid(rand())).'.jpg';
+		$destination = APP_MEDIA_THUMBNAILS_DIR . DIRECTORY_SEPARATOR. $filename;
+		file_put_contents( $destination, $file);
 		$thumbnail = new File_Photo($destination);
 		$thumbnail->resize(200, 150);
 
 		$params['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_JPG;
 		$params['thumbnailWidth'] = $thumbnail->getWidth();
 		$params['thumbnailHeight'] = $thumbnail->getHeight();
-		$params['thumbnailUri'] = $destination;
+		$params['thumbnailUri'] = $filename;
 
 		return $params;
 	}

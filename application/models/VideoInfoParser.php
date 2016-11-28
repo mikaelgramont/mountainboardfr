@@ -31,6 +31,16 @@ class VideoInfoParser
 		}
 	}
 	
+	public function isValid($input)
+	{
+		try {
+			$this->parse($input);
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	private function _getRegexes()
 	{
 		$regexes = array();

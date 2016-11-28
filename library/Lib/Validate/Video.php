@@ -12,14 +12,7 @@ class Lib_Validate_Video extends Zend_Validate_Abstract
 
     public function isValid($value)
     {
-    	$matches = null;
-    	$regex = Media_Item_Video::getCleanVideoCodeRegex(); 
-		$matchCount = preg_match_all($regex,$value,$matches);
-		if(!$matchCount){
-    		$this->_error(self::NOT_VALID);
-        	return false;
-		}
-		
-		return true;
-    }	
+    	$parser = new VideoInfoParser();
+    	return $parser->isValid($value);
+	}	
 }
