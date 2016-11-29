@@ -32,9 +32,8 @@ class Google_Api
 		$fullUri = self::BASE_URI . $resource . '?' . implode($params, '&');
 		$this->_client->setUri($fullUri);
 		$response = $this->_client->request();
-		if($response->isError()){
-			throw new Lib_Exception(
-					"Could not get response for: '".$fullUri."' ".$response->getBody());
+		if($response->isError()){throw new Google_Exception(
+			"Could not get response for: '".$fullUri."' ".$response->getBody());
 		}
 		
 		$data = Zend_Json::decode($response->getBody());
