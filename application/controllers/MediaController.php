@@ -573,7 +573,7 @@ class MediaController extends Lib_Controller_Action
 		$return = array();
 		switch($videoInfoObj->getType()){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
-				$apiClient = new Google_Api(GOOGLE_APIS_KEY);
+				$apiClient = new Google_Api(GOOGLE_APIS_KEY,new Zend_Http_Client());
 				$videoData = $apiClient->getYouTubeVideoInfo($videoInfoObj->getId());
 				$thumbnail = $videoData['items'][0]['snippet']['thumbnails']['standard'];
 		    	$return['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_YOUTUBE_THUMBNAIL;

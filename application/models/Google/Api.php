@@ -8,9 +8,10 @@ class Google_Api
 	
 	protected $_key;
 	
-	public function __construct($key)
+	public function __construct($key, $client)
 	{
 		$this->_key = $key;
+		$this->_client = $client;
 	}
 	
 	public function getYouTubeVideoInfo($id)
@@ -29,8 +30,13 @@ class Google_Api
 		$params[] = 'key='.$this->_key;
 		
 		$fullUri = self::BASE_URI . $resource . '?' . implode($params, '&');
-		$client = new Zend_Http_Client($fullUri);
-		$response = $client->request();
+		$this->_client->setUri($fullUri);
+		$response = $this->_client->request();
+		if($response->isError()){
+			throw new Lib_Exception(
+					"Could not get response for: '".$fullUri."' ".$response->getBody());
+		}
+		
 		$data = Zend_Json::decode($response->getBody());
 		
 		return $data;
