@@ -627,7 +627,8 @@ class MediaController extends Lib_Controller_Action
 		if(empty($file)){
 			return $params;
 		}
-		$filename = md5(uniqid(rand())).'.' . $extension;
+		// Tenmporary name.
+		$filename = md5(uniqid(rand()));
 		$destination = APP_MEDIA_THUMBNAILS_DIR . DIRECTORY_SEPARATOR. $filename;
 		file_put_contents($destination, $file);
 		$thumbnail = new File_Photo($destination);
