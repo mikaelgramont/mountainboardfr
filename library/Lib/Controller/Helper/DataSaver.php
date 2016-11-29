@@ -142,11 +142,14 @@ class Lib_Controller_Helper_DataSaver extends Zend_Controller_Action_Helper_Abst
         }
 
         // Creating/updating
+        if ($data['longitude'] != "") {
+        	
+        }
         $location->longitude = $data['longitude'];
-		$location->latitude = $data['latitude'];
+        $location->latitude = $data['latitude'];
 		$location->zoom = $data['zoom'];
-		$location->yaw = $data['yaw'];
-		$location->pitch = $data['pitch'];
+		$location->yaw = $data['yaw'] == "" ? 0 : $data['yaw'];
+		$location->pitch = $data['pitch'] == "" ? 0 : $data['pitch'];
 		$location->mapType = $data['mapType'];
         $location->status = Data::VALID;
         $location->itemId = $object->getId();
