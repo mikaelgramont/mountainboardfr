@@ -627,16 +627,16 @@ class MediaController extends Lib_Controller_Action
 		if(empty($file)){
 			return $params;
 		}
-		$filename = md5(uniqid(rand())).'.jpg';
+		$filename = md5(uniqid(rand())).'.' . $extension;
 		$destination = APP_MEDIA_THUMBNAILS_DIR . DIRECTORY_SEPARATOR. $filename;
-		file_put_contents( $destination, $file);
+		file_put_contents($destination, $file);
 		$thumbnail = new File_Photo($destination);
 		$thumbnail->resize(200, 150);
 
 		$params['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_JPG;
 		$params['thumbnailWidth'] = $thumbnail->getWidth();
 		$params['thumbnailHeight'] = $thumbnail->getHeight();
-		$params['thumbnailUri'] = $filename;
+		$params['thumbnailUri'] = $thumbnail->getName();
 
 		return $params;
 	}
