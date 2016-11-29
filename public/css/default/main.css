@@ -848,7 +848,6 @@ div.user.paginationControl.bottom {
     margin: 2em 0 0 0;
 }
 #simpleMapElement {
-    width: 18em;
     height: 18em;
 }
 #userMapElement {
@@ -1234,10 +1233,11 @@ div.mediaTitle a:visited {
 div.mediaMetadata {
     text-align: left;
     width: 100%;
+    padding: 0.5em;
+    box-sizing: border-box;
     /* margin-bottom: 1em; */
     background-color: #F0F0F0;
-    border-radius-bottomleft: 0.5em;
-    border-radius-bottomright: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
 }
 div.mediaMetadata p.spot,
 div.mediaMetadata p.trick,
@@ -1248,7 +1248,6 @@ div.mediaMetadataText {
     width: 37.5em;
     display: inline-block;
     vertical-align: top;
-    padding: 0.5em
 }
 div.mediaMetadataTextHorizontal {
     display: block;
@@ -1258,10 +1257,11 @@ div.mediaMetadataText a.external {
     display: block;
     margin-bottom: 0.5em;
 }
-div.mediaMetadataTextHorizontal #facebookLikeButton {} div.mediaMetadataMap {
-    display: inline-block;
+div.mediaMetadataTextHorizontal #facebookLikeButton {
+	
+}
+div.mediaMetadataMap {
     height: 18em;
-    width: 18em;
     padding: 0.5em 0.5em 0.5em 0;
 }
 div.mediaMetadataNoMap {
