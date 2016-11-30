@@ -67,8 +67,8 @@ class Lib_Form_Element_Email_Validate extends Zend_Validate_EmailAddress impleme
     {
         $table = new User();
         $where = $table->getAdapter()->quoteInto(User::COLUMN_EMAIL.' = ?', $value);
-        $where .= "AND ".User::COLUMN_STATUS." = '".User::STATUS_MEMBER
-            . "' OR " .User::COLUMN_STATUS." = '".User::STATUS_BANNED."'";
+        $where .= "AND (".User::COLUMN_STATUS." = '".User::STATUS_MEMBER
+            . "' OR " .User::COLUMN_STATUS." = '".User::STATUS_BANNED."')";
 		$result = $table->fetchRow($where);
         return $result;
     }
