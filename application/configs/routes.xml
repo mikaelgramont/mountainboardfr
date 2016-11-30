@@ -15,8 +15,8 @@
         </index>
         
          <search>
-            <route>recherche/</route>
-            <defaults controller="search" />
+            <route>recherche/:searchterms</route>
+            <defaults controller="search" searchterms="" />
         </search>       
 
         <!-- START -->

@@ -9,13 +9,16 @@ class Lib_View_Helper_RenderTags extends Zend_View_Helper_Abstract
      */
     public function renderTags($tags)
     {
-		if(empty($tags)){
-        	return '';
-        }
-		if(!is_array($tags)){
+		if(empty($tags) || !is_array($tags)){
 			return '';
-		}        
-    	$content = '<p class="tags">Tags: '.implode(' ', $tags).'</p>'.PHP_EOL;
+		}
+		
+    	$content = '<div class="tags">Tags: <ul>';
+    	foreach ($tags as $tag) {
+    		$content .= "<li>" . $this->view->routeLink(
+    			'search', $tag, array('searchterms' => $tag)). "</li> ";
+    	}
+    	$content .= '</ul></div>'.PHP_EOL;
         return $content;
     }
 }

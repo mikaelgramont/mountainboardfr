@@ -66,6 +66,9 @@ h1.albumTitle {
     font-size: 2em;
     margin: 0 0 0.5em 0;
 }
+.deemphasized-text {
+	font-size: .8em;
+}
 p.paragraph {
     margin: 0.5em 0;
     max-width: 45em;
@@ -88,6 +91,8 @@ a:active {
 .dataLink::before {
     position: relative;
     display: inline-block;
+    vertical-align: middle;
+    margin-top: -.25em;
     width: 1.125em;
     height: 1em;
     margin-right: .25em;
@@ -175,9 +180,9 @@ a.close::before {
 }
 a.linkRight::after,
 a.linkLeft::before {
-    position: relative;
-    top: 4px;
     display: inline-block;
+    vertical-align: middle;
+    margin-top: -.25em;
     width: 1.125em;
     height: 1.25em;
     content: '';
@@ -1104,7 +1109,7 @@ div.topic.paginationControl.bottom {
     margin: 1em 0em 3em 0
 }
 #postsList li {
-    min-height: 10em;
+    min-height: 8em;
     position: relative;
     padding: 0.5em;
     background-color: #EFEFEF;
@@ -1239,10 +1244,15 @@ div.mediaMetadata {
     background-color: #F0F0F0;
     border-radius: 0 0 0.5em 0.5em;
 }
-div.mediaMetadata p.spot,
-div.mediaMetadata p.trick,
-div.mediaMetadata p.riders {
-    margin: 1em 0.5em 1em 0;
+.mediaDescription {
+	line-height: 1.7em;
+}
+.mediaMetadataLinks li {
+	display: inline-block;
+}
+.mediaMetadataLinks {
+	margin-top: 1em;
+	color: #666;
 }
 div.mediaMetadataText {
     width: 37.5em;
@@ -1256,9 +1266,6 @@ div.mediaMetadataTextHorizontal {
 div.mediaMetadataText a.external {
     display: block;
     margin-bottom: 0.5em;
-}
-div.mediaMetadataTextHorizontal #facebookLikeButton {
-	
 }
 div.mediaMetadataMap {
     height: 18em;
@@ -1277,11 +1284,7 @@ div.mediaMetadataNoMap {
     max-width: 37em;
 }
 #backToAlbum {
-    /* position: absolute; */
-    /* top: 2em; */
-    /* left: 1em; */
-    display: block;
-    max-width: 23em;
+    display: inline-block;
     margin-bottom: 1em;
 }
 #backToAlbum.uploadPage {
@@ -1328,8 +1331,12 @@ div.spotMetadata h2 {
     font-size: 1em;
     font-weight: normal;
 }
-div.spotMetadata p.tags {
+.tags {
     margin-top: 0.5em;
+}
+.tags ul,
+.tags li {
+    display: inline-block;
 }
 div.spotMetadata div.spotInfo {
     display: inline-block;

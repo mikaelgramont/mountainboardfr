@@ -761,11 +761,14 @@ abstract class Data_Row extends Cache_Object_Row implements Data_Row_DataInterfa
 	    		$cacheId = $this->_getTagsCacheId();
 				$cache = $this->getCache();
 				$this->_arrTags = $cache->load($cacheId);
+    		} else {
+    			$this->_arrTags = false;
     		}
 			$table = new Tag();
 		    if($this->_arrTags === false){
-		        $select = $table->select()->where('itemId = ?', $this->id)
-	                                          ->where('itemType = ?', $this->_table->getItemType());
+		        $select = $table->select()
+					->where('itemId = ?', $this->id)
+					->where('itemType = ?', $this->_table->getItemType());
 	            $result = $table->fetchAll($select);
 	            $this->_arrTags = array();
 	            foreach($result as $row){

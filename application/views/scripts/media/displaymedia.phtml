@@ -29,7 +29,7 @@ if(!empty($this->nextMedia)){
 		'href' => $this->nextMedia->getLink()
 	));
 }
-echo '	<div id="backToAlbum" class="actionLinkContainer">'.$this->itemLink(array('name'=>$backToAlbum, 'link'=>$this->album->getLink(), 'itemType' => Constants_DataTypes::MEDIAALBUM), 'dataLink album').'</div>'.PHP_EOL;
+echo '	<div><div id="backToAlbum" class="actionLinkContainer">'.$this->itemLink(array('name'=>$backToAlbum, 'link'=>$this->album->getLink(), 'itemType' => Constants_DataTypes::MEDIAALBUM), 'dataLink album').'</div></div>'.PHP_EOL;
 
 if(!empty($this->previousMedia) || !empty($this->nextMedia)){
 	echo '	<div id="mediaNavigation">'.PHP_EOL;
@@ -73,38 +73,49 @@ echo '<div class="mediaContainer">'.PHP_EOL.$renderer->render($this->media, $edi
 
 echo '<div class="mediaMetadata">'.PHP_EOL;
 
-if(!empty($description) || !empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName'])){
-	echo '	<div class="mediaMetadataText mediaMetadataTextHorizontal">'.PHP_EOL;
-}
+echo '	<div class="mediaMetadataText mediaMetadataTextHorizontal">'.PHP_EOL;
 echo $this->shareButtons()->all(APP_URL.$this->url(), 'horizontal').PHP_EOL;
 
 echo $renderer->alternateLink($this->media);
 
 if(!empty($description)){
-	echo '		'.$description.''.PHP_EOL;
+	echo '		<div class="mediaDescription">'.$description.'</div>'.PHP_EOL;
 }
-if(!empty($this->spot)){
-	echo '		<p class="spot">'.ucfirst($this->translate('mediaSpot')).': ' .$this->itemLink($this->spot).'</p>'.PHP_EOL;
+if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName']) || !empty($tags)){
+	echo '		<div class="mediaMetadataLinks deemphasized-text">'.PHP_EOL;
 }
-if(!empty($this->trick)){
-	echo '		<p class="trick">'.ucfirst($this->translate('mediaTrick')).': ' .$this->itemLink($this->trick).'</p>'.PHP_EOL;
-}
+if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName'])){
+	echo '		<ul class="">'.PHP_EOL;
+	echo '		<li>'.ucfirst($this->translate($inMedia)).':</li>'.PHP_EOL;
+	}
 
 if(!empty($this->riders['byId']) || !empty($this->riders['byName'])){
-    $linkString = array();
-    foreach($this->riders['byId'] as $rider){
-        $linkString[] = $this->userLink($rider);
-    }
-    foreach($this->riders['byName'] as $rider){
-        $linkString[] = $rider;
-    }
-    echo '		<p class="riders">'.ucfirst($this->translate($inMedia)).': ' .implode(', ', $linkString) .'</p>'.PHP_EOL;
+	$linkString = array();
+	foreach($this->riders['byId'] as $rider){
+		$linkString[] = $this->userLink($rider);
+	}
+	foreach($this->riders['byName'] as $rider){
+		$linkString[] = $rider;
+	}
+	echo '		<li>' .implode(', ', $linkString) .'</li>'.PHP_EOL;
 }
-echo $this->renderTags($tags);
+if(!empty($this->trick)){
+	echo '		<li>'.$this->itemLink($this->trick).'</li>'.PHP_EOL;
+}
+if(!empty($this->spot)){
+	echo '		<li>'.$this->itemLink($this->spot).'</li>'.PHP_EOL;
+}
 
-if(!empty($description) || !empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName'])){
-	echo '	</div>'.PHP_EOL;
+if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName'])){
+	echo '		</ul>'.PHP_EOL;
 }
+
+echo $this->renderTags($tags);
+if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName']) || !empty($tags)){
+	echo '		</div>'.PHP_EOL;
+	}
+echo '	</div>'.PHP_EOL;
+
 if($this->media->hasLocation()){
 	$mapElementId = 'simpleMapElement';
 	$location = $this->media->getLocation();

@@ -6,7 +6,8 @@ class SearchController extends Lib_Controller_Action
 		Zend_Registry::set('Category', Category::NONE);
 
 		$this->view->items = $this->view->results = $this->view->excerpts = array();
-		$searchTerms = $this->view->searchTerms = $this->_request->getParam('searchTerms');
+		$searchTerms = $this->view->searchTerms =
+			$this->_request->getParam('searchterms');
 
 		$search = new Search($this->_request->getParams());
 		$search->setAdvancedForm();
