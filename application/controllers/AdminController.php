@@ -3,16 +3,23 @@ class AdminController extends Lib_Controller_Action
 {
     public function init()
     {
-        if($this->_request->getParam('authCheck') !== AUTHCHECK){
-    		die('0');
-    	}
-
     	parent::init();
+    	 
+    	if($this->_request->getParam('authCheck') !== AUTHCHECK &&
+      		(!$this->_user || $this->_user->getId() != 1)){
+    		die();
+    	}
     }
 
 	public function indexAction()
     {
 		die('Admin not implemented');
+    }
+    
+    public function phpinfoAction()
+    {
+    	phpinfo();
+    	exit();
     }
 
     /**
