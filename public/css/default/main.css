@@ -241,7 +241,7 @@ a.backLeft {
 #facebookLikeButton.horizontal,
 #googlePlusOneButton.horizontal {
     float: left;
-    width: 5em;
+    width: 18em;
     height: 2.5em;
     overflow: hidden;
 }
@@ -413,10 +413,10 @@ header.noCategoryContent #headerContent {
     padding-top: 1.5em;
     background-color: #F0F0F0;
 }
-#firstContent p.description {
+.article p.description {
     text-align: justify
 }
-#firstContent img {
+.article img {
     /* max-width: 100%; */
 }
 footer {

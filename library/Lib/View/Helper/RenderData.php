@@ -124,7 +124,7 @@ SCRIPT;
                 break;
         }
 
-        $content = '';
+        $content = '<div class="article">'.PHP_EOL;
         $content .= '<h1 class="articleTitle">'.ucfirst($article->getTitle()).'</h1>'.PHP_EOL;
         if(($article->isEditableBy($this->view->user, $this->view->acl))){
             $content .= $this->view->itemStatus($article, true);
@@ -135,7 +135,6 @@ SCRIPT;
         }
         $content .= $this->view->renderDataInformation($article).PHP_EOL;
         $content .= $this->view->shareButtons()->all(APP_URL.$this->view->url(), 'horizontal').PHP_EOL;
-        $content .= $this->view->renderTags($article->getTags());
 
         $content .= '<p class="description">'.$article->getDescription().'</p>'.PHP_EOL;
         $content .= '<div class="clear"></div>'.PHP_EOL;
@@ -149,7 +148,8 @@ SCRIPT;
 			$content .= $this->view->itemLink($album);
 			$content .= $this->view->albumPreview($album);
         }
-
+        $content .= $this->view->renderTags($article->getTags());
+        $content .= "</div>".PHP_EOL;
         return $content;
     }
 
