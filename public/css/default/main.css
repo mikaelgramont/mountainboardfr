@@ -417,7 +417,7 @@ header.noCategoryContent #headerContent {
     text-align: justify
 }
 .article img {
-    /* max-width: 100%; */
+    max-width: 100%;
 }
 footer {
     height: 4.5em;
