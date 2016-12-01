@@ -92,7 +92,7 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
 			case Media_Item_Video::SUBTYPE_VIMEO:
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
-				$video = $media->getProviderCode();
+				$video = '<div class="video-wrapper">'.$media->getProviderCode().'</div>';
 				break;
 			default:
 				throw new Lib_Exception_Media("Unsupported mediaSubType '$this->mediaSubType' for video '$this->id'");
@@ -100,6 +100,7 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 		}
 		return $video;
 	}
+	
 
 	public function alternateLink(Media_Item_Row $media)
 	{
