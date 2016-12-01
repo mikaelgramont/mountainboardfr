@@ -65,7 +65,7 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 		        throw new Lib_Exception("Unknown photo subtype: '{$media->mediaSubType}'");
 		        break;
 		}
-		$content = "<a target=\"_blank\" href=\"$src\"><img src = \"$src\" alt=\"$alt\" title=\"$title\" /></a>".PHP_EOL;
+		$content = "<a target=\"_blank\" class=\"media-wrapper photo-wrapper\" href=\"$src\"><img src = \"$src\" alt=\"$alt\" title=\"$title\" /></a>".PHP_EOL;
 		
 		return $content;
 	}
@@ -92,7 +92,7 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
 			case Media_Item_Video::SUBTYPE_VIMEO:
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
-				$video = '<div class="video-wrapper">'.$media->getProviderCode().'</div>';
+				$video = '<div class="media-wrapper video-wrapper">'.$media->getProviderCode().'</div>';
 				break;
 			default:
 				throw new Lib_Exception_Media("Unsupported mediaSubType '$this->mediaSubType' for video '$this->id'");

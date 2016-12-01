@@ -121,7 +121,7 @@ class MediaController extends Lib_Controller_Action
         }
 
         $this->view->isPrefetch = ($this->_request->getHeader('X-moz') == 'prefetch');
-
+		$this->view->pageClass = "display-media";
     	$view = $media->getViewScript();
     	$this->renderScript($view);
 	}

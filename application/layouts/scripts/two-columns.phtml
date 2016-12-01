@@ -34,7 +34,7 @@ $header = $headerHelper->header();
 $wrapperClass = $headerHelper->getEmptyCategoryContentClass();
 echo $this->headScript().PHP_EOL;?>
 </head>
-<body>
+<body class="<?php echo $this->pageClass ?>">
 <?php
 echo $this->imageErrorHandler($this->cspNonce).PHP_EOL;
 echo $header;

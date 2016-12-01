@@ -146,6 +146,8 @@ class Lib_Controller_Action extends Zend_Controller_Action
         } else {
         	$this->view->searchForm = null;
         }
+        
+        $this->view->pageClass = "";
     }
 
     public function postDispatch()

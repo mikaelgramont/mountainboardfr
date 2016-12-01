@@ -385,6 +385,10 @@ header.noCategoryContent #headerContent {
     z-index: 2;
     box-shadow: 0.0625em 0.0625em 0.0625em #404040
 }
+
+.display-media #contentWrapper {
+	display: block;
+}
 .noCategoryContent #contentWrapper {
     margin-top: 16em;
 }
@@ -1224,14 +1228,16 @@ div.mediaTitle h1 {
 }
 .media {
     margin-bottom: 0em;
-    text-align: center;
-    display: inline-block;
-    background: #000;
 }
 .media.photo img {
 	display: table-cell;
+    text-align: center;
+    display: inline-block;
     margin: 0 auto;
     max-width: 100%;
+}
+.media-wrapper {
+    background: #000;
 }
 .video-wrapper {
 	position: relative;
