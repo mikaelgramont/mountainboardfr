@@ -44,7 +44,6 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
         		 */
         		$src = $media->getURI();
         		$src = $this->view->cdnHelper->url($src);
-		        $content = "<div class=\"media photo\"><h1><img src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title\" /></h1></div>".PHP_EOL;
 		        break;
 
 		    case Media_Item_Photo::SUBTYPE_FLICKR:
@@ -60,15 +59,14 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 		    	$src = $this->view->cdnHelper->url($src);
 				$width = $this->_flickrPhoto[FLICKR_PHOTOS_SIZE]->width;
 				$height = $this->_flickrPhoto[FLICKR_PHOTOS_SIZE]->height;
-
-				$content = "<img src = \"$src\" width=\"$width\" height=\"$height\" alt=\"$alt\" title=\"$title\" />".PHP_EOL;
 		        break;
 
 		    default:
 		        throw new Lib_Exception("Unknown photo subtype: '{$media->mediaSubType}'");
 		        break;
 		}
-
+		$content = "<a target=\"_blank\" href=\"$src\"><img src = \"$src\" alt=\"$alt\" title=\"$title\" /></a>".PHP_EOL;
+		
 		return $content;
 	}
 

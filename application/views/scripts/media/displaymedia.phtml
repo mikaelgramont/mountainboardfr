@@ -69,7 +69,7 @@ if($this->media->mediaType == Media_Item::TYPE_PHOTO){
 } else {
 	echo '<div class="media video">'.PHP_EOL;
 }
-echo '<div class="mediaContainer">'.PHP_EOL.$renderer->render($this->media, $editable).'</div>'.PHP_EOL;
+echo $renderer->render($this->media, $editable).PHP_EOL;
 
 echo '<div class="mediaMetadata">'.PHP_EOL;
 

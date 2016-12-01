@@ -243,6 +243,7 @@ a.backLeft {
     float: left;
     width: 5em;
     height: 2.5em;
+    overflow: hidden;
 }
 #facebookLikeButton.media {
     float: none;
@@ -412,7 +413,7 @@ header.noCategoryContent #headerContent {
     text-align: justify
 }
 #firstContent img {
-    max-width: 100%;
+    /* max-width: 100%; */
 }
 footer {
     height: 4.5em;
@@ -1205,9 +1206,9 @@ ul#photoRotationLinks li a {
     width: 100%;
     height: 100%
 }
-div.mediaTitle {
+.mediaTitle {
     max-width: 45em;
-    padding: 0.5em;
+    padding: .75em;
     margin-top: 2em;
     background-color: #A0A0A0;
     border-radius: 1em 1em 0 0;
@@ -1218,29 +1219,32 @@ div.mediaTitle h1 {
     display: inline;
     font-size: 1.25em;
 }
-div.media {
+.mediaInformation {
+	margin-top: .75em;
+}
+.media {
     margin-bottom: 0em;
     text-align: center;
     display: inline-block;
-    min-width: 56em;
+    background: #000;
 }
 div.mediaContainer {
     background-color: #000;
     padding: 1em;
 }
-div.media img {
+.media.photo img {
+	display: table-cell;
     margin: 0 auto;
+    max-width: 100%;
 }
 div.mediaTitle a,
 div.mediaTitle a:visited {
     color: white;
 }
-div.mediaMetadata {
+.mediaMetadata {
     text-align: left;
-    width: 100%;
     padding: 0.5em;
     box-sizing: border-box;
-    /* margin-bottom: 1em; */
     background-color: #F0F0F0;
     border-radius: 0 0 0.5em 0.5em;
 }
