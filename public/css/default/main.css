@@ -418,6 +418,7 @@ header.noCategoryContent #headerContent {
 }
 .article img {
     max-width: 100%;
+    height: auto;
 }
 footer {
     height: 4.5em;
