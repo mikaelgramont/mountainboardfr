@@ -16,8 +16,10 @@ class Lib_View_Helper_OpenGraph extends Zend_View_Helper_Abstract
 	protected function defaultBits_(Data_Row $data)
 	{
 		$this->_metas[self::TITLE] = ucfirst(strip_tags($data->getTitle()));
-		$this->_metas[self::DESCRIPTION] = ucfirst(strip_tags(
-				$data->getDescription()));
+		if(!$data instanceof Dpt_Row && !$data instanceof Country_Row){
+			$this->_metas[self::DESCRIPTION] = ucfirst(strip_tags(
+					$data->getDescription()));
+		}
 		$this->_metas[self::URL] = APP_URL.$data->getLink();
 	}
 	

@@ -10,15 +10,7 @@ Lib.Maps = {
 				mapTypeId:google.maps.MapTypeId.HYBRID,
 				bounds:[],
 				mapElementId:'',
-				
 				icons:{
-					'album':'/images/default/markerAlbum.png',
-					'news':'/images/default/markerNews.png',
-					'photo':'/images/default/markerPhoto.png',
-					'spot':'/images/default/markerSpot.png',
-					'user':'/images/default/markerUser.png',
-					'video':'/images/default/markerVideo.png',
-					'shadow':'/images/default/marker-shadow.png',
 				}
 			}, // End displayRegion.defaultOptions
 			
@@ -56,7 +48,6 @@ Lib.Maps = {
 				var map = window.map = this.map = new google.maps.Map(document.getElementById(options.mapElementId), mapOptions);
 
 			    var updateItems = function(type) {
-			    	//console.log('update '+type);
 			    	Lib.Maps.displayRegion.loadItemsInBounds();
 			    };
 				
@@ -158,8 +149,6 @@ Lib.Maps = {
 			},
 			
 			applyFilter: function(filterElement){
-				//var start = new Date().getTime();
-
 				this.hideInfoWindowsExcept(null);
 				
 				var currentType = $(filterElement).parent().parent().attr('class');
@@ -177,7 +166,6 @@ Lib.Maps = {
 					this.markers[i].setVisible(this.showTypes[this.markers[i].itemType]);
 				}
 				var end = new Date().getTime();
-				//console.log('time taken: '+ (end-start));
 			}, // End displayRegion.applyFilter
 			
 			loadMarkers: function(items){
@@ -186,7 +174,6 @@ Lib.Maps = {
 				
 				Lib.Maps.itemCount = {};
 				
-				//console.log(items.length, "items");
 				for(var i = 0, len = items.length; i < len; i++){
 					var item = items[i],
 						visible = this.showTypes[item.itemType];
@@ -230,10 +217,7 @@ Lib.Maps = {
 						Lib.Maps.itemCount[item.itemType] += 1;
 					}
 					Lib.Maps.displayRegion.itemTypeDisplay[item.itemType] = item.displayType;
-					
 				};
-				
-				//console.log(this.markers.length, "markers total");
 			},  // End displayRegion.loadMarkers
 			
 			addClickListener: function(map, marker, infoWindow){
@@ -270,35 +254,6 @@ Lib.Maps = {
 
 			
 		}, // End displayRegion
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		displayItem: {
 			defaultOptions: {
@@ -525,7 +480,4 @@ Lib.Maps = {
 				}
 			});
 		} // End restrictMapToBounds
-		
-		
-		
 };
