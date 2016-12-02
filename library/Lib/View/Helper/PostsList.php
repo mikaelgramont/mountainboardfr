@@ -162,10 +162,12 @@ class Lib_View_Helper_PostsList extends Zend_View_Helper_Abstract
 
 		$template = <<<HTML
 <li id="$idPrefix$index"$class>$anchor
-    $postInfo
-    <div class="postContent">$content</div>
     <div class="posterInfo">
         $avatar
+    </div>
+	<div>
+    	$postInfo
+    	<div class="postContent">$content</div>
     </div>
 </li>
 HTML;

@@ -88,6 +88,9 @@ a:hover {
 a:active {
     color: #E0E000
 }
+.dataLink{
+	word-break: break-all;	
+}
 .dataLink::before {
     position: relative;
     display: inline-block;
@@ -1115,7 +1118,7 @@ div.topic.paginationControl.bottom {
     margin: 1em 0em 3em 0
 }
 #postsList li {
-    min-height: 8em;
+    display: flex;
     position: relative;
     padding: 0.5em;
     background-color: #EFEFEF;
@@ -1130,7 +1133,6 @@ div.topic.paginationControl.bottom {
     margin-bottom: 0.5em;
 }
 #postsList li div.postInfo {
-    margin-left: 7.5em;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     background-color: #C0C0C0;
@@ -1145,11 +1147,10 @@ div.topic.paginationControl.bottom {
     padding: 0.125em 0.125em 0.125em 1.25em;
 }
 #postsList li div.posterInfo {
-    width: 6em;
+	box-sizing: border-box;
+	padding: 0 .5em;
+    width: 7em;
     height: 10em;
-    position: absolute;
-    left: 0.5em;
-    top: 0.5em;
     text-align: center;
 }
 div.avatar {
