@@ -1,5 +1,4 @@
-<?php
-echo $this->doctype().PHP_EOL; ?>
+<?php echo $this->doctype().PHP_EOL; ?>
 <html lang="<?php echo $this->pageLang ?>">
 <head>
 <?php
@@ -7,17 +6,11 @@ if(!empty($this->keywords)){
 	$this->headMeta()->appendName('keywords', implode(', ', $this->keywords)).PHP_EOL;
 }
 echo $this->headMeta();
-?>
-
-<!--[if IE]><![endif]-->
-<?php
+echo $this->openGraph()->render();
 echo $this->headTitle($this->translate('appBaseTitle')).PHP_EOL;
 $this->prepareCss()->main(APPLICATION_ENV == 'production');
 echo $this->headLink().PHP_EOL;
 ?>
-<!--[if IE]>
-	<link rel="stylesheet" type="text/css" href="<?php echo $this->prepareCss()->ieCss(APPLICATION_ENV == 'production') ?>" />
-<![endif]-->
 <link rel="shortcut icon" href="<?php echo $this->favicons['favicon.ico'] ?>" />
 <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $this->favicons['apple-touch-icon.png'] ?>" />
 <link rel="icon" type="image/png" href="<?php echo $this->favicons['favicon-32x32.png'] ?>" sizes="32x32">

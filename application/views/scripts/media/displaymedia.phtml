@@ -4,6 +4,7 @@ $tags = $this->keywords = $this->media->getTags();
 $editable = $this->media->isEditableBy($this->user, $this->acl);
 $description = $this->media->getDescription();
 $backToAlbum = sprintf($this->translate('backToAlbum'), $this->album->getTitle());
+$this->openGraph()->forMedia($this->media);
 $renderer = $this->mediaDisplay();
 
 if($this->media->mediaType == Media_Item::TYPE_PHOTO){
