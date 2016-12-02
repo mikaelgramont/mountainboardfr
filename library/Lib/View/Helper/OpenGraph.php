@@ -24,7 +24,7 @@ class Lib_View_Helper_OpenGraph extends Zend_View_Helper_Abstract
 		$this->_metas[self::TITLE] = strip_tags($media->getTitle());
 		$this->_metas[self::DESCRIPTION] = strip_tags($media->getDescription());
 		$this->_metas[self::IMAGE] = $media->getThumbnailURI();
-		$this->_metas[self::URL] = $media->getURI();
+		$this->_metas[self::URL] = $media->getLink();
 	}
 	
 	public function render()
