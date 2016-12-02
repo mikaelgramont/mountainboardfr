@@ -6,12 +6,6 @@ class Lib_View_Helper_OpenGraph extends Zend_View_Helper_Abstract
 	const TITLE = "og:title";
 	const URL = "og:url";
 	
-	/*
-<meta property="og:title" content="First test" />
-<meta property="og:description" content="Default kicker. - Design your next kicker in 3D!" />
-<meta property="og:url" content="http://drawmeakicker.com/?id=1" />
-<meta property="og:image" content="http://drawmeakicker.com/images/default-kicker.png" />
-	 */
 	protected $_metas = array();
 	
 	public function openGraph()
@@ -19,21 +13,32 @@ class Lib_View_Helper_OpenGraph extends Zend_View_Helper_Abstract
 		return $this;
 	}
 	
-	public function forMedia($media)
+	protected function defaultBits_(Data_Row $data)
 	{
-		$this->_metas[self::TITLE] = strip_tags($media->getTitle());
-		$this->_metas[self::DESCRIPTION] = strip_tags($media->getDescription());
+		$this->_metas[self::TITLE] = ucfirst(strip_tags($data->getTitle()));
+		$this->_metas[self::DESCRIPTION] = ucfirst(strip_tags(
+				$data->getDescription()));
+		$this->_metas[self::URL] = APP_URL.$data->getLink();
+	}
+	
+	public function forMedia(Media_Item_Row $media)
+	{
+		$this->defaultBits_($media);
 		$this->_metas[self::IMAGE] = $media->getThumbnailURI();
-		$this->_metas[self::URL] = $media->getLink();
+	}
+	
+	public function forArticle($article)
+	{
+		$this->defaultBits_($article);
 	}
 	
 	public function render()
 	{
-		$template = "<meta property=\"%s\" content=\"%s\" />".PHP_EOL;
-		$ret = "";
+		$template = "<meta property=\"%s\" content=\"%s\" />";
+		$bits = array();
 		foreach($this->_metas as $k => $v) {
-			$ret .= sprintf($template, $k, $v);
+			$bits[] = sprintf($template, $k, $v);
 		}
-		return $ret;
+		return implode($bits, PHP_EOL);
 	}
 }

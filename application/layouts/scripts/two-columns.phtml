@@ -5,8 +5,8 @@
 if(!empty($this->keywords)){
 	$this->headMeta()->appendName('keywords', implode(', ', $this->keywords)).PHP_EOL;
 }
-echo $this->headMeta();
-echo $this->openGraph()->render();
+echo $this->headMeta().PHP_EOL;
+echo $this->openGraph()->render().PHP_EOL;
 echo $this->headTitle($this->translate('appBaseTitle')).PHP_EOL;
 $this->prepareCss()->main(APPLICATION_ENV == 'production');
 echo $this->headLink().PHP_EOL;

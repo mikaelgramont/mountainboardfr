@@ -5,6 +5,7 @@ if($this->data instanceof Dpt_Row){
 	$this->headTitle(ucfirst($this->data->getTitle()));
 }
 $this->keywords = $this->data->getTags();
+$this->openGraph()->forArticle($this->data);
 
 echo $this->renderData($this->data, $this->additionalData, $this->hasMap, $this->album);
  
