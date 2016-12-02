@@ -1126,9 +1126,6 @@ div.topic.paginationControl.bottom {
 #postsList li:nth-child(even) {
     background-color: #CFCFCF;
 }
-#postsList li div.postContent {
-    margin-left: 7.5em;
-}
 #postsList li div.postContent p {
     margin-bottom: 0.5em;
 }
