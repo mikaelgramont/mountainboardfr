@@ -64,7 +64,7 @@ echo '<div class="forumHeader card">'.PHP_EOL;
 	echo renderJumpForm($this->forumListForm, $this).PHP_EOL;
 echo '</div>'.PHP_EOL;
 
-echo '<div class="forumNavigation card">'.PHP_EOL;
+echo '<div class="listNavigation card">'.PHP_EOL;
 	echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
 	echo $this->addNewDataLink($this->dataType, $this->forum->id);
 echo '</div>'.PHP_EOL;
@@ -73,7 +73,7 @@ echo'<div class="card">'.PHP_EOL;
 echo '</div>'.PHP_EOL;
 	
 if ($paginationControl) {
-	echo '<div class="forumNavigation card">'.PHP_EOL;
+	echo '<div class="listNavigation card">'.PHP_EOL;
 		echo renderPaginationControl($paginationControl, 'bottom').PHP_EOL;
 	echo '</div>'.PHP_EOL;
 }

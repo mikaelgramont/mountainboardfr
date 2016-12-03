@@ -1016,10 +1016,10 @@ div.regionDetails {
 }
 /** Forums */
 .forumHeader,
-.forumNavigation {
+.listNavigation {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;	
 }
 .forumHeaderTitle {
@@ -1629,11 +1629,6 @@ div.album.paginationControl.bottom {
 }
 div.album.paginationControl.bottom.withComments {
     bottom: 31em;
-}
-div.addPhotoContainer,
-div.addVideo {
-    margin: 1em 0;
-    display: inline-block;
 }
 div.addPhoto,
 div.addVideo {

@@ -106,23 +106,26 @@ function renderAlbum($medias, $view)
 $this->headTitle($title);
 
 echo '<div class="card">'.PHP_EOL;
-echo renderTitle($title, $displayDescription, $editLink).PHP_EOL; 
-echo renderActions($this->album, $this->user, $this).PHP_EOL;
-echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
+	echo renderTitle($title, $displayDescription, $editLink).PHP_EOL; 
+echo '</div>'.PHP_EOL;
+
+echo '<div class="listNavigation card">'.PHP_EOL;
+	echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
+	echo renderActions($this->album, $this->user, $this).PHP_EOL;
 echo '</div>'.PHP_EOL;
 
 echo '<div class="card">'.PHP_EOL;
-echo renderAlbum($medias, $this).PHP_EOL;
+	echo renderAlbum($medias, $this).PHP_EOL;
 echo '</div>'.PHP_EOL;
 
 if ($paginationControl) {
-	echo '<div class="card">'.PHP_EOL;
+	echo '<div class="listNavigation card">'.PHP_EOL;
 	echo renderPaginationControl($paginationControl, 'bottom'.$commentClass).PHP_EOL;
 	echo '</div>'.PHP_EOL;
 }
 
 if ($commentsAllowed) {
 	echo '<div class="card">'.PHP_EOL;
-	echo $this->renderComments($this->comments, $this->album, $this->lastLogin);
+		echo $this->renderComments($this->comments, $this->album, $this->lastLogin);
 	echo '</div>'.PHP_EOL;
 }

@@ -63,16 +63,18 @@ echo '<div class="forumHeader card">'.PHP_EOL;
 	echo '<div class="actionLinkContainer backToTopicLink">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
 echo '</div>'.PHP_EOL;
 
-echo '<div class="forumNavigation card">'.PHP_EOL;
-	echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
-echo '</div>'.PHP_EOL;
+if ($paginationControl) {
+	echo '<div class="listNavigation card">'.PHP_EOL;
+		echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
+	echo '</div>'.PHP_EOL;
+}
 
 echo '<div class="forumPostList card">'.PHP_EOL;
 	echo $this->forumPostList($this->topic, $this->posts, $this->page, $this->lastLogin);
 echo '</div>'.PHP_EOL;
 
 if ($paginationControl) {
-	echo '<div class="forumNavigation card">'.PHP_EOL;
+	echo '<div class="listNavigation card">'.PHP_EOL;
 		echo renderPaginationControl($paginationControl, 'bottom').PHP_EOL;
 		if (!$userCanPost) {
 			echo $this->addNewDataLink($this->dataType, $this->topic->id);
@@ -81,7 +83,7 @@ if ($paginationControl) {
 }
 
 if ($userCanPost) {
-	echo '<div class="forumNavigation card">'.PHP_EOL;
+	echo '<div class="listNavigation card">'.PHP_EOL;
 		echo $this->form->render();
 	echo '</div>'.PHP_EOL;
 }

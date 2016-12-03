@@ -158,7 +158,7 @@ class Lib_View_Helper_PostsList extends Zend_View_Helper_Abstract
 
 		$anchor = "<a name=\"$anchorPrefix$postId\"></a>";
 
-		$postInfo = empty($info) ? '' : "<div class=\"postInfo$postInfoClass\">$info</div>";
+		$postInfo = empty($info) ? '' : "<div class=\"postInfo deemphasized-text$postInfoClass\">$info</div>";
 
 		$template = <<<HTML
 <li id="$idPrefix$index"$class>$anchor
