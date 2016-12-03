@@ -30,6 +30,7 @@ if(!empty($this->nextMedia)){
 		'href' => $this->nextMedia->getLink()
 	));
 }
+echo '<div class="card">'.PHP_EOL;
 echo '	<div><div id="backToAlbum" class="actionLinkContainer">'.$this->itemLink(array('name'=>$backToAlbum, 'link'=>$this->album->getLink(), 'itemType' => Constants_DataTypes::MEDIAALBUM), 'dataLink album').'</div></div>'.PHP_EOL;
 
 if(!empty($this->previousMedia) || !empty($this->nextMedia)){
@@ -46,7 +47,7 @@ if(!empty($this->previousMedia) || !empty($this->nextMedia)){
 	}
 	echo '	</div>'.PHP_EOL;
 }
-
+echo '</div>'.PHP_EOL;
 ?>
 <div class="mediaTitle"><?php
 echo '<h1 id="mainTitle">'.ucfirst($this->media->getTitle()).'</h1>';
@@ -64,6 +65,7 @@ if($this->media->mediaType == Media_Item::TYPE_PHOTO && $editable){
 ?>
 </div>
 <?php
+echo '<div class="card" style="margin-top:0">'.PHP_EOL;
 
 if($this->media->mediaType == Media_Item::TYPE_PHOTO){
 	echo '<div class="media photo">'.PHP_EOL;
@@ -130,5 +132,7 @@ if($this->media->hasLocation()){
 }
 echo '	</div>'.PHP_EOL;
 echo '</div>'.PHP_EOL;
-
-echo $this->renderComments($this->comments, $this->media, $this->lastLogin);
+echo '</div>'.PHP_EOL;
+echo '<div class="card">'.PHP_EOL;
+	echo $this->renderComments($this->comments, $this->media, $this->lastLogin);
+echo '</div>'.PHP_EOL;
