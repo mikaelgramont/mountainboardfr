@@ -20,7 +20,6 @@ class Lib_View_Helper_ForumPostList extends Zend_View_Helper_Abstract
         $firstSubmitterId = $topic->getSubmitter()->getId();
 
         $content = $this->view->postsList($posts, $firstSubmitterId, $params, $lastLogin, Lib_View_Helper_PostsList::TYPE_FORUMPOSTS );
-        $content .= '<div class="clear"></div>'.PHP_EOL;
         return $content;
     }
 

@@ -55,17 +55,20 @@ h6 {
     font-size: 1em;
 }
 h1.pageTitle,
-h1.forumTitle,
-h1.topicTitle,
 h1.dataEdit,
 h1.dataAdd,
 h1.blogTitle,
-h2.blogDescription,
-h1.albumTitle {
+h2.blogDescription {
     display: block;
     font-size: 2em;
     margin: 0 0 0.5em 0;
 }
+.albumTitle,
+.topicTitle,
+.forumTitle {
+	font-size: 2em;
+}
+
 .deemphasized-text {
 	font-size: .8em;
 }
@@ -89,7 +92,7 @@ a:active {
     color: #E0E000
 }
 .dataLink{
-	word-break: break-all;	
+	word-break: break-word;	
 }
 .dataLink::before {
     position: relative;
@@ -114,6 +117,9 @@ span.author {
 div.posterInfo a.user::before {
     width: 0;
     background: none;
+}
+.posterInfo a.user {
+	word-break: break-all;
 }
 a.spot::before {
     width: 0.875em;
@@ -382,11 +388,15 @@ header.noCategoryContent #headerContent {
     height: 3.875em;
 }
 #contentWrapper {
-    display: flex;
     position: relative;
-    background-color: #f8f8f8;
     z-index: 2;
-    box-shadow: 0.0625em 0.0625em 0.0625em #404040
+}
+
+.card {
+    background-color: #f8f8f8;
+	box-shadow: 0.0625em 0.0625em 0.0625em #404040;	
+    padding: 1em;
+    margin: 1em 0;
 }
 
 .display-media #contentWrapper {
@@ -394,9 +404,6 @@ header.noCategoryContent #headerContent {
 }
 .noCategoryContent #contentWrapper {
     margin-top: 16em;
-}
-.oneColumn {
-    padding: 1em;
 }
 #firstContent,
 #secondContent,
@@ -406,10 +413,13 @@ header.noCategoryContent #headerContent {
 .oneColumn #firstContent {
     position: relative;
 }
+
+.twoColumns {
+	display: flex;
+}
 .twoColumns #firstContent {
     width: 62.1%;
     position: relative;
-    padding: 1em;
 }
 .twoColumns #secondContent {
     width: 37.9%;
@@ -785,7 +795,7 @@ div.paginationControl a {
 
 #userInformation {
     width: 29em;
-    min-height: 25em;
+    min-height: 29em;
     margin: 1em 0;
     position: relative
 }
@@ -1005,20 +1015,26 @@ div.regionDetails {
     margin-right: 2em;
 }
 /** Forums */
-
-#forumListMain {
-    position: absolute;
-    top: 0em;
-    right: 1em;
+.forumHeader,
+.forumNavigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;	
 }
-ul#forumsList {
-    background-color: #DFDFDF;
-    margin-top: 2em;
+.forumHeaderTitle {
+	display: flex;
+	align-items: center;
+}
+.forumTitle {
+	margin-right: 1em;
+}
+.forumModeratorList {
+	display: inline-block;
 }
 ul#forumsList li.category {
     padding: 0.5em 0.5em 1.5em;
     position: relative;
-    background-color: #E0E0E0;
 }
 ul#forumsList li.category h2 {
     font-size: 1.5em;
@@ -1030,7 +1046,8 @@ ul#forumsList li.category {
     padding: 1em;
 }
 ul#forumsList li.forum {
-    padding: 1em 1em 1em 2em;
+	margin-left: 1em;
+    padding: 1em;
 }
 ul#forumsList li.forum:nth-child(odd) {
     background-color: #BFBFBF;
@@ -1047,35 +1064,18 @@ ul#forumsList li ul li p.description {
 ul.forumModeratorList li {
     display: inline;
 }
+.forumMetadata {
+	margin-top: .25em;
+}
+
 /** Forum*/
 
-#forumTools {
-    height: 3em;
-    margin: 2em 0 1em;
-    position: relative;
-}
 div.addForum_Topic {
     float: left;
     margin-right: 1em;
 }
-#forumList {
-    float: left;
-    margin-right: 1em;
-}
-div.forum.paginationControl.top {
-    position: absolute;
-    right: 0em;
-    top: 0em;
-}
-div.moderatorInfo {
-    position: absolute;
-    top: 0em;
-    right: 1em;
-}
 ul#topics {
-    margin-bottom: 5em;
     background-color: #DFDFDF;
-    clear: both
 }
 ul#topics li {
     padding: 1em 1em 1em 2em;
@@ -1090,29 +1090,17 @@ ul#topics li:last-child {
 ul#topics li:nth-child(even) {
     background-color: #BFBFBF;
 }
-div.forum.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: -5em;
-}
 /** Topic - Posts List */
 
-div.topic.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 4.5em;
-}
-div.topic.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 34444em;
-}
 #register.forum_topic,
 #register.forum_post {
     position: inherit;
 }
+.forumPostList {
+	padding: 0;
+}
 .backToTopicLink {
-    margin-top: 1em;
+	min-width: 14em;
 }
 #postsList {
     margin: 1em 0em 3em 0
@@ -1149,6 +1137,9 @@ div.topic.paginationControl.bottom {
     width: 7em;
     height: 10em;
     text-align: center;
+}
+.postWrapper {
+	width: 100%;
 }
 div.avatar {
     width: 6em;
@@ -2281,12 +2272,6 @@ p.homePageLoginTitle {
     }
     #topMenu a img {
         display: none;
-    }
-    .category ul {
-        padding: 0 1em;
-    }
-    .category li {
-        margin: 1em;
     }
     #currentCategoryMenu {
         display: none;

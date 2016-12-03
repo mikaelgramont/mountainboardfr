@@ -1,6 +1,25 @@
 <?php
-$this->headTitle(ucfirst($this->translate('forums')));
-?>
-<h1 id="mainTitle" class="pageTitle"><?php echo ucfirst($this->translate('forums')) ?></h1>
-<?php
-echo $this->forumsList($this->forums, $this->forumListForm, $this->lastLogin);
+$title = ucfirst($this->translate('forums'));
+
+function renderTitle($title)
+{
+	$titleTemplate = '<h1 id="mainTitle" class="forumTitle">%s</h1>';
+	return sprintf($titleTemplate, ucfirst($title)).PHP_EOL;
+}
+
+function renderJumpForm($form, $view)
+{
+	$ret = '<div class="actionLinkContainer" id="forumListMain">'.PHP_EOL;
+	$ret .= ucfirst($view->translate('goToForum')).' '.$form.PHP_EOL;
+	$ret .= '</div>'.PHP_EOL;
+	return $ret;
+}
+
+$this->headTitle($title);
+
+echo '<div class="card forumHeader">'.PHP_EOL;
+echo renderTitle($title).PHP_EOL;
+echo renderJumpForm($this->forumListForm, $this).PHP_EOL;
+echo '</div>'.PHP_EOL;
+
+echo $this->forumsList($this->forums, $this->lastLogin).PHP_EOL;

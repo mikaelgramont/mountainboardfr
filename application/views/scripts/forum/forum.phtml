@@ -1,5 +1,6 @@
 <?php
-$pagination = $this->paginationControl(
+$title = ucfirst($this->forum->getTitle());
+$paginationControl = $this->paginationControl(
 	$this->topics,
 	null,
 	null,
@@ -8,32 +9,71 @@ $pagination = $this->paginationControl(
 		'id' => $this->forum->id
 	)
 );
-$this->headTitle(ucfirst($this->forum->getTitle()));
-echo '<h1 id="mainTitle" class="forumTitle pageTitle">Forum: '.ucfirst($this->forum->getTitle()).'</h1>'.PHP_EOL;
-if($this->moderators){
 
-	echo '<div class="moderatorInfo">'.PHP_EOL;
-	echo ucfirst($this->translate('forumModeratorsList')).': '.PHP_EOL;
-	echo '	<ul class="forumModeratorList">'.PHP_EOL;
-	foreach($this->moderators as $moderator){
-		echo '		<li>'.$this->userLink($moderator).'</li>'.PHP_EOL;
+function renderTitle($title)
+{
+	$titleTemplate = '<h1 class="forumTitle">%s</h1>';
+	return sprintf($titleTemplate, $title).PHP_EOL;
+}
+
+function renderJumpForm($form, $view)
+{
+	$ret = '<div class="forumHeaderJump">'.PHP_EOL;
+	$ret .= '	<div class="actionLinkContainer" id="forumListMain">'.PHP_EOL;
+	$ret .= 		ucfirst($view->translate('goToForum')).' '.$form.PHP_EOL;
+	$ret .= '	</div>'.PHP_EOL;
+	$ret .= '</div>'.PHP_EOL;
+	return $ret;
+}
+
+function renderPaginationControl($paginationControl, $extraClasses)
+{
+	if (empty($paginationControl)) {
+		return '';
 	}
-	echo '	</ul>'.PHP_EOL;
-	echo '</div>'.PHP_EOL;
-}
-?>
-<div id="forumTools">
-<?php
-echo $this->addNewDataLink($this->dataType, $this->forum->id);
-echo '<div class="actionLinkContainer" id="forumList">'.ucfirst($this->translate('goToForum')).' '.$this->forumListForm.'</div>'.PHP_EOL;
-if($pagination){
-	echo '<div class="forum paginationControl top">'.PHP_EOL.$pagination.PHP_EOL.'</div>'.PHP_EOL;
-}
-?>
-</div>
-<?php
-echo $this->forumTopicList($this->topics, $this->lastLogin);
 
-if($pagination){
-	echo '<div class="forum paginationControl bottom">'.PHP_EOL.$pagination.PHP_EOL.'</div>'.PHP_EOL;
+	$ret = "<div class=\"forum paginationControl $extraClasses\">".PHP_EOL;
+	$ret .= '	'.$paginationControl.PHP_EOL;
+	$ret .='</div>'.PHP_EOL;
+	return $ret;
+}
+
+function renderModerators($moderators, $view)
+{
+	if(!$moderators) {
+		return '';
+	}
+	$ret = '<div class="moderatorInfo">'.PHP_EOL;
+	$ret .= ucfirst($view->translate('forumModeratorsList')).': '.PHP_EOL;
+	$ret .='	<ul class="forumModeratorList">'.PHP_EOL;
+	foreach($moderators as $moderator){
+		$ret .= '		<li>'.$view->userLink($moderator).'</li>'.PHP_EOL;
+	}
+	$ret .= '	</ul>'.PHP_EOL;
+	$ret .= '</div>'.PHP_EOL;
+	return $ret;
+}
+
+$this->headTitle($title);
+
+echo '<div class="forumHeader card">'.PHP_EOL;
+	echo '<div class="forumHeaderTitle">'.PHP_EOL;
+		echo renderTitle($title).PHP_EOL;
+		echo renderModerators($this->moderators, $this).PHP_EOL;
+	echo '</div>'.PHP_EOL;
+	echo renderJumpForm($this->forumListForm, $this).PHP_EOL;
+echo '</div>'.PHP_EOL;
+
+echo '<div class="forumNavigation card">'.PHP_EOL;
+	echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
+	echo $this->addNewDataLink($this->dataType, $this->forum->id);
+echo '</div>'.PHP_EOL;
+echo'<div class="card">'.PHP_EOL;
+	echo $this->forumTopicList($this->topics, $this->lastLogin);
+echo '</div>'.PHP_EOL;
+	
+if ($paginationControl) {
+	echo '<div class="forumNavigation card">'.PHP_EOL;
+		echo renderPaginationControl($paginationControl, 'bottom').PHP_EOL;
+	echo '</div>'.PHP_EOL;
 }

@@ -1,34 +1,89 @@
 <?php
-$pagination = $this->paginationControl($this->posts, null, null, array('name' => $this->topic->getCleanTitle(), 'id' => $this->topic->id));
-$this->headTitle(ucfirst($this->topic->getTitle()));
-
-echo '<h1 id="mainTitle" class="topicTitle">'.ucfirst($this->topic->getTitle());
-if($this->topic->isEditableBy($this->user, $this->acl)){
-	echo $this->itemStatus($this->topic, true);
-	echo $this->editLink($this->topic);
-    if(count($this->topic->getPosts()) == 1){
-        echo $this->deleteLink($this->topic);
-    }
-}
-echo '</h1>'.PHP_EOL;
-
+$userCanPost = !in_array($this->user->status,
+	array(
+		User::STATUS_BANNED,
+		User::STATUS_GUEST,
+		User::STATUS_PENDING		
+	)
+);
+$title = ucfirst($this->topic->getTitle());
+$paginationControl = $this->paginationControl(
+	$this->posts,
+	null,
+	null,
+	array(
+		'name' => $this->topic->getCleanTitle(),
+		'id' => $this->topic->id
+	)
+);
 $forum = $this->topic->getForum();
 $linkInfo = array(
 	'itemType' => $forum->getItemType(),
 	'link' => $forum->getLink(),
 	'name' => sprintf($this->translate('backToForum'), $forum->getTitle())
 );
-echo '<div class="actionLinkContainer backToTopicLink">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
 
-echo $this->forumPostList($this->topic, $this->posts, $this->page, $this->lastLogin);
-
-if($pagination){
-	echo '<div class="topic paginationControl top">'.PHP_EOL.$pagination.PHP_EOL.'</div>'.PHP_EOL;
-	echo '<div class="topic paginationControl bottom">'.PHP_EOL.$pagination.PHP_EOL.'</div>'.PHP_EOL;
+function renderTitle($title)
+{
+	$titleTemplate = '<h1 id="mainTitle" class="topicTitle">%s</h1>';
+	return sprintf($titleTemplate, $title).PHP_EOL;
 }
 
-if(in_array($this->user->status, array(User::STATUS_BANNED, User::STATUS_GUEST, User::STATUS_PENDING))){
-	echo $this->addNewDataLink($this->dataType, $this->topic->id);
-} else {
-	echo $this->form->render();
+function renderTopicActions($topic, $user, $view, $acl)
+{
+	if($topic->isEditableBy($user, $acl)){
+		echo $view->itemStatus($topic, true);
+		echo $view->editLink($topic);
+		if(count($topic->getPosts()) == 1){
+			echo $view->deleteLink($topic);
+		}
+	}
 }
+
+function renderPaginationControl($paginationControl, $extraClasses)
+{
+	if (empty($paginationControl)) {
+		return '';
+	}
+
+	$ret = "<div class=\"topic paginationControl $extraClasses\">".PHP_EOL;
+	$ret .= '	'.$paginationControl.PHP_EOL;
+	$ret .='</div>'.PHP_EOL;
+	return $ret;
+}
+
+$this->headTitle($title);
+
+
+echo '<div class="forumHeader card">'.PHP_EOL;
+	echo '<div class="forumHeaderTitle">'.PHP_EOL;
+		echo renderTitle($title).PHP_EOL;
+		echo renderTopicActions($this->topic, $this->user, $this, $this->acl).PHP_EOL;
+	echo '</div>'.PHP_EOL;
+	echo '<div class="actionLinkContainer backToTopicLink">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
+echo '</div>'.PHP_EOL;
+
+echo '<div class="forumNavigation card">'.PHP_EOL;
+	echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
+echo '</div>'.PHP_EOL;
+
+echo '<div class="forumPostList card">'.PHP_EOL;
+	echo $this->forumPostList($this->topic, $this->posts, $this->page, $this->lastLogin);
+echo '</div>'.PHP_EOL;
+
+if ($paginationControl) {
+	echo '<div class="forumNavigation card">'.PHP_EOL;
+		echo renderPaginationControl($paginationControl, 'bottom').PHP_EOL;
+		if (!$userCanPost) {
+			echo $this->addNewDataLink($this->dataType, $this->topic->id);
+		}
+	echo '</div>'.PHP_EOL;
+}
+
+if ($userCanPost) {
+	echo '<div class="forumNavigation card">'.PHP_EOL;
+		echo $this->form->render();
+	echo '</div>'.PHP_EOL;
+}
+
+

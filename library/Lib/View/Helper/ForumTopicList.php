@@ -22,8 +22,6 @@ class Lib_View_Helper_ForumTopicList extends Zend_View_Helper_Abstract
         if($params['containerClass']){
             $params['containerClass'] = " class='{$params['containerClass']}'";
         }
-        
-
 
         $content = "<ul id='{$params['containerId']}'{$params['containerClass']}>".PHP_EOL;
         foreach($topics as $topic){
@@ -68,12 +66,16 @@ class Lib_View_Helper_ForumTopicList extends Zend_View_Helper_Abstract
                 $content .= "   ".ucfirst($topic->getTitle())."$statusString$editLink".PHP_EOL;
             }
 
-            if($params['showPostCountInfo']){
-                $content .= '   '.$this->_getPostsCount($topic, $params['postCountInfoClass']).PHP_EOL;
-            }
-
-            if($params['showLastPostInfo']){
-                $content .= '   '.$this->_getLastPostInformation($topic, $params['lastPostInfoClass']).PHP_EOL;
+            if($params['showPostCountInfo'] || $params['showLastPostInfo']) {
+            	$content .= '<div class="deemphasized-text">'.PHP_EOL;
+            	if($params['showPostCountInfo']){
+            		$content .= '   '.$this->_getPostsCount($topic, $params['postCountInfoClass']).PHP_EOL;
+            	}
+            	
+            	if($params['showLastPostInfo']){
+            		$content .= '   '.$this->_getLastPostInformation($topic, $params['lastPostInfoClass']).PHP_EOL;
+            	}
+            	$content .= '</div>'.PHP_EOL;
             }
 
             $content .= "</li>".PHP_EOL;

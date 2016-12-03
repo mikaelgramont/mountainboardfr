@@ -32,7 +32,7 @@ echo $this->imageErrorHandler($this->cspNonce).PHP_EOL;
 echo $header;
 ?>
 	<div id="wrapper" <?php echo $wrapperClass ?>>
-		<div id="contentWrapper" aria-labelledby="mainTitle" class="twoColumns">
+		<div id="contentWrapper" aria-labelledby="mainTitle" class="twoColumns card">
 			<main id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
     		</main>

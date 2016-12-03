@@ -4,11 +4,10 @@ class Lib_View_Helper_ForumsList extends Zend_View_Helper_Abstract
 	/**
 	 * Builds the list of forums
 	 */
-	public function forumsList(Zend_Db_Table_Rowset $forums, Forum_List_Form $form, $lastLogin = null)
+	public function forumsList(Zend_Db_Table_Rowset $forums, $lastLogin = null)
 	{
 		$category = null;
-		$content = '<div class="actionLinkContainer" id="forumListMain">'.ucfirst($this->view->translate('goToForum')).' '.$form.'</div>'.PHP_EOL;
-		$content .= '<ul id="forumsList">'.PHP_EOL;
+		$content = '<ul id="forumsList">'.PHP_EOL;
 	 	
 		foreach($forums as $index => $forum){
 			if($forum->category != $category){
@@ -17,7 +16,7 @@ class Lib_View_Helper_ForumsList extends Zend_View_Helper_Abstract
 					$content .= '    </li>'.PHP_EOL;
 				}
 				$category = $forum->category;
-				$content .= '    <li class="category">'.PHP_EOL;
+				$content .= '    <li class="category card">'.PHP_EOL;
 				$content .= '    <h2>'.ucfirst(Forum::$categories[$category]).'</h2>'.PHP_EOL;
 				$content .= '        <ul>'.PHP_EOL;
 			}
@@ -28,8 +27,10 @@ class Lib_View_Helper_ForumsList extends Zend_View_Helper_Abstract
             }			
 			$content .= "            <li class=\"$class\">".PHP_EOL;
     		$content .= '                <h3 class="title"><a href="'.$forum->getLink().'">'.$forum->getTitle().' - <span class="description">'.stripslashes($forum->getDescription()).'</span></a></h3>'.PHP_EOL;
-    		$content .= '				 <p class="topicsCount">'.$this->_getTopicsCount($forum).'</p>'.PHP_EOL;
-    		$content .= '				 <p class="lastPostInfo">'.$this->_getLastPostInfo($forum).'</p>'.PHP_EOL;
+    		$content .= '				 <div class="forumMetadata deemphasized-text">'.PHP_EOL;
+    		$content .= '				 	<span class="topicsCount">'.$this->_getTopicsCount($forum).'</span>'.PHP_EOL;
+    		$content .= '				 	<span class="lastPostInfo">'.$this->_getLastPostInfo($forum).'</span>'.PHP_EOL;
+    		$content .= '				 </div>'.PHP_EOL;
     		$content .= '            </li>'.PHP_EOL;
 		}
 		

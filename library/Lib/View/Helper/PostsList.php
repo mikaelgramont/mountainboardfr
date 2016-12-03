@@ -165,7 +165,7 @@ class Lib_View_Helper_PostsList extends Zend_View_Helper_Abstract
     <div class="posterInfo">
         $avatar
     </div>
-	<div>
+	<div class="postWrapper">
     	$postInfo
     	<div class="postContent">$content</div>
     </div>
