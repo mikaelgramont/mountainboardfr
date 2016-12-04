@@ -1,9 +1,9 @@
 <?php
 require_once('ApplicationTest.php');
 
-class Google_ApiTest extends ApplicationTest
+class Google_Api_YoutubeTest extends ApplicationTest
 {
-	public function testYouTubeVideo()
+	public function testVideo()
 	{
 		$apiKey = 'somekey';
 		$videoId = 'abc123';
@@ -16,10 +16,10 @@ class Google_ApiTest extends ApplicationTest
 		$uri .= '&key='.$apiKey;
 		$httpClient = $this->_mockClient($uri, $responseJson);
 		
-		$apiClient = new Google_Api($apiKey, $httpClient);
+		$apiClient = new Google_Api_Youtube($apiKey, $httpClient);
 		
 		$this->assertEquals(
-			$apiClient->getYouTubeVideoInfo($videoId),
+			$apiClient->getVideoInfo($videoId),
 			$responseObj
 		);
 	}

@@ -28,7 +28,7 @@ function renderPaginationControl($paginationControl, $extraClasses)
 		return '';
 	}
 		
-	$ret = "<div class=\"album paginationControl $extraClasses\">".PHP_EOL;
+	$ret = "<div class=\"albumPagination paginationControl $extraClasses\">".PHP_EOL;
 	$ret .= '	'.$paginationControl.PHP_EOL;
 	$ret .='</div>'.PHP_EOL;
 	return $ret;
@@ -92,11 +92,11 @@ function renderActions($album, $user, $view)
 
 function renderAlbum($medias, $view)
 {
-	$ret = '<ul class="album">'.PHP_EOL;
+	$ret = '<ul class="albumList">'.PHP_EOL;
 	foreach($medias as $media){
-		$class = $media['mediaType'] == Media_Item::TYPE_VIDEO ? 'video' : 'photo'; 
+		$class = $media['mediaType'] == Media_Item::TYPE_VIDEO ? 'video' : 'photo';
 		$ret .= "<li class=\"$class\">".PHP_EOL;
-		$ret .= $view->mediaThumbnail($media, true, true).PHP_EOL;
+		$ret .= $view->mediaThumbnail($media, null, null, true);		
 		$ret .= '</li>'.PHP_EOL;
 	}
 	$ret .= '</ul>'.PHP_EOL;
@@ -114,7 +114,7 @@ echo '<div class="listNavigation card">'.PHP_EOL;
 	echo renderActions($this->album, $this->user, $this).PHP_EOL;
 echo '</div>'.PHP_EOL;
 
-echo '<div class="card">'.PHP_EOL;
+echo '<div class="card albumCard">'.PHP_EOL;
 	echo renderAlbum($medias, $this).PHP_EOL;
 echo '</div>'.PHP_EOL;
 

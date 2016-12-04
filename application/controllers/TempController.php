@@ -9,7 +9,108 @@ class TempController extends Lib_Controller_Action
     	}
     }
 
-	public function updateLocationsAction()
+    public function genmorephotothumbsAction()
+    {
+    	set_time_limit(300);
+    	
+    	$table = new Media_Item_Photo();
+    	$items = $table->fetchAll('mediaType = "photo"');
+    	$photos = 0;
+    	$errors = array();
+    	foreach ($items as $item) {
+			$photos++;
+			list($status, $error) = $this->_processPhoto($item);
+    		if ($status != true) {
+				$errors[] = $error;    					
+    		}
+    	}
+    	echo sprintf("<div>Photos: %s</div>", $photos);
+    	echo sprintf("<div>Errors: <pre>%s</pre></div>", print_r($errors, true));
+    	exit();
+    }
+    
+    public function genmorevideothumbsAction()
+    {
+    	set_time_limit(300);
+    	 
+    	$table = new Media_Item_Video();
+    	$where = 'mediaType = "video"';
+    	$items = $table->fetchAll($where, null);
+    	$videos = 0;
+    	$errors = array();
+    	foreach ($items as $item) {
+			$videos++;
+    		list($status, $error) = $this->_processVideo($item);
+    		if ($status != true) {
+    			$errors[] = $error;
+    		}
+    	}
+    	echo sprintf("<div>Videos: %s</div>", $videos);
+    	echo sprintf("<div>Errors: <pre>%s</pre></div>", print_r($errors, true));
+    	exit();
+    }
+    
+    protected function _processPhoto(Media_Item_Row $item)
+    {
+    	return array(true, 'already done');
+    	try {
+    		$original = new File_Photo(APP_MEDIA_DIR.'/'.$item->getURI());
+    		$item->createAllThumbnailsFromOriginal($original);
+    	} catch (Exception $e) {
+    		return array(false, $e->getMessage());
+    	}
+    	return array(true, null);
+    }
+    
+    protected function _processVideo(Media_Item_Row $item)
+    {
+    	//return array(false, 'not ready');
+    	
+    	try {
+    		$targetName = Utils::cleanStringForFilename(
+    			$item->title) . '_' . uniqid();
+    		$tempFile = APP_MEDIA_DIR_RAW.DIRECTORY_SEPARATOR.'videothumbs'.
+    				DIRECTORY_SEPARATOR.$targetName;
+    		
+    		$client = new Zend_Http_Client();
+    		switch($item->mediaSubType) {
+    			case Media_Item_Video::SUBTYPE_YOUTUBE:
+    				$apiClient = new Google_Api_Youtube(GOOGLE_APIS_KEY, $client);
+    				break;
+    			case Media_Item_Video::SUBTYPE_DAILYMOTION:
+    				$apiClient = new Dailymotion_Api($client);
+    				break;
+    			case Media_Item_Video::SUBTYPE_VIMEO:
+    				$apiClient = new Vimeo_Api(VIMEO_TOKEN, $client);
+    				break;
+    			default:
+    				throw new Lib_Exception_Media("Unsupported video provider: '".
+      					$item->mediaSubType."'");
+    				break;
+    		}
+   			$info = $apiClient->getThumbnailInfo($item->uri,
+   				Media_Item_Row::SIZE_MEDIUM);
+   			file_put_contents($tempFile, file_get_contents($info['thumbnailUri']));
+   			
+    		$original = new File_Photo($tempFile);
+    		$original->renameAfterSubType();    		
+    		$thumbs = $item->createAllThumbnailsFromOriginal($original);
+    		$original->delete();
+    		
+    		$smallThumb = $thumbs[Media_Item_Row::SIZE_SMALL]; 
+    		$item->thumbnailUri = $smallThumb->getName();
+    		$item->thumbnailWidth = $smallThumb->getWidth();
+    		$item->thumbnailHeight = $smallThumb->getHeight();
+    		$item->save();
+		} catch (Exception $e) {
+    		return array(false, sprintf(
+    			"Video %s:\n%s".PHP_EOL, $item->getId(), $e->getMessage()
+    		));
+    	}
+    	return array(true, null);
+    }
+    
+    public function updateLocationsAction()
 	{
 		/**
 		 * @todo:

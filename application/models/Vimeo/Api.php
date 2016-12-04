@@ -1,5 +1,5 @@
 <?php
-class Vimeo_Api
+class Vimeo_Api implements VideoThumbnailFetcherInterface
 {
 	const BASE_URI = 'https://api.vimeo.com/';
 	
@@ -15,6 +15,18 @@ class Vimeo_Api
 	{
 		$data = $this->_makeRequest(self::VIDEO_RESOURCE . '/'. $id);
 		return $data;
+	}
+	
+	public function getThumbnailInfo($id, $size)
+	{
+		$ret = array();
+		$videoData = $this->getVideoInfo($id);
+		$ret['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_VIMEO_THUMBNAIL;
+		$thumbnail = $videoData['pictures'][0];
+		$ret['thumbnailUri'] = $thumbnail['link'];
+		$ret['thumbnailWidth'] = $thumbnail['width'];
+		$ret['thumbnailHeight'] = $thumbnail['height'];
+		return $ret;
 	}
 	
 	private function _makeRequest($resource)

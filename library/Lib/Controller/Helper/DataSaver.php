@@ -17,57 +17,21 @@ class Lib_Controller_Helper_DataSaver extends Zend_Controller_Action_Helper_Abst
      * @return int
      * @throws Lib_Exception
      */
-    public function save(Data_Row $dataRow, Data_Form $form, array $data, User_Row $user, Lib_Acl $acl, array $disregardUpdates = array())
+    public function save(Data_Row $dataRow, Data_Form $form, array $data,
+    		User_Row $user, Lib_Acl $acl, array $disregardUpdates = array())
     {
     	$reflection = new ReflectionClass ($dataRow);
 
-    	// Clearing spot album caches if the data moved to  new spot
-    	if($reflection->implementsInterface('Data_Row_SpotInterface') && $dataRow->spot != $data['spot']){
-    		if($spot = $dataRow->getSpot() && $spot instanceof Spot_Row){
-				$oldSpotAlbumId = $spot()->getAlbum()->getId();
-				$oldSpotAlbumCacheId = Media_Album::getCacheId($oldSpotAlbumId);
-				$dataRow->getCache()->remove($oldSpotAlbumCacheId);
-    		}
-
-            $spotTable = new Spot();
-            if(strpos($data['spot'], NOREALDATA_MARK) === false){
-	            $res = $spotTable->find($data['spot']);
-	            if($res){
-	            	$newSpot = $res->current();
-	            	if($newSpot){
-	            		$newSpotAlbumId = $newSpot->getAlbum()->getId();
-	            		$newSpotAlbumCacheId = Media_Album::getCacheId($newSpotAlbumId);
-	            		$newSpot->getCache()->remove($newSpotAlbumCacheId);
-	            	}
-	            }
-            }
-            $spotCacheId = $dataRow->getParentRowCacheId('Spot');
-            $dataRow->getCache()->remove($spotCacheId);
+    	// Clearing spot album caches if the data moved to new spot
+    	if($reflection->implementsInterface('Data_Row_SpotInterface') &&
+    			$dataRow->spot != $data['spot']){
+    		$this->_saveSpot($dataRow);
         }
 
-    	// Clearing trick album caches if the data moved to  new trick
-    	if($reflection->implementsInterface('Data_Row_TrickInterface') && $dataRow->trick != $data['trick']){
-            if($trick = $dataRow->getTrick() && $trick instanceof Trick_Row){
-				$oldTrickAlbumId = $trick->getAlbum()->getId();
-				$oldTrickAlbumCacheId = Media_Album::getCacheId($oldTrickAlbumId);
-				$dataRow->getCache()->remove($oldTrickAlbumCacheId);
-            }
-
-            $trickTable = new Trick();
-            if(strpos($data['trick'], NOREALDATA_MARK) === false){
-	            $res = $trickTable->find($data['trick']);
-	            if($res){
-	            	$newTrick = $res->current();
-	            	if($newTrick){
-	            		$newTrickAlbumId = $newTrick->getAlbum()->getId();
-	            		$newTrickAlbumCacheId = Media_Album::getCacheId($newTrickAlbumId);
-	            		$newTrick->getCache()->remove($newTrickAlbumCacheId);
-	            	}
-	            }
-            }
-
-            $trickCacheId = $dataRow->getParentRowCacheId('Trick');
-            $dataRow->getCache()->remove($trickCacheId);
+    	// Clearing trick album caches if the data moved to new trick
+    	if($reflection->implementsInterface('Data_Row_TrickInterface') &&
+    			$dataRow->trick != $data['trick']){
+    		$this->_saveTrick($dataRow);
         }
 
         // Update of fields
@@ -90,7 +54,8 @@ class Lib_Controller_Helper_DataSaver extends Zend_Controller_Action_Helper_Abst
         }
 
         // Saving
-        $skipAutomaticEditionFields  = $acl->isAllowed($user, Lib_Acl::ADMIN_RESOURCE);
+        $skipAutomaticEditionFields  = $acl->isAllowed(
+        	$user, Lib_Acl::ADMIN_RESOURCE);
         if(array_key_exists('skipAutoFields', $data)){
         	$skipAutomaticEditionFields &= $data['skipAutoFields'];
         } else {
@@ -106,7 +71,6 @@ class Lib_Controller_Helper_DataSaver extends Zend_Controller_Action_Helper_Abst
             $this->manageLocation($dataRow, $data);
         }
 
-
         // Cache clearing
         if($reflection->implementsInterface('Data_Row_MetaDataInterface')){
             $parentRow = $dataRow->getParentItemfromDatabase();
@@ -117,6 +81,55 @@ class Lib_Controller_Helper_DataSaver extends Zend_Controller_Action_Helper_Abst
         return $dataRow->id;
     }
 
+    protected function _saveSpot(Data_Row $dataRow)
+    {
+    	if($spot = $dataRow->getSpot() && $spot instanceof Spot_Row){
+    		$oldSpotAlbumId = $spot()->getAlbum()->getId();
+    		$oldSpotAlbumCacheId = Media_Album::getCacheId($oldSpotAlbumId);
+    		$dataRow->getCache()->remove($oldSpotAlbumCacheId);
+    	}
+    	
+    	$spotTable = new Spot();
+    	if(strpos($data['spot'], NOREALDATA_MARK) === false){
+    		$res = $spotTable->find($data['spot']);
+    		if($res){
+    			$newSpot = $res->current();
+    			if($newSpot){
+    				$newSpotAlbumId = $newSpot->getAlbum()->getId();
+    				$newSpotAlbumCacheId = Media_Album::getCacheId($newSpotAlbumId);
+    				$newSpot->getCache()->remove($newSpotAlbumCacheId);
+    			}
+    		}
+    	}
+    	$spotCacheId = $dataRow->getParentRowCacheId('Spot');
+    	$dataRow->getCache()->remove($spotCacheId);
+    }
+
+    protected function _saveTrick(Data_Row $dataRow)
+    {
+    	if($trick = $dataRow->getTrick() && $trick instanceof Trick_Row){
+    		$oldTrickAlbumId = $trick->getAlbum()->getId();
+    		$oldTrickAlbumCacheId = Media_Album::getCacheId($oldTrickAlbumId);
+    		$dataRow->getCache()->remove($oldTrickAlbumCacheId);
+    	}
+    	
+    	$trickTable = new Trick();
+    	if(strpos($data['trick'], NOREALDATA_MARK) === false){
+    		$res = $trickTable->find($data['trick']);
+    		if($res){
+    			$newTrick = $res->current();
+    			if($newTrick){
+    				$newTrickAlbumId = $newTrick->getAlbum()->getId();
+    				$newTrickAlbumCacheId = Media_Album::getCacheId($newTrickAlbumId);
+    				$newTrick->getCache()->remove($newTrickAlbumCacheId);
+    			}
+    		}
+    	}
+    	
+    	$trickCacheId = $dataRow->getParentRowCacheId('Trick');
+    	$dataRow->getCache()->remove($trickCacheId);
+    }
+    
     /**
      * Takes care of inserting, updating and deleting of Location
      *

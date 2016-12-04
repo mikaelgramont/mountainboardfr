@@ -1,20 +1,25 @@
 <?php
-if($this->data->id){
-	$stringName = 'edit'.ucfirst($this->dataType).'Title';
-    $string = ucfirst($this->translate($stringName));
-    echo '<h1 id="mainTitle" class="dataEdit">'.$string.'</h1>'.PHP_EOL;
-    
-    $linkInfo = array(
-    	'link' => $this->data->getLink(),
-    	'name' => sprintf(ucfirst($this->translate('backTo')), $this->data->getTitle()),
-    	'itemType' => $this->data->getItemType()
-    );
-	echo '<div id="backToData" class="actionLinkContainer">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
-} else {
-	$stringName = 'add'.ucfirst($this->dataType).'Title';
-    $string = ucfirst($this->translate($stringName));
-	echo '<h1 class="dataAdd">'.$string.'</h1>'.PHP_EOL;
-}
+echo '<div class="card">'.PHP_EOL;
+	if($this->data->id){
+		$stringName = 'edit'.ucfirst($this->dataType).'Title';
+	    $string = ucfirst($this->translate($stringName));
+	    echo '<h1 id="mainTitle" class="dataEditTitle">'.$string.'</h1>'.PHP_EOL;
+	    
+	    $linkInfo = array(
+	    	'link' => $this->data->getLink(),
+	    	'name' => sprintf(ucfirst($this->translate('backTo')), $this->data->getTitle()),
+	    	'itemType' => $this->data->getItemType()
+	    );
+		echo '<div id="backToData" class="actionLinkContainer">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
+	} else {
+		$stringName = 'add'.ucfirst($this->dataType).'Title';
+	    $string = ucfirst($this->translate($stringName));
+		echo '<h1 class="dataAddTitle">'.$string.'</h1>'.PHP_EOL;
+	}
+echo '</div>'.PHP_EOL;
+
 $this->headTitle($string);
-echo $this->form;
-?>
+
+echo '<div class="card">'.PHP_EOL;
+	echo $this->form.PHP_EOL;
+echo '</div>'.PHP_EOL;

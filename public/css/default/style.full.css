@@ -1598,26 +1598,41 @@ div.blogOwner {
 }
 /** Album */
 
-ul.album {
+.album {
+	display: flex;
+	flex-wrap: wrap;
 }
-ul.album li {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 1em;
-    padding: 1em;
+.albumCard {
+	padding: .125em;
+}
+.album li {
+	box-sizing: border-box;
     text-align: center;
+    padding: .125em;
 }
-ul.albumPreview li {
-    display: inline;
+.album .photo {
+	flex: 1 1 12em;
+	}
+.album .video {
+	flex: 1 1 15em;
 }
-ul.album li a.mediaLinkThumbnail {
+.album .mediaLinkThumbnail {
     display: block;
-    width: 12.5em;
-    margin-bottom: .5em;
-    background: black;
+    background-size: cover;
+    background-position: center;
+}
+.album .photo .mediaLinkThumbnail {
+	padding-bottom: 100%;
+}
+.album .video .mediaLinkThumbnail {
+    padding-bottom: 56.25%; /* 9/16 ratio */
+}
+.albumPreview li {
+    display: inline;
 }
 ul.album li a.mediaThumbnailComments {
     display: block;
+    height: 100%;
 }
 ul.album li a.mediaThumbnailTitle {
     display: inline-block;

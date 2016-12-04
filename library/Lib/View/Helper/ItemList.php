@@ -52,7 +52,7 @@ class Lib_View_Helper_ItemList extends Zend_View_Helper_Abstract
             $classes = array();
            	$classes[] = 'mainLink';
             if($params['addDataLinkClass']){
-            	$classes[] = $item->getItemType();
+            	$classes[] = $item->getItemType().'Link';
             	$classes[] = 'dataLink';
             }
             $linkClass = ' class="'.implode(' ', $classes).'"';

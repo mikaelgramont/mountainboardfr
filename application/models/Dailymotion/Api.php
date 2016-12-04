@@ -1,5 +1,5 @@
 <?php
-class Dailymotion_Api
+class Dailymotion_Api implements VideoThumbnailFetcherInterface
 {
 	const BASE_URI = 'https://api.dailymotion.com/';
 
@@ -16,6 +16,17 @@ class Dailymotion_Api
 		return $data;
 	}
 
+	public function getThumbnailInfo($id, $size)
+	{
+		$ret = array();
+		$videoData = $this->getVideoInfo($id);
+		$ret['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_DAILYMOTION_THUMBNAIL;
+		$ret['thumbnailUri'] = $videoData['thumbnail_480_url'];
+		$ret['thumbnailWidth'] = 640;
+		$ret['thumbnailHeight'] = 480;
+		return $ret;
+	}
+	
 	private function _makeRequest($resource)
 	{
 		$fullUri = self::BASE_URI . $resource;
@@ -30,5 +41,4 @@ class Dailymotion_Api
 
 		return $data;
 	}
-
 }

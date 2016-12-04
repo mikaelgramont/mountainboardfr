@@ -13,7 +13,7 @@ $file = $this->baseUrl . '/'.IMAGES_PATH.$image['file'];
 $picBy = ucfirst(sprintf($this->translate('404picBy'), $image['from']));
 $msg = $this->translate('404HtmlMessage');
 ?>
-<div class="notFoundPage">
+<div class="notFoundPage card">
 	<div class="pic">
 <?php
 echo "		<img src=\"{$file}\" alt=\"\" title=\"\" width=\"{$image['width']}\" height=\"{$image['height']}\" />".PHP_EOL;

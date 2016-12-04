@@ -1,3 +1,4 @@
+<div class="card">
 <?php
 $isMyPage = ($this->profilee->{User::COLUMN_USERID} == $this->user->{User::COLUMN_USERID});
 $isLoggedIn = $this->user->isLoggedIn();
@@ -124,3 +125,5 @@ if($isLoggedIn){
 	}
 }
 echo $content;
+?>
+</div>

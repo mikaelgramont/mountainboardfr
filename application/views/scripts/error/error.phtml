@@ -1,7 +1,8 @@
-<h1 id="mainTitle" class="pageTitle">An error occurred</h1>
-<h3 id=""><?php echo $this->message ?></h3> 
+<div class="card">
+	<h1 id="mainTitle" class="pageTitle">An error occurred</h1>
+	<h3 id=""><?php echo $this->message ?></h3> 
 
-<? if ('development' == $this->env): ?> 
+<?php if ('development' == $this->env) { ?> 
 
     <h4 id="exception-information">Exception information:</h4>
     <p>
@@ -14,4 +15,7 @@
     <h4 id="request-parameters">Request Parameters:</h4>
     <? var_dump($this->request->getParams()); ?>
 
-<? endif; ?>
+<?php
+}
+?>
+</div>

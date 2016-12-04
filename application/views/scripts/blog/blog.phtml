@@ -1,3 +1,4 @@
+<div class="card">
 <?php
 $paginationControl = $this->paginationControl(
 	$this->posts,
@@ -32,3 +33,5 @@ echo $this->itemList($this->posts, array('containerClass' => 'blogPostListItem')
 if($paginationControl){
 	echo '<div class="blogpost paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
 }
+?>
+</div>

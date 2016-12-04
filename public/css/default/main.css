@@ -55,8 +55,6 @@ h6 {
     font-size: 1em;
 }
 h1.pageTitle,
-h1.dataEdit,
-h1.dataAdd,
 h1.blogTitle,
 h2.blogDescription {
     display: block;
@@ -64,8 +62,10 @@ h2.blogDescription {
     margin: 0 0 0.5em 0;
 }
 .albumTitle,
-.topicTitle,
-.forumTitle {
+.dataAddTitle,
+.dataEditTitle,
+.forumTitle,
+.topicTitle {
 	font-size: 2em;
 }
 
@@ -1016,7 +1016,8 @@ div.regionDetails {
 }
 /** Forums */
 .forumHeader,
-.listNavigation {
+.listNavigation,
+.albumHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1292,15 +1293,6 @@ div.mediaMetadataNoMap {
     display: inline-block;
     max-width: 37em;
 }
-#backToAlbum {
-    display: inline-block;
-    margin-bottom: 1em;
-}
-#backToAlbum.uploadPage {
-    right: 1em;
-    top: 1em;
-    left: inherit;
-}
 div.prevMedia,
 div.nextMedia {} div.prevMedia {
     margin-right: 1em;
@@ -1486,86 +1478,30 @@ div.trickMetadata div.trickAlbum {
 }
 /** News */
 
-ul#items.newsListItem {
-    padding-top: 4.5em;
-    padding-bottom: 3em;
-}
 ul#items.newsListItem li {
     margin: 0 0em 1em 0em;
     position: relative;
 }
-div.news.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 6em;
-}
-div.news.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
-}
 /** Dossiers */
 
-ul#items.dossierListItem {
-    margin-top: 2em;
-    padding-bottom: 3em;
-}
 ul#items.dossierListItem li {
     margin: 0 0em 1em 0em;
     padding: 0.5em 0.5em 1em;
     position: relative;
 }
-div.dossier.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 5em;
-}
-div.dossier.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
-}
 /** Tests */
 
-ul#items.testListItem {
-    padding-top: 5.5em;
-    padding-bottom: 3em
-}
 ul#items.testListItem li {
     margin: 0 0em 1em 0em;
     padding: 0.5em 0.5em 1em;
     position: relative;
 }
-div.test.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 5em;
-}
-div.test.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
-}
 /** Blogs */
 
-ul#items.blogListItem {
-    padding-top: 4.5em;
-    padding-bottom: 3.5em;
-}
 ul#items.blogListItem li {
     margin: 0 0em 1em 0em;
     padding: 0.5em 0.5em 1em;
     position: relative;
-}
-div.blog.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 5em;
-}
-div.blog.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
 }
 /** Blog Posts */
 
@@ -1598,26 +1534,42 @@ div.blogOwner {
 }
 /** Album */
 
-ul.album {
+.albumPagination,
+.albumList {
+	display: flex;
+	flex-wrap: wrap;
 }
-ul.album li {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 1em;
-    padding: 1em;
+.albumCard {
+	padding: .125em;
+}
+.albumList li {
+	box-sizing: border-box;
     text-align: center;
+    padding: .125em;
 }
-ul.albumPreview li {
-    display: inline;
+.albumList .photo {
+	flex: 1 1 12em;
+	}
+.albumList .video {
+	flex: 1 1 15em;
 }
-ul.album li a.mediaLinkThumbnail {
+.albumList .mediaLinkThumbnail {
     display: block;
-    width: 12.5em;
-    margin-bottom: .5em;
-    background: black;
+    background-size: cover;
+    background-position: center;
+}
+.albumList .photo .mediaLinkThumbnail {
+	padding-bottom: 100%;
+}
+.albumList .video .mediaLinkThumbnail {
+    padding-bottom: 56.25%; /* 9/16 ratio */
+}
+.albumPreview li {
+    display: inline;
 }
 ul.album li a.mediaThumbnailComments {
     display: block;
+    height: 100%;
 }
 ul.album li a.mediaThumbnailTitle {
     display: inline-block;

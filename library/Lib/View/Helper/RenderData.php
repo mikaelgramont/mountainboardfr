@@ -26,7 +26,10 @@ class Lib_View_Helper_RenderData extends Zend_View_Helper_Abstract
         // Dpt/Country
         if($rowClass == 'Dpt_Row' || $rowClass == 'Country_Row'){
         	$this->view->richTextContent = false;
-            $content = $this->renderRegion($data, $album, $additionalData['items'], $additionalData['spots']);
+            $content = $this->_wrapInCard(
+            	$this->renderRegion(
+            		$data, $album, $additionalData['items'],
+            		$additionalData['spots']));
             return $content;
         }
 
@@ -44,7 +47,7 @@ class Lib_View_Helper_RenderData extends Zend_View_Helper_Abstract
 
         // Blog Posts
         if($rowClass == 'Blog_Post_Row'){
-            $content = $this->renderBlogPost($data);
+            $content = $this->_wrapInCard($this->renderBlogPost($data));
             return $content;
         }
 
@@ -69,6 +72,14 @@ class Lib_View_Helper_RenderData extends Zend_View_Helper_Abstract
         }
 
         throw new Lib_Exception("No renderer for data of type $rowClass");
+    }
+    
+    protected function _wrapInCard($content)
+    {
+    	$ret = "<div class=\"card\">".PHP_EOL;
+    	$ret .= $content;
+    	$ret .= "</div>".PHP_EOL;
+    	return $ret;
     }
 
     /**

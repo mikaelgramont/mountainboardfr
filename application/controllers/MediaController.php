@@ -132,14 +132,16 @@ class MediaController extends Lib_Controller_Action
 	public function uploadphotoAction()
 	{
 		$photoTable = new Media_Item_Photo();
-		$photo = $photoTable->fetchNew();
+		$photo = $photoTable->createRow();
 		if((!$photo->isCreatableBy($this->_user, $this->_acl))){
-			$this->_helper->redirectToRoute('usererror', array('errorCode' => User::RESOURCE_ACCESS_DENIED));
+			$this->_helper->redirectToRoute('usererror',
+				array('errorCode' => User::RESOURCE_ACCESS_DENIED));
         }
 
 		$albumId = $this->_request->getParam('albumId');
-		if($albumId == Media_Album_VideoMain::ID){
-			throw new Lib_Exception_Media("Attempt to upload a photo to the video album");
+		if($albumId == Media_Album_VideoMain::ID) {
+			throw new Lib_Exception_Media(
+				"Attempt to upload a photo to the video album");
 		}
 
         $photo->albumId = $albumId;
@@ -152,36 +154,46 @@ class MediaController extends Lib_Controller_Action
 						  && isset($postData['media'])
 						  && (strlen($postData['media']) > 0);
 
-//$useRemotePhoto = true;
-		$form = $photo->getForm($this->_user, $this->_acl, array('useRemoteFile' => $useRemotePhoto));
+		$form = $photo->getForm($this->_user, $this->_acl,
+			array('useRemoteFile' => $useRemotePhoto));
 
 		if(empty($postData) || !$form->isValid($postData)){
 			// Display empty form or form with errors
 			$this->view->form = $form;
-			$this->view->album = $album = $this->_getAlbumFromNameOrId(null, $albumId, 0);
+			$this->view->mediaType = Media_Item::TYPE_PHOTO;
+			$this->view->album = $album = $this->_getAlbumFromNameOrId(
+				null, $albumId, 0);
     		Zend_Registry::set('Category', $album->getCategory());
     		Zend_Registry::set('SubCategory', $album->getSubCategory());
+    		$this->render('uploadmedia');
 			return;
         }
 
         try{
 	        // Saving media to database and disk
 	        $data = $form->getFormattedValuesForDatabase();
-	        $data = array_merge($data, $this->_savePhotoFiles($photo, $form, APP_MEDIA_DIR, uniqid()));
-			$this->_helper->dataSaver()->save($photo, $form, $data, $this->_user, $this->_acl, $this->_disregardUpdates);
+	        $data = array_merge($data, $this->_savePhotoFiles(
+	        	$photo, $form, uniqid()));
+			$this->_helper->dataSaver()->save($photo, $form, $data,
+				$this->_user, $this->_acl, $this->_disregardUpdates);
 			$table = new Media_Item_Riders();
 			$table->insertRiders($photo->id, $form->riders->getNames());
 
         } catch (Exception $e) {
         	$this->_cleanUpMedia($photo);
 			if($e instanceof Lib_Exception_Media_Photo_Mime){
-       			Globals::getLogger()->mediaError("Saving photo for album '$albumId': bad mime type", Zend_Log::ERR);
+       			Globals::getLogger()->mediaError(
+       				"Saving photo for album '$albumId': bad mime type",
+       				Zend_Log::ERR);
            		$form->photo->setError('mime');
 				$this->view->form = $form;
 				return;
            	} else {
-       			Globals::getLogger()->mediaError("Failed to save photo for album '$albumId': ".$e->getMessage(), Zend_Log::ERR);
-       			$this->_helper->redirectToRoute('othererror', array('error' => 'mediaSavingError'), true);
+       			Globals::getLogger()->mediaError(
+       				"Failed to save photo for album '$albumId': ".
+       				$e->getMessage(), Zend_Log::ERR);
+       			$this->_helper->redirectToRoute('othererror', array(
+       				'error' => 'mediaSavingError'), true);
            	}
         }
 
@@ -197,8 +209,9 @@ class MediaController extends Lib_Controller_Action
 	{
 		$photoId = $this->_request->getParam('id');
 		$photoTable = new Media_Item_Photo();
-		$photo = $this->view->photo = $photoTable->find($photoId)->current();
+		$photo = $this->view->media = $photoTable->find($photoId)->current();
 		$this->view->album = $album = $photo->getAlbum();
+		$this->view->mediaType = Media_Item::TYPE_PHOTO;
 
 		if(empty($photo)){
 			throw new Lib_Exception_NotFound("Photo '$photoId' does not exist");
@@ -215,7 +228,7 @@ class MediaController extends Lib_Controller_Action
 		if(empty($postData) || !$form->isValid($postData)){
 			// Display empty form or form with errors
 			$this->view->form = $form;
-			$this->render('uploadphoto');
+			$this->render('uploadmedia');
 			Zend_Registry::set('Category', $photo->getCategory());
     	    Zend_Registry::set('SubCategory', $photo->getSubCategory());
 			return;
@@ -241,7 +254,8 @@ class MediaController extends Lib_Controller_Action
 
 		try{
 	        if($photoSubmitted){
-        		$data = array_merge($data, $this->_savePhotoFiles($photo, $form, APP_MEDIA_DIR, $uniqid));
+        		$data = array_merge($data, $this->_savePhotoFiles($photo, $form,
+        			$uniqid));
 			}
         	$this->_helper->dataSaver()->save($photo, $form, $data, $this->_user, $this->_acl, $this->_disregardUpdates);
         	$this->_manageOldPhotoFilesOnUpdate($photo, $photoSubmitted, $form->title->getValue(), $uniqid, $oldFiles, $oldTitle);
@@ -252,7 +266,7 @@ class MediaController extends Lib_Controller_Action
        			Globals::getLogger()->mediaError("Updating photo '$photoId': bad mime type", Zend_Log::ERR);
            		$form->media->addError(Zend_Validate_File_MimeType::FALSE_TYPE);
 				$this->view->form = $form;
-				$this->render('uploadphoto');
+				$this->render('uploadmedia');
 				return;
            	} else {
        			Globals::getLogger()->mediaError("Updating photo '$photoId': ".$e->getMessage(), Zend_Log::ERR);
@@ -284,6 +298,7 @@ class MediaController extends Lib_Controller_Action
         $video->albumId = $albumId;
 		$video->mediaType = Media_Item::TYPE_VIDEO;
 		$form = $video->getForm($this->_user, $this->_acl);
+		$this->view->mediaType = Media_Item::TYPE_VIDEO;
 
 		$postData = $this->_request->getPost();
 		if(empty($postData) || !$form->isValid($postData)){
@@ -292,6 +307,7 @@ class MediaController extends Lib_Controller_Action
 			$this->view->album = $album = $this->_getAlbumFromNameOrId(null, $albumId, 0);
     		Zend_Registry::set('Category', $album->getCategory());
     		Zend_Registry::set('SubCategory', $album->getSubCategory());
+    		$this->render('uploadmedia');
 			return;
         }
 
@@ -344,9 +360,11 @@ class MediaController extends Lib_Controller_Action
 			// Remove the Video filter in order to keep raw video html code
 			$form->media->removeFilter('Video');
 			$form->populateFromDatabaseData($dbData);
+			$this->view->media = $video;
 			$this->view->form = $form;
 			$this->view->album = $video->getAlbum();
-			$this->render('uploadvideo');
+			$this->view->mediaType = Media_Item::TYPE_VIDEO;
+			$this->render('uploadmedia');
 			return;
         }
 
@@ -445,8 +463,10 @@ class MediaController extends Lib_Controller_Action
 	 * @param int $id
 	 * @return array
 	 */
-	protected function _savePhotoFiles(Media_Item_Photo_Row $photo, Media_Item_Photo_Form $form, $dir, $id)
+	protected function _savePhotoFiles(Media_Item_Photo_Row $photo, Media_Item_Photo_Form $form, $id)
 	{
+		$dir = APP_MEDIA_DIR;
+		//Media_Item_Row::getThumbDirForSize(Media_Item_Row::SIZE_MEDIUM);
 		$targetName = $this->_getMediaFileName($form->title->getValue(), $id);
 		$destination = $dir . DIRECTORY_SEPARATOR . $targetName;
 
@@ -460,7 +480,10 @@ class MediaController extends Lib_Controller_Action
 			$photoFile = new File_Photo($destination);
 			$photoFile->renameAfterSubType();
 			$photoFile->limitDimensions();
-			$thumbnail = $photoFile->createThumbnail(APP_MEDIA_THUMBNAILS_DIR, GLOBAL_DEFAULT_IMG_THUMB_WIDTH, GLOBAL_DEFAULT_IMG_THUMB_HEIGHT);
+			$thumbnails = $photo->createAllThumbnailsFromOriginal($photoFile);
+			// Treat the small thumb as the default one as it is how
+			// things were before there were more than one thumb size.
+			$thumbnail = $thumbnails[Media_Item_Row::SIZE_SMALL];
 		} catch (Exception $e) {
 			$this->_cleanUpPhotoFiles($photo, $destination);
 			throw $e;
@@ -577,40 +600,35 @@ class MediaController extends Lib_Controller_Action
 	protected function _getVideoThumbnailInfo($videoInfoObj)
 	{
 		$info = array();
+		$client = new Zend_Http_Client();
 		switch($videoInfoObj->getType()){
 			case Media_Item_Video::SUBTYPE_YOUTUBE:
-				$apiClient = new Google_Api(GOOGLE_APIS_KEY, new Zend_Http_Client());
-				$videoData = $apiClient->getYouTubeVideoInfo($videoInfoObj->getId());
-				$thumbnail = $videoData['items'][0]['snippet']['thumbnails']['standard'];
-				$info['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_YOUTUBE_THUMBNAIL;
-				$info['thumbnailUri'] = $thumbnail['url'];
-				$info['thumbnailWidth'] = $thumbnail['width'];
-				$info['thumbnailHeight'] = $thumbnail['height'];
+				$apiClient = new Google_Api_Youtube(GOOGLE_APIS_KEY, $client);
 				break;
 			case Media_Item_Video::SUBTYPE_DAILYMOTION:
-				$apiClient = new Dailymotion_Api(new Zend_Http_Client());
-				$videoData = $apiClient->getVideoInfo($videoInfoObj->getId());
-				$info['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_DAILYMOTION_THUMBNAIL;
-				$info['thumbnailUri'] = $videoData['thumbnail_480_url'];
-				$info['thumbnailWidth'] = 640;
-				$info['thumbnailHeight'] = 480;
+				$apiClient = new Dailymotion_Api($client);
 				break;
 			case Media_Item_Video::SUBTYPE_VIMEO:
-				$apiClient = new Vimeo_Api(VIMEO_TOKEN, new Zend_Http_Client());
-				$videoData = $apiClient->getVideoInfo($videoInfoObj->getId());
-				$thumbnail = $videoData['pictures'][0];
-				$info['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_VIMEO_THUMBNAIL;
-				$info['thumbnailUri'] = $thumbnail['link'];
-				$info['thumbnailWidth'] = $thumbnail['width'];
-				$info['thumbnailHeight'] = $thumbnail['height'];
+				$apiClient = new Vimeo_Api(VIMEO_TOKEN, $client);
 				break;
 			default:
-				throw new Lib_Exception_Media("Unsupported video provider: '".$videoInfoObj->getType()."'");
+				throw new Lib_Exception_Media("Unsupported video provider: '".
+					$videoInfoObj->getType()."'");
 				break;
+		}
+		try {
+			$info = $apiClient->getThumbnailInfo($videoInfoObj->getId(),
+				Media_Item_Row::SIZE_MEDIUM);
+		} catch(Exception $e) {
+			throw new Lib_Exception_Media(sprintf(
+				"Could not fetch thumbnail info for video %s",
+				$videoInfoObj->getId()));
 		}
 		
 		if (empty($info['thumbnailUri'])) {
-			throw new Lib_Exception_Media("Empty thumbnail url for video of type: '".$videoInfoObj->getType()."'");
+			throw new Lib_Exception_Media(
+				"Empty thumbnail url for video of type: '".
+					$videoInfoObj->getType()."'");
 		}
 		
 		$info['mediaSubType'] = $videoInfoObj->getType();

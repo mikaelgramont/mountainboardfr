@@ -6,6 +6,12 @@ class Media_Item_Row extends Data_Row implements Data_Row_AlbumInterface,
 												 Data_Row_LocationInterface,
 												 Data_Row_DocumentInterface
 {
+	const DEFAULT_THUMB_SIZE_DIR = APP_MEDIA_THUMBNAILS_DIR;
+	
+	const SIZE_SMALL = 'small';
+	const SIZE_MEDIUM = 'medium';
+	const SIZE_LARGE = 'large';
+	
     /**
      * Location of the spot
      *
@@ -13,6 +19,52 @@ class Media_Item_Row extends Data_Row implements Data_Row_AlbumInterface,
      */
     protected $_location;
 
+    /**
+     * Returns the directory for a given thumb size.
+     *
+     * @return string
+     * @throws Lib_Exception_Media
+     */
+    public static function getThumbDirForSize($size)
+    {
+    	switch($size) {
+    		case self::SIZE_MEDIUM:
+    			return APP_MEDIA_THUMBNAILS_MEDIUM_DIR;
+    		case self::SIZE_LARGE:
+    			return APP_MEDIA_THUMBNAILS_LARGE_DIR;
+    		case self::SIZE_SMALL:
+    			return APP_MEDIA_THUMBNAILS_DIR;
+    		default:
+    			throw new Lib_Exception_Media("Unknown thumb size: '$size'");
+    	}
+    }
+    
+    public static function getThumbParamsForSize($size)
+    {
+    	switch($size) {
+    		case self::SIZE_LARGE:
+    			return array(
+   					APP_MEDIA_THUMBNAILS_LARGE_DIR,
+   					GLOBAL_DEFAULT_IMG_LARGE_THUMB_WIDTH,
+   					GLOBAL_DEFAULT_IMG_LARGE_THUMB_HEIGHT,
+    			);
+    		case self::SIZE_MEDIUM:
+    			return array(
+    				APP_MEDIA_THUMBNAILS_MEDIUM_DIR,
+    				GLOBAL_DEFAULT_IMG_MEDIUM_THUMB_WIDTH,
+    				GLOBAL_DEFAULT_IMG_MEDIUM_THUMB_HEIGHT,
+    			);
+    		case self::SIZE_SMALL:
+    			return array(
+    				APP_MEDIA_THUMBNAILS_DIR,
+    				GLOBAL_DEFAULT_IMG_THUMB_WIDTH,
+    				GLOBAL_DEFAULT_IMG_MEDIUM_THUMB_HEIGHT,
+    			);
+    		default:
+    			throw new Lib_Exception_Media("Unknown thumb size: '$size'");
+    	}
+    }
+    
     protected function _postDelete()
     {
         parent::_postDelete();
@@ -150,15 +202,19 @@ class Media_Item_Row extends Data_Row implements Data_Row_AlbumInterface,
 	 * Returns the URI used to embed the thumbnail element in a view
 	 * @return string
 	 */
-	public function getThumbnailURI($absolute = true)
+	public function getThumbnailURI($absolute = true, $size = null)
 	{
-		if($absolute){
-			$url = APP_URL.'/'.APP_MEDIA_THUMBNAILS_DIR.'/'.$this->thumbnailUri;
-		} else {
-			$url = APP_MEDIA_THUMBNAILS_DIR.'/'.$this->thumbnailUri;
+		if (empty($size)) {
+			$size = self::SIZE_SMALL;
+		}
+		$params = self::getThumbParamsForSize($size);
+		$url = $params[0].'/'.$this->thumbnailUri;
+		if($absolute) {
+			$url = APP_URL.'/'.$url;
 		}
 		return $url;
 	}
+	
 	/**
 	 * Returns the width (in pixels) of the thumbnail
 	 *
@@ -588,5 +644,20 @@ class Media_Item_Row extends Data_Row implements Data_Row_AlbumInterface,
 		return $return;
 	}
 
-
+	public function createAllThumbnailsFromOriginal(File_Photo $original)
+	{
+		$allSizes = array(
+			self::SIZE_SMALL,
+			self::SIZE_MEDIUM,
+			self::SIZE_LARGE
+		);
+		
+		$thumbs = array();
+		foreach ($allSizes as $size) {
+			list($dir, $w, $h) = self::getThumbParamsForSize($size);
+			$destination = $dir . DIRECTORY_SEPARATOR .	$original->getName();
+			$thumbs[$size] = $original->resizeTo($w, $h, $destination);
+		}
+		return $thumbs;
+	}
 }
