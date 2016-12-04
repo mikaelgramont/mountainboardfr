@@ -54,7 +54,7 @@ class TempController extends Lib_Controller_Action
     {
     	return array(true, 'already done');
     	try {
-    		$original = new File_Photo(APP_MEDIA_DIR.'/'.$item->getURI());
+    		$original = new File_Photo($item->getURI(false));
     		$item->createAllThumbnailsFromOriginal($original);
     	} catch (Exception $e) {
     		return array(false, $e->getMessage());
