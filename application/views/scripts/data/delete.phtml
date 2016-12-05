@@ -1,9 +1,18 @@
-<h1 id="mainTitle"><?php ucfirst($this->translate('deleteConfirmationMessage')) ?></h1>
-<div id="deleteFormContainer">
-	<p>
+<div class="card">
+	<h1 id="mainTitle"><?php ucfirst($this->translate('deleteConfirmationMessage')) ?></h1>
+	<div id="deleteFormContainer">
+		<p>
 <?php
-echo ucfirst(sprintf($this->translate('deleteConfirm'), $this->data->getTitle()))."	</p>".PHP_EOL; 
-echo $this->form;
-echo "<a id=\"cancelLink\" href=\"".$this->data->getLink()."\">".ucfirst(Globals::getTranslate()->_('cancel'))."</a>";
+			echo ucfirst(sprintf(
+				$this->translate('deleteConfirm'),
+				$this->data->getTitle())
+			).PHP_EOL;
 ?>
+		</p>
+<?php
+		echo $this->form.PHP_EOL;
+		echo "<a id=\"cancelLink\" href=\"".$this->data->getLink()."\">".
+		ucfirst(Globals::getTranslate()->_('cancel'))."</a>";
+?>
+	</div>
 </div>

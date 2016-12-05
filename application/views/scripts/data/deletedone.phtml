@@ -1,6 +1,9 @@
+<div class="card">
 <?php
 $this->url = $this->baseUrl .'/'. $this->url;
 $msg = ucfirst($this->translate('redirectAfterDeletion'));
 $msg = sprintf($msg, "<a href=\"$this->url\">", '</a>');
 echo "<p>$msg</p>".PHP_EOL;
 $this->headMeta()->appendHttpEquiv('Refresh','3;URL='.$this->url);
+?>
+</div>

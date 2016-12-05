@@ -1,3 +1,4 @@
+<div class="card">
 <?php
 if($this->type == 'result'){
 	if($this->result == 'ok'){
@@ -9,7 +10,12 @@ if($this->type == 'result'){
 }
 
 
-echo '<h1 id="mainTitle" class="pageTitle">'.ucfirst($this->translate('itemPlur_'.Constants_DataTypes::PRIVATEMESSAGE)).'</h1>';
+echo '<h1 id="mainTitle" class="cardTitle">'.ucfirst($this->translate('itemPlur_'.Constants_DataTypes::PRIVATEMESSAGE)).'</h1>'.PHP_EOL;
+?>
+</div>
+<div class="card">
+<?php
+
 
 if($this->type != 'home'){
 	echo '	<div class="actionLinkContainer">'.$this->routeLink('privatemessageshome').'</div>'.PHP_EOL;
@@ -24,9 +30,9 @@ if($this->type != 'new' && $this->type != 'reply'){
 switch($this->type){
 	case 'home':
 	case 'sent':
-		echo $this->postsList($this->messages, 0, array(), $this->lastLogin, Lib_View_Helper_PostsList::TYPE_PRIVATEMESSAGES );
 		$paginationControl = $this->paginationControl($this->messages, null, null, array('dataType' => Constants_DataTypes::PRIVATEMESSAGE));
 		echo '<div class="'.PrivateMessage::ITEM_TYPE.' paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+		echo $this->postsList($this->messages, 0, array(), $this->lastLogin, Lib_View_Helper_PostsList::TYPE_PRIVATEMESSAGES );
 		echo '<div class="'.PrivateMessage::ITEM_TYPE.' paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
 		break;
 	case 'new':
@@ -40,3 +46,5 @@ switch($this->type){
 		echo $this->form;
 		break;
 }
+?>
+</div>

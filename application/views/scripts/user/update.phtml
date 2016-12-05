@@ -1,8 +1,16 @@
-<h1 id="mainTitle" class="pageTitle"><?php echo ucfirst($this->translate('userupdate')) ?></h1>
+<div class="card">
+	<h1 id="mainTitle" class="cardTitle"><?php echo ucfirst($this->translate('userupdate')) ?></h1>
+</div>
 <?php
 if($this->newPassword){
-    echo ucfirst($this->translate('newPasswordActivatedForm'));
+	echo '<div class="card">'.PHP_EOL;
+	echo ucfirst($this->translate('newPasswordActivatedForm'));
+	echo '</div">'.PHP_EOL;
 }
 ?>
-<div class="actionLinkContainer"><?php echo $this->routeLink('editnotifications');?></div>
-<?php echo $this->form;
+<div class="card">
+	<div class="actionLinkContainer"><?php echo $this->routeLink('editnotifications');?></div>
+</div>
+<div class="card">
+	<?php echo $this->form.PHP_EOL; ?>
+</div>

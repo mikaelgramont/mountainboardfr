@@ -61,11 +61,13 @@ h2.blogDescription {
     font-size: 2em;
     margin: 0 0 0.5em 0;
 }
+.cardTitle,
 .albumTitle,
 .dataAddTitle,
 .dataEditTitle,
 .forumTitle,
-.topicTitle {
+.topicTitle,
+.privateMessageTitle {
 	font-size: 2em;
 }
 
@@ -1730,16 +1732,6 @@ ul#items.privatemessages {
 }
 ul#items.privatemessages li {
     margin: 0.5em 1em;
-}
-div.privatemessage.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 5em;
-}
-div.privatemessage.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
 }
 div.privateMessageReplyLinkContainer {
     margin-top: 1em

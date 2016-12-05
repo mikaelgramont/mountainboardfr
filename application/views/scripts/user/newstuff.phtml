@@ -5,13 +5,18 @@ $showNewItems = ($this->items['newElementsAndMetadata']) || $this->newUnreadMess
 $showOldItems = ($this->items['oldElementsAndNewMetadata']) || $this->oldUnreadMessages;
 
 ?>
-<h1 id="mainTitle" class="pageTitle"><?php echo ucfirst($this->translate('newstuff'))?></h1>
 
+<div class="card">
+	<h1 id="mainTitle" class="cardTitle"><?php echo ucfirst($this->translate('newstuff'))?></h1>
+</div>
+<div class="card">
 <?php
 echo '<div class="actionLinkContainer">'.ucfirst($this->translate('showStuffPosted')).' '.$this->rangeForm.'</div>'.PHP_EOL;
 echo '<div class="actionLinkContainer">'.$this->routeLink('markallasread').'</div>'.PHP_EOL;
 echo '<div class="actionLinkContainer">'.$this->routeLink('editnotifications').'</div>'.PHP_EOL;
 ?>
+</div>
+<div class="card">
 <div id='newItems'>
 <?php
 if($showNewItems){
@@ -49,7 +54,5 @@ if(empty($this->items['newElementsAndMetadata']) && empty($this->items['oldEleme
 if(empty($this->items['newElementsAndMetadata']) && empty($this->items['oldElementsAndNewMetadata'])){
 	echo $this->userActionSuggestions($this->user, 'newStuff');
 }
-
-
-
-
+?>
+</div>
