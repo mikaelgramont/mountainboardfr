@@ -6,9 +6,9 @@ $paginationControl = $this->paginationControl($medias);
 $editable = $this->album->isEditableBy($this->user, $this->acl);
 $editLink = $editable ? $this->editLink($this->album) : '';
 $commentsAllowed = !in_array($this->album->id, array(
-		Media_Album_PhotoMain::ID,
-		Media_Album_VideoMain::ID,
-		Media_Album_Portfolio::ID)); 
+	Media_Album_PhotoMain::ID,
+	Media_Album_VideoMain::ID,
+	Media_Album_Portfolio::ID)); 
 $commentClass = $commentsAllowed ? ' withComments' : '';
 $displayDescription = '';
 if($description != $title && !empty($description)){
@@ -95,7 +95,7 @@ function renderAlbum($medias, $view)
 	$ret = '<ul class="albumList">'.PHP_EOL;
 	foreach($medias as $media){
 		$class = $media['mediaType'] == Media_Item::TYPE_VIDEO ? 'video' : 'photo';
-		$ret .= "<li class=\"$class\">".PHP_EOL;
+		$ret .= "<li class=\"media $class\">".PHP_EOL;
 		$ret .= $view->mediaThumbnail($media, null, null, true);		
 		$ret .= '</li>'.PHP_EOL;
 	}

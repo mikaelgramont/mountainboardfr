@@ -102,7 +102,7 @@ a:active {
     vertical-align: middle;
     margin-top: -.25em;
     width: 1.125em;
-    height: 1em;
+    height: 18px;
     margin-right: .25em;
     content: '';
 }
@@ -167,7 +167,8 @@ a.dpt::before {
 a.post::before {
     background: url("../../images/default/linkSprites.png") -10px -402px no-repeat;
 }
-a.comment::before {
+a.comment::before,
+.mediaOverlayComments::before {
     background: url("../../images/default/linkSprites.png") -10px -438px no-repeat;
 }
 a.dossier::before {
@@ -1548,10 +1549,40 @@ div.blogOwner {
 	box-sizing: border-box;
     text-align: center;
     padding: .125em;
+    position: relative;
 }
-.albumList .photo,
-.albumList .video {
+.mediaOverlay {
+	position: absolute;
+    left: .125em;
+    right: .125em;
+    bottom: 0;
+    height: 2em;
+    background: rgba(0,0,0,.5);
+	color: #fff;
+    display: flex;
+    align-items: center;
+}
+.mediaOverlayIcon {
+	flex: 0 0 2em;
+	/*background: red;*/
+}
+.mediaOverlayTitle {
+	flex-grow: 1;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 0 .25em;
+}
+.mediaOverlayComments {
+	flex: 0 0 2em;
+	padding-left: .125em;
+	font-size: .8em;
+	margin-right: .5em;
+}
+.albumList .media,
+.albumList .media {
 	flex: 1 1 12em;
+	max-width: 16em;
 }
 .albumList .mediaLinkThumbnail {
     display: block;

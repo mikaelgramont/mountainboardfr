@@ -4,7 +4,8 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 	protected $_showText = false;
 	protected $_showCommentsLink = false;
 
-	public function mediaThumbnail($rawMedia, $showText = false, $showCommentsLink = false, $renderAsBackground = false)
+	public function mediaThumbnail($rawMedia, $showText = false, 
+		$showCommentsLink = false, $renderAsBackground = false)
 	{
 		$this->_showText = $showText;
 		$this->_showCommentsLink = $showCommentsLink;
@@ -23,7 +24,11 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 				throw new Lib_Exception("Unknow media type: '$type'");
 				break;
 		}
-
+		$title = ucfirst(strip_tags($media->getTitle()));
+		$commentsCount = $this->_getMediaCommentsCount($media);
+		$content .= $this->_renderOverlay($title, $media->getMediaType(),
+			$commentsCount);
+		
 		return $content;
 	}
 	
@@ -50,11 +55,6 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		$height = $media->getThumbnailHeight();
 		$description = $this->view->escape(strip_tags($media->getDescription()));
 		$title = ucfirst(strip_tags($media->getTitle()));
-
-		/**
-         * @todo: ne mettre que les attributs que l'on connait
-    	 * echapper les " dans les title et alt
-         */
 
 		switch($media->thumbnailSubType){
 		    case Media_Item_Photo::SUBTYPE_JPG:
@@ -83,7 +83,8 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		return $content;
 	}
 	
-	protected function _renderThumbnail($class, $src, $media, $title, $width, $height)
+	protected function _renderThumbnail($class, $src, $media, $title, $width,
+		$height)
 	{
 		$src = $this->view->cdnHelper->imgUrl($src);
 		$link = $media->getLink();
@@ -97,14 +98,22 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 			if($this->_showText){
 				$content .= "<a class=\"mediaThumbnailTitle dataLink $class\" href=\"$link\">$title</a>".PHP_EOL;
 			}
-		
-			if($this->_showCommentsLink){
-				$content .= $this->_mediaComments($media);
-			}
 		}
 		return $content;
 	}
 
+	protected function _renderOverlay($title, $type, $commentsCount)
+	{
+		$ret = "<div class=\"mediaOverlay\">".PHP_EOL;
+		$ret .= "	<a class=\"mediaOverlayIcon dataLink $type\"></a>".PHP_EOL;
+		$ret .= "	<span class=\"mediaOverlayTitle\">$title</span>".PHP_EOL;
+		if ($commentsCount > 0) {
+			$ret .= "	<span class=\"dataLink mediaOverlayComments\">$commentsCount</span>".PHP_EOL;
+		}
+		$ret .= "</div>".PHP_EOL;
+		return $ret;
+	}
+	
 	protected function _videoThumbnail(Media_Item_Video_Row $media)
 	{
 		$width = $media->getThumbnailWidth();
@@ -117,7 +126,8 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		
 		switch($media->thumbnailSubType){
 		    case Media_Item_Photo::SUBTYPE_JPG:
-				$src = $this->view->baseUrl .'/'. $media->getThumbnailURI(false, $size);
+				$src = $this->view->baseUrl .'/'. $media->getThumbnailURI(
+					false, $size);
 		        break;
 
 		    case Media_Item_Photo::SUBTYPE_VIMEO_THUMBNAIL:
@@ -137,10 +147,14 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		    	break;
 
 		    default:
-		        throw new Lib_Exception("Unknown media thumbnail subtype: '{$media->thumbnailSubType}'");
+		        throw new Lib_Exception(
+		        	"Unknown media thumbnail subtype: '".
+		        	"{$media->thumbnailSubType}'"
+		        );
 		        break;
 		}
-		$content = $this->_renderThumbnail('video', $src, $media, $title, $width, $height);
+		$content = $this->_renderThumbnail('video', $src, $media, $title,
+			$width, $height);
 		return $content;
 	}
 
@@ -150,17 +164,9 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		return $content;
 	}
 
-	protected function _mediaComments(Media_Item_Row $media)
+	protected function _getMediaCommentsCount(Media_Item_Row $media)
 	{
-		$content = '';
 		$comments = $media->getComments($this->view->user, $this->view->acl);
-		if($nbComments = count($comments)){
-			$firstComment = $comments->rewind()->current();
-			$commentLink = $firstComment->getLink();
-			$nbCommentsString = $nbComments . ' '.$this->view->translate($nbComments > 1 ? 'itemPlur_'.Constants_DataTypes::COMMENT : 'itemSing_'.Constants_DataTypes::COMMENT);
-			$content = '<a class="mediaThumbnailComments" href="'.$commentLink.'">'.$nbCommentsString.' </a>'.PHP_EOL;
-		}
-		return $content;
-
+		return count($comments);
 	}
 }
