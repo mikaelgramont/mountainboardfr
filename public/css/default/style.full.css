@@ -1549,22 +1549,18 @@ div.blogOwner {
     text-align: center;
     padding: .125em;
 }
-.albumList .photo {
-	flex: 1 1 12em;
-	}
+.albumList .photo,
 .albumList .video {
-	flex: 1 1 15em;
+	flex: 1 1 12em;
 }
 .albumList .mediaLinkThumbnail {
     display: block;
     background-size: cover;
     background-position: center;
 }
-.albumList .photo .mediaLinkThumbnail {
-	padding-bottom: 100%;
-}
+.albumList .photo .mediaLinkThumbnail,
 .albumList .video .mediaLinkThumbnail {
-    padding-bottom: 56.25%; /* 9/16 ratio */
+	padding-bottom: 100%;
 }
 .albumPreview li {
     display: inline;
