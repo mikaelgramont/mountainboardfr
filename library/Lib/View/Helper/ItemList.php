@@ -11,119 +11,132 @@ class Lib_View_Helper_ItemList extends Zend_View_Helper_Abstract
     {
         $params = $this->_getDefaultParameters();
         $params = array_merge($params, $userParams);
+        $id = $params['containerId'];
 
-        if(!count($items)){
-            // No items: nothing to be rendered
-            $content = "<div id='{$params['containerId']}'>".PHP_EOL;
-            $content .= "</div>".PHP_EOL;
-            return $content;
+        if(count($items) == 0){
+            return "<div id=\"$id\"></div>".PHP_EOL;
         }
 
+        $classes = array();
         if($params['containerClass']){
-            $params['containerClass'] = " class='mediaBlock {$params['containerClass']}'";
+        	$classes[] = "mediaBlock";
+        	$classes[] = $params['containerClass'];
         }
         if($params['itemClass']){
-            $params['itemClass'] = " class='{$params['itemClass']}'";
+        	$classes[] = $params['itemClass'];
         }
+        $containerClasses = implode(' ', $classes);
 
-
-        $content = "<ul id='{$params['containerId']}'{$params['containerClass']}>".PHP_EOL;
+        $content = "<ul id=\"$id\" class=\"$containerClasses\">".PHP_EOL;
         foreach($items as $item){
-            $statusString = $editLink = $deleteLink = '';
-
-            if($item->isEditableBy($this->view->user, $this->view->acl)){
-                $statusString = $this->view->itemStatus($item, true);
-                $editLink = $this->view->editLink($item);
-            }
-            if($item->isDeletableBy($this->view->user, $this->view->acl)){
-                $deleteLink = $this->view->deleteLink($item);
-            }
-
-            if($params['useAnchor']){
-                $href = "<a name=\"{$params['anchorPrefix']}{$item->id}\"></a>";
-            } else {
-                $href = "";
-            }
-
-            $link = $item->getLink();
-            $readMoreTitle = ucwords($item->getTitle());
-            $title = ' title="'.ucfirst($this->view->translate('itemSing_'.$item->getItemType())) . ' - ' . $readMoreTitle.'"';
-
-            $classes = array();
-           	$classes[] = 'mainLink';
-            if($params['addDataLinkClass']){
-            	$classes[] = $item->getItemType().'Link';
-            	$classes[] = 'dataLink';
-            }
-            $linkClass = ' class="'.implode(' ', $classes).'"';
-
-            $content .= "<li{$params['itemClass']}>$href".PHP_EOL;
-            if(method_exists($item, 'getThumbnail')){
-            	$src = $this->view->cdnHelper->url('/'.$item->getThumbnail());
-            	$content .= "	<div class=\"img\"><img src=\"".$this->view->baseUrl.$src."\" alt=\"\"/></div>".PHP_EOL;
-            }
-            $content .= "	<div class=\"bd\">".PHP_EOL.'<h1>'.PHP_EOL;
-            if($params['link']){
-                $content .= "  	<a$linkClass$title href='".$link."'>".ucfirst($readMoreTitle)."</a>$statusString$editLink$deleteLink".PHP_EOL;
-            } else {
-                $content .= "   ".ucfirst($readMoreTitle)."$statusString$editLink$deleteLink".PHP_EOL;
-            }
-
-            if($params['showPostInfo']){
-                $content .= ' '.$this->_getPostInformation($item, $params['postInfoClass']).PHP_EOL;
-            }
-            if($params['showDate']){
-                $content .= ' '.$this->_getDate($item, $params).PHP_EOL;
-            }
-
-            if($params['editionInfo']){
-            	$content.='<br/>';
-                $content .= '   '.$this->view->editionInformation($item, $params['editionInfoClass']).PHP_EOL;
-            }
-
-            if($item instanceof Event_Row){
-            	$renderer = new Lib_View_Helper_RenderData_Event($this->view);
-        		$content .= $renderer->renderDates($item);
-        	}
-
-            $description = $item->getDescription();
-            if($params['striptags']){
-            	$description = '<span class="description">'.strip_tags($description).'</span>';
-            }
-
-            if(!($item instanceof Trick_Row) && !($item instanceof Spot_Row)){
-	            if($params['shortenDescription']){
-	            	$length = Utils::strlen($description);
-	            	if($length > $params['maxDescriptionLength']){
-	            		$description = Utils::substr($description, $params['maxDescriptionLength']) . '... [<a href="'.$link.'">'.ucfirst($this->view->translate('readMore')).'</a>]';
-	            	}
-	            }
-	            $content .= '   '.$description.PHP_EOL;
-            }
-        	if($item instanceof Spot_Row){
-        		$location = $item->getLocation();
-        		if($location && $dpt = $location->getDpt()){
-	        		$content .= ' - '.$this->view->itemLink($dpt);
-        		}
-        	}
-
-
-
-        	$content .= "</h1>".PHP_EOL;
-
-            if($params['readMore']){
-            	$content .= "<a href=\"$link\" title=\"$readMoreTitle\" class=\"readMoreLink\">".ucfirst($this->view->translate('readMore'))."...</a>".PHP_EOL;
-            }
-            $content .= "</div>".PHP_EOL;
-            $content .= "</li>".PHP_EOL;
+        	$content .= $this->_renderItem($item, $params);
         }
-
 
         if($showArchive){
-			$content .= '<li class="archivesLink">'. $this->view->routeLink('listnews', ucfirst($this->view->translate('indexMoreArticles'))).'</li>'.PHP_EOL;
+			$content .= '<li class="archivesLink">'.PHP_EOL;
+			$content .= $this->view->routeLink(
+				'listnews',
+				ucfirst($this->view->translate('indexMoreArticles'))).PHP_EOL;
+			$content .= '</li>'.PHP_EOL;
         }
         $content .= '</ul>'.PHP_EOL;
         return $content;
+    }
+    
+    protected function _renderItem($item, $params)
+    {
+    	$statusString = $editLink = $deleteLink = $href = '';
+    	
+    	if($item->isEditableBy($this->view->user, $this->view->acl)){
+    		$statusString = $this->view->itemStatus($item, true);
+    		$editLink = $this->view->editLink($item);
+    	}
+    	if($item->isDeletableBy($this->view->user, $this->view->acl)){
+    		$deleteLink = $this->view->deleteLink($item);
+    	}
+    	
+    	$link = $item->getLink();
+    	$readMoreTitle = ucwords($item->getTitle());
+    	$title = ucfirst($this->view->translate(
+    		'itemSing_'.$item->getItemType())) . ' - ' . $readMoreTitle;
+    	
+    	$classes = array();
+    	$classes[] = 'mainLink';
+    	if($params['addDataLinkClass']){
+    		$classes[] = $item->getItemType().'Link';
+    		$classes[] = 'dataLink';
+    	}
+    	$linkClass = implode(' ', $classes);
+    	
+    	$itemClass = $params['itemClass'];
+    	$content = "<li class=\"$itemClass\">".PHP_EOL;
+    	if($params['useAnchor']){
+    		$name = $params['anchorPrefix'].$item->id;
+    		$content .= "<a name=\"$name\"></a>".PHP_EOL;
+    	}
+    	if(method_exists($item, 'getThumbnail')){
+    		$thumbnailSrc = $this->view->cdnHelper->url('/'.$item->getThumbnail());
+    		$content .= "	<a href=\"$link\" class=\"img\" aria-hidden=\"true\">".PHP_EOL;
+    		$content .= "		<img src=\"".$this->view->baseUrl.$thumbnailSrc."\" alt=\"\"/>".PHP_EOL;
+    		$content .= "	</a>".PHP_EOL;
+    	}
+    	$content .= '	<div class="bd">'.PHP_EOL;
+    	$content .= '		<h1>'.PHP_EOL;
+    	if($params['link']){
+    		// Make the header a link.
+    		$content .= "  	<a class=\"$linkClass\" title=\"$title\" href='".$link."'>".ucfirst($readMoreTitle)."</a>".PHP_EOL;
+    	} else {
+    		// The header is just text.
+    		$content .= "   ".ucfirst($readMoreTitle).PHP_EOL;
+    	}
+    	$content .= "</h1>".PHP_EOL;
+    	$content .= $statusString.$editLink.$deleteLink.PHP_EOL;
+    	
+    	if($params['showPostInfo']){
+    		$content .= ' '.$this->_getPostInformation($item, $params['postInfoClass']).PHP_EOL;
+    	}
+    	if($params['showDate']){
+    		$content .= ' '.$this->_getDate($item, $params).PHP_EOL;
+    	}
+    	
+    	if($params['editionInfo']){
+    		$content.='<br/>';
+    		$content .= '   '.$this->view->editionInformation($item, $params['editionInfoClass']).PHP_EOL;
+    	}
+    	
+    	if($item instanceof Event_Row){
+    		$renderer = new Lib_View_Helper_RenderData_Event($this->view);
+    		$content .= $renderer->renderDates($item);
+    	}
+    	
+    	$description = $item->getDescription();
+    	if($params['striptags']){
+    		$description = '<span class="description">'.strip_tags($description).'</span>'.PHP_EOL;
+    	}
+    	
+    	if(!($item instanceof Trick_Row) && !($item instanceof Spot_Row)){
+    		if($params['shortenDescription']){
+    			$length = Utils::strlen($description);
+    			if($length > $params['maxDescriptionLength']){
+    				$description = Utils::substr($description, $params['maxDescriptionLength']) . '... [<a href="'.$link.'">'.ucfirst($this->view->translate('readMore')).'</a>]';
+    			}
+    		}
+    		$content .= '   '.$description.PHP_EOL;
+    	}
+    	if($item instanceof Spot_Row){
+    		$location = $item->getLocation();
+    		if($location && $dpt = $location->getDpt()){
+    			$content .= ' - '.$this->view->itemLink($dpt);
+    		}
+    	}
+    	
+    	
+    	if($params['readMore']){
+    		$content .= "<a href=\"$link\" title=\"$readMoreTitle\" class=\"readMoreLink\">".ucfirst($this->view->translate('readMore'))."...</a>".PHP_EOL;
+    	}
+    	$content .= "</div>".PHP_EOL;
+    	$content .= "</li>".PHP_EOL;
+    	return $content;
     }
 
     /**
