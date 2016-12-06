@@ -25,7 +25,11 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 				break;
 		}
 		$title = ucfirst(strip_tags($media->getTitle()));
-		$commentsCount = $this->_getMediaCommentsCount($media);
+		if ($this->view->user) {
+			$commentsCount = $this->_getMediaCommentsCount($media);
+		} else {
+			$commentsCount = '';
+		}
 		$content .= $this->_renderOverlay($title, $media->getMediaType(),
 			$commentsCount);
 		
@@ -107,7 +111,7 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		$ret = "<div class=\"mediaOverlay\">".PHP_EOL;
 		$ret .= "	<a class=\"mediaOverlayIcon dataLink $type\"></a>".PHP_EOL;
 		$ret .= "	<span class=\"mediaOverlayTitle\">$title</span>".PHP_EOL;
-		if ($commentsCount > 0) {
+		if ($commentsCount && $commentsCount > 0) {
 			$ret .= "	<span class=\"dataLink mediaOverlayComments\">$commentsCount</span>".PHP_EOL;
 		}
 		$ret .= "</div>".PHP_EOL;
