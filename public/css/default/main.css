@@ -1,12 +1,25 @@
-/** Reset */
+/*
+@font-face {
+    font-family: Deftone;
+    src: url(../../fonts/deftone.ttf)
+}
+*/
+/*
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Patua+One');
+*/
 
+@import url('https://fonts.googleapis.com/css?family=Roboto|Galada');
+
+
+
+/** Reset */
 html, body, div, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p, blockquote, pre, form, fieldset, table, th, td {
     margin: 0;
     padding: 0;
 }
 body {
     font-size: 16px;
-    font-family: helvetica;
+    font-family: Roboto, sans-serif;
 }
 ul {
     list-style-position: inside;
@@ -51,6 +64,7 @@ h3,
 h4,
 h5,
 h6 {
+	font-family: Galada, cursive;
     font-weight: bold;
     font-size: 1em;
 }
@@ -94,7 +108,8 @@ a:active {
     color: #E0E000
 }
 .dataLink{
-	word-break: break-word;	
+	word-break: break-word;
+	font-family: Galada;	
 }
 .dataLink::before {
     position: relative;
@@ -241,7 +256,7 @@ a.backLeft {
     color: white
 }
 #shareButtons.horizontal {
-    height: 2.5em;
+    height: 1.5em;
     clear: both;
 }
 #facebookLikeButton,
@@ -1572,6 +1587,8 @@ div.blogOwner {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	padding: 0 .25em;
+	font-family: Galada, cursive;
+	text-shadow: 1px 1px 1px #000;
 }
 .mediaOverlayComments {
 	flex: 0 0 2em;
@@ -1579,11 +1596,22 @@ div.blogOwner {
 	font-size: .8em;
 	margin-right: .5em;
 }
-.albumList .media,
 .albumList .media {
 	flex: 1 1 12em;
-	max-width: 16em;
+	max-width: 20em;
 }
+@media screen and (min-width: 668px) {
+	.albumList .media {
+		flex-basis: 15em;
+	}
+	.mediaOverlay {
+		height: 2.5em;
+	}
+	.mediaOverlayTitle {
+		font-size: 1.25em;
+	}
+}
+
 .albumList .mediaLinkThumbnail {
     display: block;
     background-size: cover;
