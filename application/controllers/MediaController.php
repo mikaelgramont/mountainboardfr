@@ -593,7 +593,7 @@ class MediaController extends Lib_Controller_Action
 			throw new Lib_Exception_Media("Could not parse video info: '$value'");
 		}
 		$thumbnailInfoArr = $this->_getVideoThumbnailInfo($videoInfoObj);
-		$thumbnailInfoArr = $this->_saveLocalVideoThumbnail($thumbnailInfoArr);
+		$thumbnailInfoArr = $this->_saveLocalVideoThumbnail($video, $thumbnailInfoArr);
 		return $thumbnailInfoArr;
 	}
 
@@ -639,7 +639,7 @@ class MediaController extends Lib_Controller_Action
 		return $info;
 	}
 	
-	protected function _saveLocalVideoThumbnail($params)
+	protected function _saveLocalVideoThumbnail(Media_Item_Video_Row $video, $params)
 	{
 		$file = file_get_contents($params['thumbnailUri']);
 		if(empty($file)){
@@ -647,11 +647,15 @@ class MediaController extends Lib_Controller_Action
 		}
 		// Tenmporary name.
 		$filename = md5(uniqid(rand()));
-		$destination = APP_MEDIA_THUMBNAILS_DIR . DIRECTORY_SEPARATOR. $filename;
+		$destination = APP_MEDIA_DIR_RAW . DIRECTORY_SEPARATOR. $filename;
 		file_put_contents($destination, $file);
-		$thumbnail = new File_Photo($destination);
-		$thumbnail->resize(200, 150);
-
+		$photoFile = new File_Photo($destination);
+		$thumbnails = $video->createAllThumbnailsFromOriginal($photoFile);
+		$photoFile->delete();
+		// Treat the small thumb as the default one as it is how
+		// things were before there were more than one thumb size.
+		$thumbnail = $thumbnails[Media_Item_Row::SIZE_SMALL];
+		
 		$params['thumbnailSubType'] = Media_Item_Photo::SUBTYPE_JPG;
 		$params['thumbnailWidth'] = $thumbnail->getWidth();
 		$params['thumbnailHeight'] = $thumbnail->getHeight();
