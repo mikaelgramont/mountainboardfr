@@ -93,15 +93,20 @@ function renderSubHeaderCard($prev, $next, $view)
 	return $content;
 }
 
-function maybeRenderMetadata($spot, $trick, $riders, $tags, $inMedia, $view)
+function maybeRenderMetadata($media, $renderer, $spot, $trick, $riders, $tags, $inMedia, $view)
 {
-	if(Utils::allEmpty($spot, $trick, $riders['byId'], $riders['byName'], $tags)) {
+	$renderAlternateLink = $media->mediaType == Media_Item::TYPE_VIDEO;
+	if(Utils::allEmpty($spot, $trick, $riders['byId'], $riders['byName'],
+		$tags, $renderAlternateLink)) {
 		return '';
 	}
 
 	$content = '		<div class="mediaMetadataLinks deemphasized-text">'.PHP_EOL;
 	$content .= maybeRenderAttributions($spot, $trick, $riders, $inMedia, $view);
 	$content .= $view->renderTags($tags);
+	if ($renderAlternateLink) {
+		$content .= $renderer->alternateLink($media);
+	}
 	$content .= '		</div>'.PHP_EOL;
 	return $content;
 }
@@ -188,16 +193,17 @@ echo renderHeaderCard($this->media, $this->album, $editable, $this);
 echo renderSubHeaderCard($this->previousMedia, $this->nextMedia, $this);
 
 echo '<div class="card mediaCard">'.PHP_EOL;
-echo '	<div class="media "'.$mediaClass.'">'.PHP_EOL;
+echo '	<div class="media '.$mediaClass.'">'.PHP_EOL;
 echo '		<div class="mediaElement">'.PHP_EOL;
 echo $renderer->render($this->media, $editable).PHP_EOL;
 echo '		</div>'.PHP_EOL;
 echo '		<div class="mediaMetadata">'.PHP_EOL;
-echo '			<div class="mediaMetadataText mediaMetadataTextHorizontal">'.PHP_EOL;
+echo '			<div class="mediaMetadataText">'.PHP_EOL;
 echo $this->renderMediaInformation($this->media);
-echo maybeRenderMetadata($this->spot, $this->trick, $this->riders, $tags, ucfirst($this->translate($inMedia)), $this);
+echo maybeRenderMetadata($this->media, $renderer, $this->spot,
+		$this->trick, $this->riders, $tags,
+		ucfirst($this->translate($inMedia)), $this);
 echo '			</div>'.PHP_EOL;
-echo $renderer->alternateLink($this->media);
 echo maybeRenderDescription($description);
 echo $this->shareButtons()->all(APP_URL.$this->url(), 'horizontal').PHP_EOL;
 echo '		</div>'.PHP_EOL;

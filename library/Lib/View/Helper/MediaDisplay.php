@@ -101,7 +101,6 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 		return $video;
 	}
 	
-
 	public function alternateLink(Media_Item_Row $media)
 	{
 		$return = "";
@@ -134,7 +133,7 @@ class Lib_View_Helper_MediaDisplay extends Zend_View_Helper_Abstract
 				        break;
 				}
 				$alternate = $media->getExternalURI();
-				$return = '<a class="external deemphasized-text'.$class.'" href="'.$alternate.'" rel="alternate">'.ucfirst(Globals::getTranslate()->_($alternateTitle)).'</a>'.PHP_EOL;
+				$return = '<a class="external'.$class.'" href="'.$alternate.'" rel="alternate">'.ucfirst(Globals::getTranslate()->_($alternateTitle)).'</a>'.PHP_EOL;
 
 		    	break;
 		    default:

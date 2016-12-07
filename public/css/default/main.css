@@ -1215,7 +1215,8 @@ div.avatar {
     max-width: 100%;
 }
 .media-wrapper {
-    background: #000;
+    display: block;
+    text-align: center;
 }
 .video-wrapper {
 	position: relative;
@@ -1244,18 +1245,8 @@ div.mediaTitle a:visited {
 .mediaMetadataLinks {
 	margin-top: .25em;
 }
-div.mediaMetadataText {
-    width: 37.5em;
-    display: inline-block;
-    vertical-align: top;
-}
-div.mediaMetadataTextHorizontal {
+.mediaMetadataText a.external {
     display: block;
-    width: inherit;
-}
-div.mediaMetadataText a.external {
-    display: block;
-    margin-bottom: 0.5em;
 }
 div.mediaMetadataMap {
     height: 18em;
