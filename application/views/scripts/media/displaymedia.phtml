@@ -1,149 +1,210 @@
 <?php
-$this->headTitle(ucfirst($this->media->getTitle()));
+/**
+ * VARIABLES
+ */
 $tags = $this->keywords = $this->media->getTags();
 $editable = $this->media->isEditableBy($this->user, $this->acl);
 $description = $this->media->getDescription();
-$backToAlbum = sprintf($this->translate('backToAlbum'), $this->album->getTitle());
-$this->openGraph()->forMedia($this->media);
+if($this->media->mediaType == Media_Item::TYPE_PHOTO){
+	$prev = 'prevPhoto';
+	$next = 'nextPhoto';
+	$inMedia = 'ridersInPhoto';
+	$mediaClass = 'photo';
+} else {
+	$prev = 'prevVideo';
+	$next = 'nextVideo';
+	$inMedia = 'ridersInVideo';
+	$mediaClass = 'video';
+}
 $renderer = $this->mediaDisplay();
 
-if($this->media->mediaType == Media_Item::TYPE_PHOTO){
-	$inMedia = 'ridersInPhoto';
-    $prev = 'prevPhoto';
-    $next = 'nextPhoto';
-} else {
-	$inMedia = 'ridersInVideo';
-    $prev = 'prevVideo';
-    $next = 'nextVideo';
+/**
+ * FUNCTIONS 
+ */
+function nextPrevMeta($prev, $next, $view)
+{
+	if(!empty($prev)){
+		$view->headLink()->headLink(array(
+			'rel' => 'prev',
+			'href' => $prev->getLink()
+		));
+	}
+	
+	if(!empty($next)){
+		$view->headLink()->headLink(array(
+			'rel' => 'next',
+			'href' => $next->getLink()
+		));
+	}
 }
 
-if(!empty($this->previousMedia)){
-	$this->headLink()->headLink(array(
-		'rel' => 'prev',
-		'href' => $this->previousMedia->getLink()
-	));
+function renderHeaderCard($media, $album, $editable, $view)
+{
+	$backToAlbum = sprintf($view->translate('backToAlbum'),	$album->getTitle());
+	
+	$content = '';
+	$content .= '<div class="card albumHeader">'.PHP_EOL;
+	$content .= '	<h1 id="mainTitle" class="mediaTitle">'.PHP_EOL;
+	$content .= '		'.ucfirst($media->getTitle()).PHP_EOL;
+	if($editable){
+		$content .= '	<div class="mediaEditLinks">'.PHP_EOL;
+		if($media->mediaType == Media_Item::TYPE_PHOTO){
+			$content .= '		'.$view->mediaPhotoRotateLinks($media).PHP_EOL;
+		}
+		$content .= '		'.$view->itemStatus($media).PHP_EOL;
+		$content .= '		'.$view->editLink($media).PHP_EOL;
+		$content .= '		'.$view->deleteLink($media).PHP_EOL;
+		$content .= '	</div>'.PHP_EOL;
+	}
+	$content .= '	</h1>'.PHP_EOL;
+	$content .= '	<div>'.PHP_EOL;
+	$content .= '		<div id="backToAlbum" class="actionLinkContainer">'.PHP_EOL;
+	$content .= '			'.$view->itemLink(
+		array(
+			'name' => $backToAlbum,
+			'link' => $album->getLink(),
+			'itemType' => Constants_DataTypes::MEDIAALBUM
+		), 'dataLink album').PHP_EOL;
+	$content .= '		</div>'.PHP_EOL;
+	$content .= '	</div>'.PHP_EOL;
+	$content .= '</div>'.PHP_EOL;
+	return $content;
 }
 
-if(!empty($this->nextMedia)){
-	$this->headLink()->headLink(array(
-		'rel' => 'next',
-		'href' => $this->nextMedia->getLink()
-	));
-}
-echo '<div class="card albumHeader">'.PHP_EOL;
-echo '	<h1 id="mainTitle" class="mediaTitle">'.PHP_EOL;
-echo '		'.ucfirst($this->media->getTitle()).PHP_EOL;
-if($editable){
-	echo '	<div class="mediaEditLinks">'.PHP_EOL;
-	if($this->media->mediaType == Media_Item::TYPE_PHOTO){
-		echo '		'.$this->mediaPhotoRotateLinks($this->media).PHP_EOL;
+function renderSubHeaderCard($prev, $next, $view)
+{
+	$content = '';
+	if(!empty($prev) || !empty($next)){
+		$content .= '<div class="card albumHeader">'.PHP_EOL;
+		if(!empty($prev)){
+			$link = $prev->getLink();
+			$content .= '	<div class="actionLinkContainer prevMedia">'.PHP_EOL;
+			$content .= $view->itemLink($prev, 'linkLeft', 'prev').PHP_EOL;
+			$content .='	</div>'.PHP_EOL;
+		}
+		if(!empty($next)){
+			$link = $next->getLink();
+			$content .= '	<div class="actionLinkContainer nextMedia">'.PHP_EOL;
+			$content .= $view->itemLink($next, 'linkRight', 'next').PHP_EOL;
+			$content .= '	</div>'.PHP_EOL;
+		}
+		$content .= '</div>'.PHP_EOL;
 	}
-	echo '		'.$this->itemStatus($this->media).PHP_EOL;
-	echo '		'.$this->editLink($this->media).PHP_EOL;
-	echo '		'.$this->deleteLink($this->media).PHP_EOL;
-	echo '	</div>'.PHP_EOL;
+	return $content;
 }
-echo '	</h1>'.PHP_EOL;
-echo '	<div>'.PHP_EOL;
-echo '		<div id="backToAlbum" class="actionLinkContainer">'.PHP_EOL;
-echo '			'.$this->itemLink(
-	array(
-		'name' => $backToAlbum,
-		'link' => $this->album->getLink(),
-		'itemType' => Constants_DataTypes::MEDIAALBUM
-			
-	), 'dataLink album').PHP_EOL;
-echo '		</div>'.PHP_EOL;
-echo '	</div>'.PHP_EOL;
-echo '</div>'.PHP_EOL;
 
-if(!empty($this->previousMedia) || !empty($this->nextMedia)){
-	echo '<div class="card albumHeader">'.PHP_EOL;
-	if(!empty($this->previousMedia)){
-		$link = $this->previousMedia->getLink();
-		$img = '/'.$this->baseUrl . IMAGES_PATH . 'left.png';
-		echo '	<div class="actionLinkContainer prevMedia">'.$this->itemLink($this->previousMedia, 'linkLeft', 'prev').'</div>'.PHP_EOL;
+function maybeRenderMetadata($spot, $trick, $riders, $tags, $inMedia, $view)
+{
+	if(Utils::allEmpty($spot, $trick, $riders['byId'], $riders['byName'], $tags)) {
+		return '';
 	}
-	if(!empty($this->nextMedia)){
-		$link = $this->nextMedia->getLink();
-		$img = '/'.$this->baseUrl . IMAGES_PATH . 'right.png';
-		echo '	<div class="actionLinkContainer nextMedia">'.$this->itemLink($this->nextMedia, 'linkRight', 'next').'</div>'.PHP_EOL;
-	}
-	echo '</div>'.PHP_EOL;
+
+	$content = '		<div class="mediaMetadataLinks deemphasized-text">'.PHP_EOL;
+	$content .= maybeRenderAttributions($spot, $trick, $riders, $inMedia, $view);
+	$content .= $view->renderTags($tags);
+	$content .= '		</div>'.PHP_EOL;
+	return $content;
 }
+
+function maybeRenderAttributions($spot, $trick, $riders, $inMedia, $view)
+{
+	if (Utils::allEmpty($spot, $trick, $riders['byId'], $riders['byName'])) {
+		return '';
+	}
+	$content = '			<li>'.$inMedia.':</li>'.PHP_EOL;
+	
+	if(!empty($riders['byId']) || !empty($riders['byName'])){
+		$linkString = array();
+		foreach($riders['byId'] as $rider){
+			$linkString[] = $view->userLink($rider);
+		}
+		foreach($riders['byName'] as $rider){
+			$linkString[] = $rider;
+		}
+		$content .= '		<li>' .implode(', ', $linkString) .'</li>'.PHP_EOL;
+	}
+	if(!empty($trick)){
+		$content .= '		<li>'.$view->itemLink($trick).'</li>'.PHP_EOL;
+	}
+	if(!empty($spot)){
+		$content .= '		<li>'.$view->itemLink($spot).'</li>'.PHP_EOL;
+	}
+	
+	$content .= '		</ul>'.PHP_EOL;
+	return $content;
+}
+
+function maybeRenderDescription($description)
+{
+	if(!empty($description)){
+		return '		<div class="mediaDescription">'.$description.'</div>'.PHP_EOL;
+	}
+	return '';
+}
+
+function maybeRenderMapCard($media, $view)
+{
+	if (!$media->hasLocation()) {
+		return '';
+	}
+	
+	$mapElementId = 'simpleMapElement';
+	$location = $media->getLocation();
+	$location->zoom = DEFAULT_MEDIA_MAP_ZOOM;
+	$view->googleMaps()->displayItem($location, array(
+		'mapElementId' => $mapElementId));
+	
+	$content = '<div class="card">'.PHP_EOL;
+	$content .= '	<div class="mediaMetadataMap">'.PHP_EOL;
+	$content .= '   	<div id="'.$mapElementId.'">'.PHP_EOL;
+	$content .= '			<img src="'.$view->staticGoogleMap($location, 288, 288).'" alt="" />'.PHP_EOL;
+	$content .= '		</div>'.PHP_EOL;
+	$content .= '	</div>'.PHP_EOL;
+	$content .= '</div>'.PHP_EOL;
+	return $content;
+}
+
+function renderCommentsCard($comments, $media, $lastLogin, $view)
+{
+	$content = '<div class="card">'.PHP_EOL;
+	$content .= '	'.$view->renderComments($comments, $media, $lastLogin);
+	$content .= '</div>'.PHP_EOL;
+	return $content;
+}
+
+/**
+ * METAS
+ */
+$this->headTitle(ucfirst($this->media->getTitle()));
+$this->openGraph()->forMedia($this->media);
+nextPrevMeta($this->previousMedia, $this->nextMedia, $this);
+
+/**
+ * RENDERING
+ * 
+ */
+echo renderHeaderCard($this->media, $this->album, $editable, $this);
+
+echo renderSubHeaderCard($this->previousMedia, $this->nextMedia, $this);
 
 echo '<div class="card mediaCard">'.PHP_EOL;
-if($this->media->mediaType == Media_Item::TYPE_PHOTO){
-	echo '	<div class="media photo">'.PHP_EOL;
-} else {
-	echo '	<div class="media video">'.PHP_EOL;
-}
+echo '	<div class="media "'.$mediaClass.'">'.PHP_EOL;
 echo '		<div class="mediaElement">'.PHP_EOL;
 echo $renderer->render($this->media, $editable).PHP_EOL;
 echo '		</div>'.PHP_EOL;
-
 echo '		<div class="mediaMetadata">'.PHP_EOL;
-
 echo '			<div class="mediaMetadataText mediaMetadataTextHorizontal">'.PHP_EOL;
 echo $this->renderMediaInformation($this->media);
-
+echo maybeRenderMetadata($this->spot, $this->trick, $this->riders, $tags, ucfirst($this->translate($inMedia)), $this);
+echo '			</div>'.PHP_EOL;
 echo $renderer->alternateLink($this->media);
-
-if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName']) || !empty($tags)){
-	echo '		<div class="mediaMetadataLinks deemphasized-text">'.PHP_EOL;
-}
-if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName'])){
-	echo '		<ul class="">'.PHP_EOL;
-	echo '			<li>'.ucfirst($this->translate($inMedia)).':</li>'.PHP_EOL;
-	}
-
-if(!empty($this->riders['byId']) || !empty($this->riders['byName'])){
-	$linkString = array();
-	foreach($this->riders['byId'] as $rider){
-		$linkString[] = $this->userLink($rider);
-	}
-	foreach($this->riders['byName'] as $rider){
-		$linkString[] = $rider;
-	}
-	echo '		<li>' .implode(', ', $linkString) .'</li>'.PHP_EOL;
-}
-if(!empty($this->trick)){
-	echo '		<li>'.$this->itemLink($this->trick).'</li>'.PHP_EOL;
-}
-if(!empty($this->spot)){
-	echo '		<li>'.$this->itemLink($this->spot).'</li>'.PHP_EOL;
-}
-
-if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName'])){
-	echo '		</ul>'.PHP_EOL;
-}
-
-echo $this->renderTags($tags);
-if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName']) || !empty($tags)){
-	echo '		</div>'.PHP_EOL;
-	}
-echo '	</div>'.PHP_EOL;
-if(!empty($description)){
-	echo '		<div class="mediaDescription">'.$description.'</div>'.PHP_EOL;
-}
+echo maybeRenderDescription($description);
 echo $this->shareButtons()->all(APP_URL.$this->url(), 'horizontal').PHP_EOL;
-
+echo '		</div>'.PHP_EOL;
 echo '	</div>'.PHP_EOL;
 echo '</div>'.PHP_EOL;
-echo '</div>'.PHP_EOL;
 
-echo '<div class="card">'.PHP_EOL;
-if($this->media->hasLocation()){
-	$mapElementId = 'simpleMapElement';
-	$location = $this->media->getLocation();
-	$location->zoom = DEFAULT_MEDIA_MAP_ZOOM;
-	$this->googleMaps()->displayItem($location, array('mapElementId' => $mapElementId));
-	$content = '   <div id="'.$mapElementId.'"><img src="'.$this->staticGoogleMap($location, 288, 288).'" alt="" /></div>'.PHP_EOL;
+echo maybeRenderMapCard($this->media, $this);
 
-	echo '	<div class="mediaMetadataMap">'.$content.'</div>'.PHP_EOL;
-}
-echo '</div>'.PHP_EOL;
+echo renderCommentsCard($this->comments, $this->media, $this->lastLogin, $this);
 
-echo '<div class="card">'.PHP_EOL;
-	echo $this->renderComments($this->comments, $this->media, $this->lastLogin);
-echo '</div>'.PHP_EOL;

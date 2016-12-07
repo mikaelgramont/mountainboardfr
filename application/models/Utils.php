@@ -272,4 +272,18 @@ class Utils
 		return $return;		
 	} 
 
+	public static function isAnyNonEmpty()
+	{
+		return array_reduce(func_get_args(), function($carry, $item) {
+			return $carry || !empty($item);
+		}, false);
+	}
+	
+	public static function allEmpty()
+	{
+		return array_reduce(func_get_args(), function($carry, $item) {
+			return $carry && empty($item);
+		}, false);
+	}
+	
 }
