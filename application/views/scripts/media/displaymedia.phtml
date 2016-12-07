@@ -30,7 +30,20 @@ if(!empty($this->nextMedia)){
 		'href' => $this->nextMedia->getLink()
 	));
 }
-echo '<div class="card">'.PHP_EOL;
+echo '<div class="card albumHeader">'.PHP_EOL;
+echo '	<h1 id="mainTitle" class="mediaTitle">'.PHP_EOL;
+echo '		'.ucfirst($this->media->getTitle()).PHP_EOL;
+if($editable){
+	echo '	<div class="mediaEditLinks">'.PHP_EOL;
+	if($this->media->mediaType == Media_Item::TYPE_PHOTO){
+		echo '		'.$this->mediaPhotoRotateLinks($this->media).PHP_EOL;
+	}
+	echo '		'.$this->itemStatus($this->media).PHP_EOL;
+	echo '		'.$this->editLink($this->media).PHP_EOL;
+	echo '		'.$this->deleteLink($this->media).PHP_EOL;
+	echo '	</div>'.PHP_EOL;
+}
+echo '	</h1>'.PHP_EOL;
 echo '	<div>'.PHP_EOL;
 echo '		<div id="backToAlbum" class="actionLinkContainer">'.PHP_EOL;
 echo '			'.$this->itemLink(
@@ -58,48 +71,30 @@ if(!empty($this->previousMedia) || !empty($this->nextMedia)){
 	}
 	echo '</div>'.PHP_EOL;
 }
-?>
-<div class="mediaTitle"><?php
-echo '<h1 id="mainTitle">'.ucfirst($this->media->getTitle()).'</h1>';
-if($editable){
-	echo $this->itemStatus($this->media);
-	echo $this->editLink($this->media);
-	echo $this->deleteLink($this->media);
-}
-echo $this->renderMediaInformation($this->media);
 
-if($this->media->mediaType == Media_Item::TYPE_PHOTO && $editable){
-	echo $this->mediaPhotoRotateLinks($this->media).PHP_EOL;
-}
-
-?>
-</div>
-<?php
-echo '<div class="card" style="margin-top:0">'.PHP_EOL;
-
+echo '<div class="card mediaCard">'.PHP_EOL;
 if($this->media->mediaType == Media_Item::TYPE_PHOTO){
-	echo '<div class="media photo">'.PHP_EOL;
+	echo '	<div class="media photo">'.PHP_EOL;
 } else {
-	echo '<div class="media video">'.PHP_EOL;
+	echo '	<div class="media video">'.PHP_EOL;
 }
+echo '		<div class="mediaElement">'.PHP_EOL;
 echo $renderer->render($this->media, $editable).PHP_EOL;
+echo '		</div>'.PHP_EOL;
 
-echo '<div class="mediaMetadata">'.PHP_EOL;
+echo '		<div class="mediaMetadata">'.PHP_EOL;
 
-echo '	<div class="mediaMetadataText mediaMetadataTextHorizontal">'.PHP_EOL;
-echo $this->shareButtons()->all(APP_URL.$this->url(), 'horizontal').PHP_EOL;
+echo '			<div class="mediaMetadataText mediaMetadataTextHorizontal">'.PHP_EOL;
+echo $this->renderMediaInformation($this->media);
 
 echo $renderer->alternateLink($this->media);
 
-if(!empty($description)){
-	echo '		<div class="mediaDescription">'.$description.'</div>'.PHP_EOL;
-}
 if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName']) || !empty($tags)){
 	echo '		<div class="mediaMetadataLinks deemphasized-text">'.PHP_EOL;
 }
 if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) || !empty($this->riders['byName'])){
 	echo '		<ul class="">'.PHP_EOL;
-	echo '		<li>'.ucfirst($this->translate($inMedia)).':</li>'.PHP_EOL;
+	echo '			<li>'.ucfirst($this->translate($inMedia)).':</li>'.PHP_EOL;
 	}
 
 if(!empty($this->riders['byId']) || !empty($this->riders['byName'])){
@@ -128,21 +123,27 @@ if(!empty($this->spot) || !empty($this->trick) || !empty($this->riders['byId']) 
 	echo '		</div>'.PHP_EOL;
 	}
 echo '	</div>'.PHP_EOL;
+if(!empty($description)){
+	echo '		<div class="mediaDescription">'.$description.'</div>'.PHP_EOL;
+}
+echo $this->shareButtons()->all(APP_URL.$this->url(), 'horizontal').PHP_EOL;
 
+echo '	</div>'.PHP_EOL;
+echo '</div>'.PHP_EOL;
+echo '</div>'.PHP_EOL;
+
+echo '<div class="card">'.PHP_EOL;
 if($this->media->hasLocation()){
 	$mapElementId = 'simpleMapElement';
 	$location = $this->media->getLocation();
 	$location->zoom = DEFAULT_MEDIA_MAP_ZOOM;
 	$this->googleMaps()->displayItem($location, array('mapElementId' => $mapElementId));
-	$content = '   <div id="'.$mapElementId.'" style="left:0"><img src="'.$this->staticGoogleMap($location, 288, 288).'" alt="" /></div>'.PHP_EOL;
+	$content = '   <div id="'.$mapElementId.'"><img src="'.$this->staticGoogleMap($location, 288, 288).'" alt="" /></div>'.PHP_EOL;
 
 	echo '	<div class="mediaMetadataMap">'.$content.'</div>'.PHP_EOL;
-} else {
-	echo '	<div class="mediaMetadataNoMap"></div>'.PHP_EOL;
 }
-echo '	</div>'.PHP_EOL;
 echo '</div>'.PHP_EOL;
-echo '</div>'.PHP_EOL;
+
 echo '<div class="card">'.PHP_EOL;
 	echo $this->renderComments($this->comments, $this->media, $this->lastLogin);
 echo '</div>'.PHP_EOL;

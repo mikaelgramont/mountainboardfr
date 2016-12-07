@@ -32,10 +32,9 @@ class Lib_View_Helper_RenderMediaInformation extends Zend_View_Helper_Abstract
 
         $album = $data->getAlbum();
         
-        $content  = ' (';
-        $content .= $this->view->translate('postedBy'). ' '.$this->view->userLink($submitter);
+        $content = ucfirst($this->view->translate('postedBy'). ' '.$this->view->userLink($submitter));
 		$content .= ' '.$this->view->translate('mediaInAlbum')." ".$this->view->itemLink($album, null, 'contents');        
-        $content .= ' '.$this->view->translate('dateOn').' '.$date.$authorLink.')';
+        $content .= ' '.$this->view->translate('dateOn').' '.$date.$authorLink.PHP_EOL;
 
         return '<p class="mediaInformation deemphasized-text">'.$content.'</p>'.PHP_EOL;
     }

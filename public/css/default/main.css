@@ -1,15 +1,4 @@
-/*
-@font-face {
-    font-family: Deftone;
-    src: url(../../fonts/deftone.ttf)
-}
-*/
-/*
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Patua+One');
-*/
-
 @import url('https://fonts.googleapis.com/css?family=Roboto|Galada');
-
 
 
 /** Reset */
@@ -80,6 +69,7 @@ h2.blogDescription {
 .dataAddTitle,
 .dataEditTitle,
 .forumTitle,
+.mediaTitle,
 .topicTitle,
 .privateMessageTitle {
 	font-size: 2em;
@@ -87,6 +77,7 @@ h2.blogDescription {
 
 .deemphasized-text {
 	font-size: .8em;
+	color: #666;
 }
 p.paragraph {
     margin: 0.5em 0;
@@ -120,6 +111,9 @@ a:active {
     height: 18px;
     margin-right: .25em;
     content: '';
+}
+.actionLinkContainer .dataLink{
+    font-family: Roboto;  
 }
 a.user::before,
 a.author::before,
@@ -257,23 +251,19 @@ a.backLeft {
 }
 #shareButtons.horizontal {
     height: 1.5em;
-    clear: both;
 }
 #facebookLikeButton,
 #googlePlusOneButton {
-    float: right;
     width: 3.5em;
     height: 4.125em;
 }
 #facebookLikeButton.horizontal,
 #googlePlusOneButton.horizontal {
-    float: left;
     width: 18em;
     height: 2.5em;
     overflow: hidden;
 }
 #facebookLikeButton.media {
-    float: none;
     text-align: left;
     margin: 0.5em 0;
     height: 2em;
@@ -1201,36 +1191,15 @@ div.avatar {
 #postComment {}
 /** Media */
 
-ul#photoRotationLinks {
-    position: absolute;
-    top: 1em;
-    right: -11em;
-    width: 7em;
-    height: 2em;
+.mediaEditLinks {
+	display: inline-block;
 }
-ul#photoRotationLinks li {
-    float: left;
-    padding: 0 0.25em;
-    width: 1.8125em;
-    height: 1.8125em;
+.photoRotationLinks,
+.photoRotationLinks li {
+	display: inline-block;
 }
-ul#photoRotationLinks li a {
-    display: block;
-    width: 100%;
-    height: 100%
-}
-.mediaTitle {
-    max-width: 45em;
-    padding: .75em;
-    margin-top: 2em;
-    background-color: #A0A0A0;
-    border-radius: 1em 1em 0 0;
-    color: white;
-    position: relative;
-}
-div.mediaTitle h1 {
-    display: inline;
-    font-size: 1.25em;
+.mediaTitle h1 {
+    font-size: 1.5em;
 }
 .mediaInformation {
 	margin-top: .75em;
@@ -1238,7 +1207,7 @@ div.mediaTitle h1 {
 .media {
     margin-bottom: 0em;
 }
-.media.photo img {
+.media.photo .mediaElement img {
 	display: table-cell;
     text-align: center;
     display: inline-block;
@@ -1265,22 +1234,15 @@ div.mediaTitle a,
 div.mediaTitle a:visited {
     color: white;
 }
-.mediaMetadata {
-    text-align: left;
-    padding: 0.5em;
-    box-sizing: border-box;
-    background-color: #F0F0F0;
-    border-radius: 0 0 0.5em 0.5em;
-}
 .mediaDescription {
-	line-height: 1.7em;
+    line-height: 1.3em;
+    margin: .5em 0;
 }
 .mediaMetadataLinks li {
 	display: inline-block;
 }
 .mediaMetadataLinks {
-	margin-top: 1em;
-	color: #666;
+	margin-top: .25em;
 }
 div.mediaMetadataText {
     width: 37.5em;
@@ -1297,12 +1259,6 @@ div.mediaMetadataText a.external {
 }
 div.mediaMetadataMap {
     height: 18em;
-    padding: 0.5em 0.5em 0.5em 0;
-}
-div.mediaMetadataNoMap {
-    display: inline-block;
-    width: 18em;
-    padding: 0.5em 0.5em 0.5em 0;
 }
 #mediaNavigation {
     /* position: absolute; */

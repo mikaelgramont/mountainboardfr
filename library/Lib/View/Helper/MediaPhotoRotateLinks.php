@@ -26,7 +26,7 @@ class Lib_View_Helper_MediaPhotoRotateLinks extends Zend_View_Helper_Abstract
 
         );
 
-        $content = "<ul id=\"photoRotationLinks\">".PHP_EOL;
+        $content = "<ul class=\"photoRotationLinks\">".PHP_EOL;
         foreach($elements as $element){
             $title = ucfirst($translator->translate($element['title']));
             $content .= "<li><a title=\"$title\" href=\"{$element['url']}\">".PHP_EOL;
@@ -34,7 +34,6 @@ class Lib_View_Helper_MediaPhotoRotateLinks extends Zend_View_Helper_Abstract
             $content .= "</a></li>".PHP_EOL;
         }
 		$content .= "</ul>".PHP_EOL;
-		$content .= '<div class="clear"></div>'.PHP_EOL;
 
 		return $content;
     }

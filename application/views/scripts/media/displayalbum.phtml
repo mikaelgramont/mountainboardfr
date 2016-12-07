@@ -53,7 +53,7 @@ function renderActions($album, $user, $view)
 					'dataLink photo');
 			break;
 		case Media_Album_VideoMain::ID:
-			$prepend = '<div class="addVideo">'.PHP_EOL;
+			$prepend = '<div class="addVideo actionLinkContainer">'.PHP_EOL;
 			$append = '</div>'.PHP_EOL;
 			$ret .= $view->actionLink(
 					$prepend,
