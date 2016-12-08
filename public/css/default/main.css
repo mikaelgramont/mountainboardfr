@@ -1151,14 +1151,16 @@ ul#topics li:nth-child(even) {
     margin-bottom: 0.5em;
 }
 #postsList li div.postInfo {
-    margin-top: 0.5em;
     margin-bottom: 0.5em;
     background-color: #C0C0C0;
     padding: 0.125em;
-    border-top: 0.0625em solid #6b6b6b;
+    padding-left: .25em;
+    border-top: 0.0625em solid #7b7b7b;
     border-bottom: 0.0625em solid #A0A0A0;
     border-right: 0.0625em solid #A0A0A0;
-    border-left: 0.0625em solid #6b6b6b;
+    border-left: 0.0625em solid #7b7b7b;
+    line-height: 1.3em;
+    color: #444;
 }
 #postsList li div.postInfo.new {
     background: url('../../images/default/linkSprites.png') no-repeat -10px -402px;
