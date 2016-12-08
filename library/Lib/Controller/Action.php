@@ -130,6 +130,7 @@ class Lib_Controller_Action extends Zend_Controller_Action
                 $jQueryHelper->setCdnVersion(JQUERY_VERSION);
             }
         } else {
+            $jQueryHelper->setLocalPath($this->view->cdnHelper->jsUrl($baseUrl . '/' .JQUERY_LOCAL_PATH));
             $jQueryHelper->setUiLocalPath($baseUrl . '/' .JQUERY_LOCAL_PATH);
         }
 
