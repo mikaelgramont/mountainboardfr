@@ -818,7 +818,7 @@ div.paginationControl a {
 	margin-right: 1em;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 752px) {
 	.profilePageMainContainer {
 		display: block;
 	}
@@ -831,10 +831,14 @@ div.paginationControl a {
 	}
 }
 
-@media screen and (min-width: 440px) and (max-width: 720px) {
+@media screen and (min-width: 440px) and (max-width: 752px) {
 	.profileInfoCard {
 		display: flex;
 	}
+}
+
+.profileAlbumCard {
+	padding: 0 0 1em;
 }
 
 #userProfilePic ul {
@@ -1585,7 +1589,7 @@ div.blogOwner {
 	}
 }
 .albumList.albumPreview .media {
-	flex-basis: 10em;
+	flex-basis: 12em;
 }
 .albumList .mediaLinkThumbnail {
     display: block;
