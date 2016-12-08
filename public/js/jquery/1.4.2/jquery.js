@@ -1,1 +1,1 @@
-../jquery/1.4.2/jquery.min.js
+jquery.min.js
