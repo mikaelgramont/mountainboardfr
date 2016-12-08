@@ -138,6 +138,8 @@ class Lib_Controller_Action extends Zend_Controller_Action
         } else {
             $jQueryHelper->setUiLocalPath($baseUrl . '/' .JQUERYUI_LOCAL_PATH);
         }
+        
+        $jQueryHelper->addOnLoad('$(".close").click(function() {return false;})');
 
         header('Content-Type: text/html; charset=UTF-8');
 
