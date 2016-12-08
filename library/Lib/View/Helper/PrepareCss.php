@@ -16,6 +16,7 @@ class Lib_View_Helper_PrepareCss extends Zend_View_Helper_Abstract
 			$this->view->headLink()->appendStylesheet($this->view->asset()->css('style.full.css'));
 		} else {
 			$this->view->headLink()->appendStylesheet($this->view->baseUrl().'/'.CSS_PATH.'main.css');
+			$this->view->headLink()->appendStylesheet($this->view->baseUrl().'/'.CSS_PATH.'fonts.css');
 			$this->view->headLink()->appendStylesheet($this->view->baseUrl().'/'.CSS_PATH.'jquery-ui.css');
 			$this->view->headLink()->appendStylesheet($this->view->baseUrl().'/'.CSS_PATH.'jquery-ui-custom.css');
 		}
