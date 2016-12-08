@@ -108,10 +108,9 @@ a:active {
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    margin-top: -.25em;
-    width: 1.125em;
+    width: 15px;
     height: 18px;
-    margin-right: .25em;
+    margin-right: 1px;
     content: '';
 }
 .actionLinkContainer .dataLink{
@@ -1540,6 +1539,7 @@ div.blogOwner {
     position: relative;
 }
 .mediaOverlay {
+	pointer-events: none;
 	position: absolute;
     left: .125em;
     right: .125em;
