@@ -73,6 +73,8 @@ h2.blogDescription {
 .topicTitle,
 .privateMessageTitle {
 	font-size: 2em;
+	height: 1em;
+	line-height: 1.3em;
 }
 
 .deemphasized-text {
@@ -801,26 +803,49 @@ div.paginationControl a {
 }
 /** Profiles */
 
-#userInformation {
-    width: 29em;
-    min-height: 29em;
-    margin: 1em 0;
-    position: relative
+.profilePageMainContainer {
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
 }
-#userInformation ul {
+
+.profilePageMainContainer .card {
+	flex-grow: 1;
+	margin: 0;
+}
+
+.profilePageMainContainer .card.profileInfoCard {
+	max-width: 20em;
+	margin-right: 1em;
+}
+
+@media screen and (max-width: 720px) {
+	.profilePageMainContainer {
+		display: block;
+	}
+	.profilePageMainContainer .card {
+		margin: 1em 0;
+	}
+	.profilePageMainContainer .card.profileInfoCard {
+		max-width: none;
+		margin: 1em 0
+	}
+}
+
+@media screen and (min-width: 440px) and (max-width: 720px) {
+	.profileInfoCard {
+		display: flex;
+	}
+}
+
+#userProfilePic ul {
     margin-top: 0.5em;
 }
 #userPreferences {
     top: -5em;
     right: 0em;
 }
-#userAlbumPreview {
-    position: absolute;
-    top: 0em;
-    left: 30em;
-    width: 28em;
-    height: 30em;
-}
+
 /** User */
 
 ul#userListItem {
@@ -883,7 +908,6 @@ div.user.paginationControl.bottom {
     height: 18em;
 }
 #userMapElement {
-    width: 58em;
     height: 20em;
 }
 #toggleMap {
@@ -1317,8 +1341,8 @@ div.spotMetadata div.spotAlbum {
     margin-bottom: 1em;
 }
 div.albumPreviewLink {
+	margin-top: 1em;
     text-align: center;
-    display: block;
 }
 #dptList li {
     width: 12.5em;
@@ -1558,7 +1582,9 @@ div.blogOwner {
 		font-size: 1.25em;
 	}
 }
-
+.albumList.albumPreview .media {
+	flex-basis: 10em;
+}
 .albumList .mediaLinkThumbnail {
     display: block;
     background-size: cover;
@@ -1567,6 +1593,9 @@ div.blogOwner {
 .albumList .photo .mediaLinkThumbnail,
 .albumList .video .mediaLinkThumbnail {
 	padding-bottom: 100%;
+}
+.albumPreview {
+	position: relative;
 }
 .albumPreview li {
     display: inline;
