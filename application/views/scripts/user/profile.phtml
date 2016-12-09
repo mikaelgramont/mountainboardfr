@@ -5,21 +5,38 @@
 $username = $this->escape($this->profilee->getTitle());
 $isMyPage = ($this->profilee->{User::COLUMN_USERID} == $this->user->{User::COLUMN_USERID});
 $isLoggedIn = $this->user->isLoggedIn();
+$isAdmin = $this->user->status == User::STATUS_ADMIN;
 $location = $this->profilee->getLocation();
 
 /**
  * FUNCTIONS 
  */
 
-function maybeUserPreferencesCard($isMyPage, $view)
+function maybeUserActionsCard($profilee, $isMyPage, $isLoggedIn, $renderTakeTheirPlace, $view)
 {
+    $renderSendMessage = $isLoggedIn && !$isMyPage;
+    
     $content = "";
-    if($isMyPage){
+    if($isMyPage || $renderSendMessage || $renderTakeTheirPlace){
         $content .= '<div class="card">'.PHP_EOL;
-    	$content .= '  <div id="userPreferences">'.PHP_EOL;
-    	$content .= '	 <p class="actionLinkContainer">'.$view->routeLink('userupdate').'</p>'.PHP_EOL;
-    	$content .= '	 <p class="actionLinkContainer">'.$view->routeLink('editnotifications').'</p>'.PHP_EOL;
-    	$content .= '  </div>'.PHP_EOL;
+        if($isMyPage){
+            $content .= '  <div id="userPreferences">'.PHP_EOL;
+            $content .= '	 <p class="actionLinkContainer">'.$view->routeLink('userupdate').'</p>'.PHP_EOL;
+            $content .= '	 <p class="actionLinkContainer">'.$view->routeLink('editnotifications').'</p>'.PHP_EOL;
+            $content .= '  </div>'.PHP_EOL;
+        } else if ($isLoggedIn){
+            $content .= '	<div class="profileMessageContainer actionLinkContainer">'.PHP_EOL;
+            $content .= '      '.$view->routeLink('privatemessagesnew', null,
+                    array('toUser' => $profilee->getTitle())).PHP_EOL;
+            $content .= '  </div>'.PHP_EOL;
+        	if($renderTakeTheirPlace){
+        		$content .= '    <div class="actionLinkContainer">'.PHP_EOL;
+        		$content .= '        '.$view->routeLink('impersonate', null,
+        		    array('authCheck' => AUTHCHECK, 'i' => $view->profilee->getId())).PHP_EOL;
+        		$content .= '    </div>'.PHP_EOL;
+    	}
+    }
+        
     	$content .= '</div>'.PHP_EOL;
     }
     return $content;
@@ -54,17 +71,17 @@ function personalInformation($user, $isLoggedIn, $view)
             ucfirst($user->firstName) . ' ' . ucfirst($user->lastName));
     }
     
-    // GENDER
-    $gender = (!empty($user->gender)) ? ucfirst($view->translate(Lib_Form_Element_Gender::$genders[$user->gender])) : '';
-    if($gender && $isLoggedIn){
-    	$content .= renderUserInfoItem($view, 'gender', $gender);
-    }
+//     // GENDER
+//     $gender = (!empty($user->gender)) ? ucfirst($view->translate(Lib_Form_Element_Gender::$genders[$user->gender])) : '';
+//     if($gender && $isLoggedIn){
+//     	$content .= renderUserInfoItem($view, 'gender', $gender);
+//     }
     
-    // DATE OF BIRTH
-    $dob = (!empty($user->birthDate) && $user->birthDate != '0000-00-00') ? $view->date($user->birthDate, false) : null;
-    if($dob && $isLoggedIn){
-    	$content .= renderUserInfoItem($view, 'birthDate', $dob);
-    }
+//     // DATE OF BIRTH
+//     $dob = (!empty($user->birthDate) && $user->birthDate != '0000-00-00') ? $view->date($user->birthDate, false) : null;
+//     if($dob && $isLoggedIn){
+//     	$content .= renderUserInfoItem($view, 'birthDate', $dob);
+//     }
     
     // LOCATION
     $where = $view->renderLocationInfo($user);
@@ -72,10 +89,10 @@ function personalInformation($user, $isLoggedIn, $view)
     	$content .= renderUserInfoItem($view, 'livesIn', $where, false);
     }
     
-    // OCCUPATION
-    if($isLoggedIn){
-    	$content .= renderUserInfoItem($view, 'occupation', ucfirst($user->occupation));
-    }
+//     // OCCUPATION
+//     if($isLoggedIn){
+//     	$content .= renderUserInfoItem($view, 'occupation', ucfirst($user->occupation));
+//     }
     
     $content .= '    	</ul>'.PHP_EOL;
     return $content;
@@ -87,7 +104,7 @@ function contactInformation($user, $isLoggedIn, $userBlog, $view)
     
     $site = $view->escape($user->site);
     if(!empty($site)){
-    	$content .= renderUserInfoItem($view, 'site', '<a rel="nofollow" href="'.$site.'">'.$site.'</a>', false);
+    	$content .= renderUserInfoItem($view, 'site', '<a rel="noopener nofollow" target="_blank" href="'.$site.'">'.$site.'</a>', false);
     }
     
     $blogLink = $userBlog->hasBlogPosts() ? $view->itemLink($userBlog) : null;
@@ -104,10 +121,10 @@ function rideInformation($user, $view)
     
     $content .= renderUserInfoItem($view, 'rideType', $view->rideType($user), false);
     
-    $level = $view->escape($user->level);
-    if($level){
-        $content .= renderUserInfoItem($view, 'level', $view->translate(Lib_Form_Element_Level::$levels[$level]), false);
-    }
+//     $level = $view->escape($user->level);
+//     if($level){
+//         $content .= renderUserInfoItem($view, 'level', $view->translate(Lib_Form_Element_Level::$levels[$level]), false);
+//     }
 
     $content .= renderUserInfoItem($view, 'gear', ucfirst($user->gear));
     
@@ -159,22 +176,12 @@ function mainCard($userInfoCardContent, $userAlbumCardContent)
     return $content;
 }
 
-function userProfilePic($profilee, $isLoggedIn, $isMyPage, $view)
+function userProfilePic($profilee, $view)
 {
-    $content = '<div id="userProfilePic">'.PHP_EOL;
+    $content = '<div class="userProfilePic">'.PHP_EOL;
+    $content .= '    <div class="userProfilePicContent">'.PHP_EOL;
     $content .= $view->profilePic($profilee).PHP_EOL;
-    if($isLoggedIn && !$isMyPage){
-    	$content .= '	<div class="profileMessageContainer actionLinkContainer">'.PHP_EOL;
-    	$content .= '      '.$view->routeLink('privatemessagesnew', null,
-    	    array('toUser' => $profilee->getTitle())).PHP_EOL;
-    	$content .= '  </div>'.PHP_EOL;
-    	if($this->user->status == User::STATUS_ADMIN){
-    		$content .= '    <div class="actionLinkContainer">'.PHP_EOL;
-    		$content .= '        '.$view->routeLink('impersonate', null,
-    		    array('authCheck' => AUTHCHECK, 'i' => $view->profilee->getId())).PHP_EOL;
-    		$content .= '    </div>'.PHP_EOL;
-    	}
-    }
+    $content .= '   </div>'.PHP_EOL;
     $content .= '</div>'.PHP_EOL;
     return $content;
 }
@@ -188,7 +195,7 @@ function userAlbumCardContent($album, $view)
 /**
  * RENDERING 
  */
-$userInfoCardContent = userProfilePic($this->profilee, $isLoggedIn, $isMyPage, $this);
+$userInfoCardContent = userProfilePic($this->profilee, $this);
 $userInfoCardContent .= '<div class="userProfileInfo">'.PHP_EOL;
 $userInfoCardContent .= personalInformation($this->profilee, $isLoggedIn, $this);
 $userInfoCardContent .= contactInformation($this->profilee, $isLoggedIn, $this->blog, $this);
@@ -196,7 +203,7 @@ $userInfoCardContent .= rideInformation($this->profilee, $this);
 $userInfoCardContent .= '</div>'.PHP_EOL;
 
 echo userNameCard($username);
-echo maybeUserPreferencesCard($isMyPage, $this);
+echo maybeUserActionsCard($this->profilee, $isMyPage, $isLoggedIn, $isAdmin, $this);
 echo mainCard($userInfoCardContent, userAlbumCardContent($this->album, $this));
 echo maybeRenderLocationCard($isLoggedIn, $location, $this);
 ?>

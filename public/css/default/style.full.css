@@ -841,10 +841,17 @@ div.paginationControl a {
 	padding: 0 0 1em;
 }
 
-#userProfilePic ul {
+.userProfilePic {
+	margin-right: 1em;
+}
+.userProfilePicContent {
+	display: inline-block;
+    text-align: center
+}
+.userProfilePic ul {
     margin-top: 0.5em;
 }
-#userPreferences {
+.userPreferences {
     top: -5em;
     right: 0em;
 }
@@ -1536,6 +1543,9 @@ div.blogOwner {
 .albumCard {
 	padding: .125em;
 }
+.albumList {
+	padding: .125em;
+}
 .albumList li {
 	box-sizing: border-box;
     text-align: center;
@@ -1547,7 +1557,7 @@ div.blogOwner {
 	position: absolute;
     left: .125em;
     right: .125em;
-    bottom: 0;
+    bottom: .125em;
     height: 2em;
     background: rgba(0,0,0,.5);
 	color: #fff;
