@@ -7,7 +7,7 @@ Lib.Maps = {
 			defaultOptions: {
 				center:[],
 				zoom:5,
-				mapTypeId:google.maps.MapTypeId.HYBRID,
+				mapTypeId: null,
 				bounds:[],
 				mapElementId:'',
 				icons:{
@@ -31,6 +31,10 @@ Lib.Maps = {
 			showTypes: [],
 
 			init: function(userOptions, callback){
+				if (typeof goog == 'undefined' || !goog.maps) {
+					return;
+				}
+				this.defaultOptions.mapTypeId = google.maps.MapTypeId.HYBRID;
 				var that = this;
 				var options = this.options = jQuery.extend(this.defaultOptions, userOptions);
 				
@@ -259,7 +263,7 @@ Lib.Maps = {
 			defaultOptions: {
 				center:[],
 				zoom:8,
-				mapTypeId:google.maps.MapTypeId.HYBRID,
+				mapTypeId: null,
 				mapElementId:'',
 				regionDetails:''
 			}, // End displayItem.defaultOptions
@@ -269,6 +273,10 @@ Lib.Maps = {
 			map:null,
 			
 			init: function(userOptions, callback){
+				if (typeof goog == 'undefined' || !goog.maps) {
+					return;
+				}
+				this.defaultOptions.mapTypeId = google.maps.MapTypeId.HYBRID;
 				var options = this.options = jQuery.extend(this.defaultOptions, userOptions);
 				var latLng = new google.maps.LatLng(parseFloat(options.center[0]), parseFloat(options.center[1]));
 			    var mapOptions = {
@@ -301,7 +309,7 @@ Lib.Maps = {
 				zoom:8,
 				hasMarker: false,
 				bounds: [],
-				mapTypeId:google.maps.MapTypeId.HYBRID,
+				mapTypeId: null,
 
 				mapLabel:'',
 				clearLocation:'clearLocation',
@@ -315,6 +323,11 @@ Lib.Maps = {
 			map:null,
 			
 			init: function(userOptions, callback){
+				if (typeof goog == 'undefined' || !goog.maps) {
+					return;
+				}
+				this.defaultOptions.mapTypeId = google.maps.MapTypeId.HYBRID;
+				
 				var options = this.options = jQuery.extend(this.defaultOptions, userOptions);
 		
 				this.setupPage();
