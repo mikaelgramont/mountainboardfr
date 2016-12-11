@@ -1281,6 +1281,9 @@ div.mediaTitle a:visited {
 .mediaMetadataLinks {
 	margin-top: .25em;
 }
+.mediaMetadataLinks .dataLink{
+	word-break: initial;
+}
 .mediaMetadataText a.external {
     display: block;
 }
