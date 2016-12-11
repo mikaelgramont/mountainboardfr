@@ -30,9 +30,10 @@ class Lib_View_Helper_MediaThumbnail extends Zend_View_Helper_Abstract
 		} else {
 			$commentsCount = '';
 		}
-		$content .= $this->_renderOverlay($title, $media->getMediaType(),
-			$commentsCount);
-		
+		if ($this->_renderAsBackground) {
+    		$content .= $this->_renderOverlay($title, $media->getMediaType(),
+    			$commentsCount);
+		}
 		return $content;
 	}
 	

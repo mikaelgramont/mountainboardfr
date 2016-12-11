@@ -43,7 +43,7 @@ if ($this->wrapperIsCard) {
     } else {
         $firstContentCardClass = "card leftCard"; 
     }
-    $secondaryContentCardClass =  "card rightCard";
+    $secondaryContentCardClass =  "rightCardContainer";
 }
 if($this->richTextContent) {
     $firstContentCardClass .= " richTextContent";
@@ -56,10 +56,10 @@ if($this->richTextContent) {
     		</main>
 			<aside id="secondContent" class="<?php echo $secondaryContentCardClass ?>">
 <?php
-	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN2).PHP_EOL;
 	if($this->isHomePage){
-		echo $this->facebook_LikeBox(FACEBOOK_PAGE_URL);
+		echo $this->facebook_LikeBox(FACEBOOK_PAGE_URL, "card");
 	}
+	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN2).PHP_EOL;
 ?>
 			</aside>
 		</div>

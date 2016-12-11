@@ -268,12 +268,12 @@ a.backLeft {
     height: 2em;
     padding-left: 0;
 }
-#facebookLikeBox {
+.facebookLikeBox {
     position: relative;
     margin-top: 1em;
     height: 15.9375em;
 }
-#facebookLikeBox iframe {
+.facebookLikeBox iframe {
     display: block;
     margin: 0 auto;
 }
@@ -413,7 +413,8 @@ header.noCategoryContent #headerContent {
 
 .leftCard,
 .rightCard,
-.leftCardContainer .card {
+.leftCardContainer .card,
+.rightCardContainer .card {
 	margin-top: 0;
 }
 
@@ -433,8 +434,7 @@ header.noCategoryContent #headerContent {
     margin-top: 16em;
 }
 #firstContent,
-#secondContent,
-#thirdContent {
+#secondContent {
     box-sizing: border-box;
 }
 .oneColumn #firstContent {
@@ -450,8 +450,6 @@ header.noCategoryContent #headerContent {
 }
 .twoColumns #secondContent {
     width: 37.9%;
-    padding-top: 1.5em;
-    background-color: #F0F0F0;
 }
 .article p.description {
     text-align: justify
@@ -757,15 +755,6 @@ span.dateInfo {
 p.description {
     margin: 1em 0;
     font-style: italic
-}
-div.additionalContent {
-    padding: 1em 0;
-}
-div.additionalContent:nth-child(even) {
-    background-color: #E4E4E4
-}
-div.additionalContent:li:last-child {
-    margin-bottom: 1em;
 }
 /** Lists */
 
@@ -1397,25 +1386,9 @@ div.addSpot a:visited {
 }
 /** Trick */
 
-ul#items.trickListItem {
-    padding-top: 6.5em;
-    padding-bottom: 3.5em;
-}
 ul#items.trickListItem li {
     margin: 0 0em 1em 0em;
     padding: 0.5em 0.5em 1em;
-    position: relative;
-}
-#register.trick {
-    top: 1em;
-}
-div.addTrick {
-    position: absolute;
-    left: 1em;
-    top: 7em;
-    padding: 0.625em;
-    background-color: #A0A0A0;
-    border-radius: 1em;
 }
 div.addTrick a {
     padding-left: 1.125em;
@@ -2247,9 +2220,11 @@ p.homePageLoginTitle {
         display: block;
     }
     .twoColumns #firstContent,
-    .twoColumns #secondContent,
-    .twoColumns #thirdContent {
+    .twoColumns #secondContent {
         width: 100%;
+    }
+    .leftCard {
+    	margin-bottom: 1em;
     }
     #simpleSearch {        
         display: initial;

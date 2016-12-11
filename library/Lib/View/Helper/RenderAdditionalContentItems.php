@@ -98,7 +98,7 @@ class Lib_View_Helper_RenderAdditionalContentItems extends Zend_View_Helper_Abst
 					$row .= $this->view->itemLink($item);
 					break;
 			}
-			$content .= "<div class=\"additionalContent $dataType\">".PHP_EOL;
+			$content .= "<div class=\"card additionalContent $dataType\">".PHP_EOL;
 			$content .= $row;
 			$content .= '</div>'.PHP_EOL;
     	}
