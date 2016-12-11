@@ -63,6 +63,7 @@ class CommunityController extends Lib_Controller_Action
     {
 		$this->_useAdditionalContent = true;
 		$this->_helper->layout->setLayout('two-columns');
+		$this->view->wrapperIsCard = true;
 		
     	$page = $this->_getParam('page', 1);
     	Zend_Registry::set('SubCategory', SubCategory::USERS);
@@ -83,5 +84,7 @@ class CommunityController extends Lib_Controller_Action
         $this->view->page = $page;
         $this->view->limit = USERS_PER_PAGE;
         $this->view->users = $users;
+    	$this->view->wrapperIsCard = false;
+        $this->view->separateFirstContentCardHeader = true;
     }
 }

@@ -70,6 +70,7 @@ class DataController extends Lib_Controller_Action
 
         $this->view->items = $items;
         $this->view->dataType = $dataType;
+        $this->view->separateFirstContentCardHeader = true;
     }
 
     /**

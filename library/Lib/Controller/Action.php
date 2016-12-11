@@ -112,6 +112,8 @@ class Lib_Controller_Action extends Zend_Controller_Action
         $this->view->favicons = $favicons;
 
         $this->_helper->layout->setLayout(APP_DEFAULT_LAYOUT);
+        $this->view->wrapperIsCard = false;
+        $this->view->separateFirstContentCardHeader = false;
 
         // JQUERY CONFIGURATION
         ZendX_JQuery::enableView($this->view);

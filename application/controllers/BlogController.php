@@ -27,6 +27,8 @@ class BlogController extends Lib_Controller_Action
     	$activeBlogs = $this->_helper->dataPaginator($select, $page, 'commonviews/pagination.phtml', BLOGS_PER_PAGE);
     	$this->view->activeBlogs = $activeBlogs;
     	$this->_helper->layout->setLayout('two-columns');
+    	$this->view->wrapperIsCard = false;
+        $this->view->separateFirstContentCardHeader = true;
     }
 
     /**
@@ -69,6 +71,7 @@ class BlogController extends Lib_Controller_Action
         } else {
         	$this->_useAdditionalContent = true;
         	$this->_helper->layout->setLayout('two-columns');
+        	$this->view->wrapperIsCard = true;
         }
         
         

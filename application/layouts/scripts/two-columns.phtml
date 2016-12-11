@@ -30,13 +30,31 @@ echo $this->headScript().PHP_EOL;?>
 <?php
 echo $this->imageErrorHandler($this->cspNonce).PHP_EOL;
 echo $header;
+
+$wrapperCardClass = $this->wrapperIsCard ? " card" : "";
+if ($this->wrapperIsCard) {
+    $wrapperCardClass = " card";
+    $firstContentCardClass = "";
+    $secondaryContentCardClass = ""; 
+} else {
+    $wrapperCardClass = "";
+    if ($this->separateFirstContentCardHeader) {
+        $firstContentCardClass = "leftCardContainer";
+    } else {
+        $firstContentCardClass = "card leftCard"; 
+    }
+    $secondaryContentCardClass =  "card rightCard";
+}
+if($this->richTextContent) {
+    $firstContentCardClass .= " richTextContent";
+}
 ?>
 	<div id="wrapper" <?php echo $wrapperClass ?>>
-		<div id="contentWrapper" aria-labelledby="mainTitle" class="twoColumns card">
-			<main id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
+		<div id="contentWrapper" aria-labelledby="mainTitle" class="twoColumns <?php echo $wrapperCardClass ?>">
+			<main id="firstContent" class="<?php  echo $firstContentCardClass ?>">
 <?php echo $this->layout()->content.PHP_EOL; ?>
     		</main>
-			<aside id="secondContent">
+			<aside id="secondContent" class="<?php echo $secondaryContentCardClass ?>">
 <?php
 	echo $this->renderAdditionalContentItems($this->user, $this->acl, $this->additionalContentItems, Content::COLUMN2).PHP_EOL;
 	if($this->isHomePage){

@@ -73,7 +73,6 @@ h2.blogDescription {
 .topicTitle,
 .privateMessageTitle {
 	font-size: 2em;
-	height: 1em;
 	line-height: 1.3em;
 }
 
@@ -101,7 +100,6 @@ a:active {
     color: #E0E000
 }
 .dataLink{
-	word-break: break-word;
 	font-family: Galada;	
 }
 .dataLink::before {
@@ -406,6 +404,26 @@ header.noCategoryContent #headerContent {
 	box-shadow: 0.0625em 0.0625em 0.0625em #404040;	
     padding: 1em;
     margin: 1em 0;
+}
+
+.leftCard,
+.leftCardContainer {	
+	margin-right: 1em;
+}
+
+.leftCard,
+.rightCard,
+.leftCardContainer .card {
+	margin-top: 0;
+}
+
+.leftCardContainer .card:last-child {
+	margin-bottom: 0;
+}
+
+.leftCard,
+.rightCard {
+	margin-bottom: 0;
 }
 
 .display-media #contentWrapper {
@@ -858,24 +876,8 @@ div.paginationControl a {
 
 /** User */
 
-ul#userListItem {
-    padding: 3.5em 0;
-}
 ul#userListItem li {
     margin: 0 1em 1em 0em;
-    padding: 0.5em 0.5em 1em;
-    position: relative;
-    background-color: #E0E0E0;
-}
-div.user.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 1em;
-}
-div.user.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
 }
 /** Data */
 
@@ -1281,9 +1283,6 @@ div.mediaTitle a:visited {
 .mediaMetadataLinks {
 	margin-top: .25em;
 }
-.mediaMetadataLinks .dataLink{
-	word-break: initial;
-}
 .mediaMetadataText a.external {
     display: block;
 }
@@ -1406,16 +1405,6 @@ ul#items.trickListItem li {
     margin: 0 0em 1em 0em;
     padding: 0.5em 0.5em 1em;
     position: relative;
-}
-div.trick.paginationControl.top {
-    position: absolute;
-    right: 1em;
-    top: 7em;
-}
-div.trick.paginationControl.bottom {
-    position: absolute;
-    right: 1em;
-    bottom: 1em;
 }
 #register.trick {
     top: 1em;
@@ -1626,10 +1615,6 @@ ul.album li a.mediaThumbnailComments {
 ul.album li a.mediaThumbnailTitle {
     display: inline-block;
     max-width: 12em;
-}
-div.album.paginationControl.top {
-}
-div.album.paginationControl.bottom {
 }
 div.album.paginationControl.bottom.withComments {
     bottom: 31em;

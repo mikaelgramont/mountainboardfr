@@ -1,21 +1,30 @@
 <?php
 $paginationControl = $this->paginationControl($this->activeBlogs);
-
 $listTitle = ucfirst($this->translate(Constants_DataTypes::BLOG.'ListTitle'));
 $this->headTitle($listTitle);
-echo "<h1 id=\"mainTitle\">$listTitle</h1>".PHP_EOL;
 $listDescription = ucfirst($this->translate(Constants_DataTypes::BLOG.'ListDescription'));
-echo "<h2 class=\"description\">$listDescription</h2>".PHP_EOL;
+
+echo '<div class="card">'.PHP_EOL;
+echo "  <h1 class=\"cardTitle\">$listTitle</h1>".PHP_EOL;
+echo "  <p class=\"listDescription\">$listDescription</p>".PHP_EOL;
+echo '</div>'.PHP_EOL;
+
 if($paginationControl){
-	echo '<div class="blog paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    echo '<div class="card">'.PHP_EOL;
+    echo '  <div class="blog paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    echo '</div>'.PHP_EOL;
 }
 
+echo '<div class="card">'.PHP_EOL;
 echo $this->itemList($this->activeBlogs, array(
 	'containerClass' => 'blogListItem',
 	'striptags' => true,
 ));
+echo '</div>'.PHP_EOL;
 
 if($paginationControl){
-	echo '<div class="blog paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    echo '<div class="card">'.PHP_EOL;
+    echo '  <div class="blog paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
 }
 ?>

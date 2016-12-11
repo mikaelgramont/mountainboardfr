@@ -147,6 +147,10 @@ $user = array(
 
 		'userActionSuggestion_FirstPhoto_link' => 'envoies-en une tout de suite!',
 		'userActionSuggestion_FirstPhoto_text' => 'Tu n\'as pas encore posté une seule photo, sacrebleu! N\'attends plus, %s',
+
+        // members list
+        'membersListTitle' => 'membres',
+        'membersListDescription' => 'tous les utilisateurs enregistrés du site',
 );
 
 

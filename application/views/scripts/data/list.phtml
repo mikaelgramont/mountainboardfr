@@ -1,34 +1,40 @@
 <?php
 $paginationControl = $this->paginationControl($this->items, null, null, array('dataType' => $this->dataType));
-
 $item = $this->items->getItem(0);
-
 $listTitle = ucfirst($this->translate($this->dataType.'ListTitle'));
 $this->headTitle($listTitle);
-echo "<h1 id=\"mainTitle\">$listTitle</h1>".PHP_EOL;
 $listDescription = ucfirst($this->translate($this->dataType.'ListDescription'));
-echo "<h2 class=\"description\">$listDescription</h2>".PHP_EOL;
-
 $params = array(
 	'containerClass' => $this->dataType.'ListItem',
 	'striptags' => true,
 	'showDate' => true
 );
-
 if($this->dataType == Event::ITEM_TYPE){
 	$params['showDate'] = false;
 }
+$renderAddNewDataLink = !($item instanceof Article_Row);
 
-if($paginationControl){
-	echo '<div class="'.$this->dataType.' paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+echo '<div class="card">'.PHP_EOL;
+echo "  <h1 class=\"cardTitle\">$listTitle</h1>".PHP_EOL;
+echo "  <p class=\"listDescription\">$listDescription</p>".PHP_EOL;
+echo '</div>'.PHP_EOL;
+
+if($renderAddNewDataLink || $paginationControl){
+    echo '<div class="card">'.PHP_EOL;
+    if ($renderAddNewDataLink) {
+        echo $this->addNewDataLink($this->dataType);
+    }
+    if($paginationControl){
+    	echo '<div class="'.$this->dataType.' paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    }
+    echo '</div>'.PHP_EOL;
 }
-
-if(!($item instanceof Article_Row)){
-	echo $this->addNewDataLink($this->dataType);
-}
-
+echo '<div class="card">'.PHP_EOL;
 echo $this->itemList($this->items, $params);
+echo '</div>'.PHP_EOL;
 
 if($paginationControl){
-	echo '<div class="'.$this->dataType.' paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    echo '<div class="card">'.PHP_EOL;
+    echo '<div class="'.$this->dataType.' paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    echo '</div>'.PHP_EOL;
 }

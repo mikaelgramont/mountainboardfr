@@ -1,18 +1,26 @@
 <?php
+$title = ucfirst($this->translate('membersListTitle'));
+$description = ucfirst($this->translate('membersListDescription'));
 $users = Lib_PaginatorFactory::getPaginator($this->users, $this->page, $this->limit);
-/*
-$pagination = $this->paginationControl($users);
-echo $pagination;
-echo $this->userList($users, 'userListItem');
-echo $pagination;
-
-
-*/
 $paginationControl = $this->paginationControl($users, null, null, array('dataType' => 'user'));
 
-echo $this->userList($users, 'userListItem');
+
+echo '<div class="card">'.PHP_EOL;
+echo "  <h1 class=\"cardTitle\">$title</h1>".PHP_EOL;
+echo "  <p class=\"listDescription\">$description</p>".PHP_EOL;
+echo '</div>'.PHP_EOL;
 
 if($paginationControl){
-	echo '<div class="user paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
-	echo '<div class="user paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    echo '<div class="card">'.PHP_EOL;
+	echo ' <div class="user paginationControl top">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    echo '</div>'.PHP_EOL;
+}
+echo '<div class="card">'.PHP_EOL;
+echo $this->userList($users, 'userListItem');
+echo '</div>'.PHP_EOL;
+
+if($paginationControl){
+    echo '<div class="card">'.PHP_EOL;
+	echo ' <div class="user paginationControl bottom">'.PHP_EOL.$paginationControl.PHP_EOL.'</div>'.PHP_EOL;
+    echo '</div>'.PHP_EOL;
 }

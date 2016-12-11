@@ -146,6 +146,10 @@ $user = array(
 
 		'userActionSuggestion_FirstPhoto_link' => 'send one now!',
 		'userActionSuggestion_FirstPhoto_text' => 'Wow, you haven\'t posted a single picture yet, don\'t wait, %s',
+
+        // members list
+        'membersListTitle' => 'membres',
+        'membersListDescription' => 'tous les utilisateurs enregistrés du site',
 );
 
 // EMAILS
