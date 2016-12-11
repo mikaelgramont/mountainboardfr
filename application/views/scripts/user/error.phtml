@@ -1,3 +1,4 @@
+<div class="card">
 <?php
 echo ucfirst($this->translate('error')).':';
 switch($this->errorCode){
@@ -73,3 +74,5 @@ switch($this->errorCode){
 }
 echo '<ul><li>'.ucfirst($this->translate($msg)).'</li></ul>';
 echo "<a href='{$this->baseUrl}/'>".ucfirst($this->translate('backToHomePage')).'</a>';
+?>
+</div>

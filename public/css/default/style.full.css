@@ -692,6 +692,7 @@ p.element-group input[type="file"] {
 }
 p.element-group input[type="checkbox"] {
     width: 2em;
+	height: initial;
     border: 0;
     margin-top: 0;
 }
@@ -715,7 +716,6 @@ p.element-group textarea#media {
 }
 p.submit-group {
     text-align: right;
-    padding-right: 2em;
 }
 .submit-group input {
     background: #ff0;
@@ -746,7 +746,7 @@ ul.errors {
     margin-left: 14em;
 }
 #userR {
-    margin: 0.5em 0 0 8em;
+	
 }
 #photoForm,
 #videoForm,
@@ -1777,14 +1777,14 @@ div.privateMessageReplyLinkContainer {
 
 div.connectionLinks {
     padding: 0 0 1em 0em;
-    height: 1em;
+/*     height: 1em;
     margin-bottom: 1em;
-}
+ */}
 div.connectionLinks a {
     margin: 0em 0 2em 5em;
     background-color: #EFEF20;
     display: block;
-    float: left;
+/*     float: left; */
     width: 8em;
     position: relative;
     border-radius: 1em;
@@ -1810,7 +1810,7 @@ p.recoverPassword {
 /** login form in second content column */
 
 #secondContent p.element-group {
-    width: 18em;
+    width: initial;
 }
 #secondContent div.additionalContent {
     text-align: center;

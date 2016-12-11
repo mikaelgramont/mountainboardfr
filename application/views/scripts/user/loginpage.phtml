@@ -1,5 +1,7 @@
+<div class="card">
 <h1 id="mainTitle" class="pageTitle"><?php echo ucfirst($this->translate('loginPageTitle')) ?></h1>
 <?php
 $destination = $this->url(array(), 'newstuff');
 echo $this->getHelper('actionLink')->loginRegistrationMarkup($this->user, true, false, $destination, true);
-
+?>
+</div>

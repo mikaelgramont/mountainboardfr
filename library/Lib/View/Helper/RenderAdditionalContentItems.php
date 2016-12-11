@@ -29,8 +29,10 @@ class Lib_View_Helper_RenderAdditionalContentItems extends Zend_View_Helper_Abst
 	{
 		$return = '';
 		if(!$user->isLoggedIn()){
+		    $return .= '<div class="card">'.PHP_EOL;
 			$return .= '<p class="homePageLoginTitle">'.ucfirst($this->view->translate('homePageLogin')).'</p>'.PHP_EOL;
 			$return .= $this->view->getHelper('actionLink')->loginRegistrationMarkup($user, false, true, $this->view->url(array(), 'newstuff'), true);
+		    $return .= '</div>'.PHP_EOL;
 		}
 
 		if(isset($additionalContent['nextEvents']) && !empty($additionalContent['nextEvents'])){
