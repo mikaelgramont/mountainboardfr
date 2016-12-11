@@ -1,9 +1,15 @@
-<h1 id="mainTitle" class="pageTitle"><?php echo ucfirst($this->translate('notificationEdition'));?></h1>
+<div class="card">
+	<h1 id="mainTitle" class="pageTitle">
+		<?php echo ucfirst($this->translate('notificationEdition'));?>
+	</h1>
+	<div class="notificationsForm">
 <?php
 if($this->form){
 	echo $this->form;
 }
-
+?>
+	</div>
+<?php
 if($this->status === true){
 	echo '<p>'. $this->translate('notificationUpdateSuccessful').'<br/>';
 	echo $this->routeLink('myprofile', ucfirst($this->translate('backToHomePage')));
@@ -13,3 +19,5 @@ if($this->status === true){
 	echo $this->routeLink('myprofile', ucfirst($this->translate('backToHomePage')));
 	echo '</p>';
 }
+?>
+</div>

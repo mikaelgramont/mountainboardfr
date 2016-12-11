@@ -576,6 +576,10 @@ div.notFoundPage div.pic p {
 
 /** New stuff */
 
+.notificationsForm {
+	max-width: 40em;
+}
+
 #notificationRange {
     margin: 1em 0;
 }
@@ -692,7 +696,10 @@ p.element-group input[type="checkbox"] {
     margin-top: 0;
 }
 p.element-group input[type="radio"] {
-    width: 2em;
+	width: 1.3em;
+    height: 1.3em;
+    padding: 0;
+    margin-left: 1.5em;
 }
 p.element-group textarea#description {
     height: 7em;
@@ -709,6 +716,11 @@ p.element-group textarea#media {
 p.submit-group {
     text-align: right;
     padding-right: 2em;
+}
+.submit-group input {
+    background: #ff0;
+    border: 2px solid #333;
+    padding: .75em;	
 }
 ul.errors {
     display: inline;
@@ -1861,6 +1873,11 @@ form.advancedSearch #searchSubmit {
     top: 0;
     width: 9em;
 }
+.simpleSearch #searchSubmit {
+	border: 1px solid #333;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    font-weight: bold;}
 ul.searchResults li {
     margin: 1em 0;
 }
