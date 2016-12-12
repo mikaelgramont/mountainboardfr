@@ -36,7 +36,9 @@ class Lib_View_Helper_RenderAdditionalContentItems extends Zend_View_Helper_Abst
 		}
 
 		if(isset($additionalContent['nextEvents']) && !empty($additionalContent['nextEvents'])){
-			$return .= $this->_renderNextEvents($additionalContent['nextEvents'], $user);
+		    $return .= '<div class="card">'.PHP_EOL;
+		    $return .= $this->_renderNextEvents($additionalContent['nextEvents'], $user);
+		    $return .= '</div>'.PHP_EOL;
 		}
 
 		if(isset($additionalContent['items']) && !empty($additionalContent['items'])){

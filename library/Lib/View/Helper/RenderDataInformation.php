@@ -7,7 +7,7 @@ class Lib_View_Helper_RenderDataInformation extends Zend_View_Helper_Abstract
      * @param array $items
      * @return string
      */
-    public function renderDataInformation(Data_Row $data, $class = null, $attrib = 'p')
+    public function renderDataInformation(Data_Row $data, $class = null, $tag = 'p')
     {
         $date = $data->getDate();
         $submitter = $data->getSubmitter();
@@ -40,7 +40,7 @@ class Lib_View_Helper_RenderDataInformation extends Zend_View_Helper_Abstract
         $content .= ' '.$this->view->translate('dateOn').' '.$date.$authorLink.')';
 
 
-        return '<'.$attrib.' class="'.$class.'">'.$content."</$attrib>".PHP_EOL;
+        return '<'.$tag.' class="'.$class.'">'.$content."</$tag>".PHP_EOL;
     }
     
 	public function renderMediaInformation(Media_Item_Row $data, Album_Row $album)

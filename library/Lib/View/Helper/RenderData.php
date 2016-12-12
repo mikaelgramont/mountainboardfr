@@ -41,6 +41,7 @@ class Lib_View_Helper_RenderData extends Zend_View_Helper_Abstract
 
         // Tricks
         if($rowClass == 'Trick_Row'){
+        	$this->view->richTextContent = false;
             $content = $this->renderTrick($data, $album);
             return $content;
         }
@@ -295,8 +296,9 @@ HTML;
      */
     public function renderTrick(Trick_Row $trick, Media_Album_Row $album = null)
     {
-        $content = '';
-        $content .= '	<div class="trickTitle">		<h1>'.ucfirst($trick->getTitle());
+        $content = '<div class="card trickCard">'.PHP_EOL;
+        $content .= '	<div class="cardTitle">'.PHP_EOL;
+        $content .= '       <h1>'.ucfirst($trick->getTitle()).PHP_EOL;
         if(($trick->isEditableBy($this->view->user, $this->view->acl))){
             $content .= $this->view->itemStatus($trick);
             $content .= $this->view->editLink($trick);
@@ -304,26 +306,28 @@ HTML;
         if(($trick->isDeletableBy($this->view->user, $this->view->acl))){
             $content .= $this->view->deleteLink($trick);
         }
-        $content .= '		</h1>'.PHP_EOL;
-        $content .= $this->view->renderDataInformation($trick, 'trickInformation');
-        $content .= '	</div>'.PHP_EOL;
-        $content .= '	<div class="trickMetadata">'.PHP_EOL;
-        $content .= '		<div class="trickInfo">'.PHP_EOL;
-        $content .= '			<h2 class="trickDescription">'.$trick->getDescription().'		</h2>'.PHP_EOL;
+        $content .= '       </h1>'.PHP_EOL;
+        $content .= '   </div>'.PHP_EOL;
+        $content .= $this->view->renderDataInformation($trick, 'deemphasized-text', 'span');
+        $content .= '</div>'.PHP_EOL;
+
+        $content .= '<div class="trickCardContainer">'.PHP_EOL;
+        $content .= '	<div class="card trickInfo">'.PHP_EOL;
+        $content .= '		<p class="trickDescription">'.$trick->getDescription().'		</p>'.PHP_EOL;
         $tip = $trick->getTrickTip();
         if($tip){
-        	$content .= '			<h2 class="trickTip">'.$tip.'</h2>'.PHP_EOL;
+        	$content .= '		<p class="trickTip">'.$tip.'</p>'.PHP_EOL;
         }
         $content .= $this->view->renderTags($trick->getTags());
-        $content .= '		</div>'.PHP_EOL;
-
+        $content .= '	</div>'.PHP_EOL;
+        
         if(!empty($album)){
-			$content .= '	<div class="trickAlbum">'.PHP_EOL;
+			$content .= '	<div class="card trickAlbum">'.PHP_EOL;
 			$content .= $this->view->albumPreview($album);
 			$content .= '	</div>'.PHP_EOL;
         }
-        $content .= '	</div>'.PHP_EOL;
-
+        $content .= '</div>'.PHP_EOL;
+        
         return $content;
     }
 
