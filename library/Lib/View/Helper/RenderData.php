@@ -162,6 +162,10 @@ SCRIPT;
         }
         $content .= $this->view->renderTags($article->getTags());
         $content .= "</div>".PHP_EOL;
+        
+        if ($article->getLayout(Data::ACTION_DISPLAY) == 'one-column') {
+            $content = $this->_wrapInCard($content);
+        }
         return $content;
     }
 
