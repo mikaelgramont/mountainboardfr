@@ -2139,7 +2139,6 @@ p.element-group-simple span.errors {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 3;
 }
 #headerOverlay {
     position: absolute;
