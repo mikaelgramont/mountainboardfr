@@ -10,15 +10,21 @@ $paginationControl = $this->paginationControl(
 	)
 );
 
-function renderTitle($title)
-{
-	$titleTemplate = '<h1 class="forumTitle">%s</h1>';
-	return sprintf($titleTemplate, $title).PHP_EOL;
-}
+$hc = new HeaderContent($title);
+$hc->setHeaderActions(
+    renderModerators($this->moderators, $this),
+    renderJumpForm($this->forumListForm, $this)
+);
+$hc->setSubHeaderActions(
+    renderPaginationControl($paginationControl, 'top headerCardAction headerCardActionInMenu'),
+    $this->addNewDataLink($this->dataType, $this->forum->id, true)
+);
+
+$this->headTitle($title);
 
 function renderJumpForm($form, $view)
 {
-	$ret = '<div class="forumHeaderJump">'.PHP_EOL;
+	$ret = '<div class="headerCardAction">'.PHP_EOL;
 	$ret .= '	<div class="actionLinkContainer" id="forumListMain">'.PHP_EOL;
 	$ret .= 		ucfirst($view->translate('goToForum')).' '.$form.PHP_EOL;
 	$ret .= '	</div>'.PHP_EOL;
@@ -32,7 +38,7 @@ function renderPaginationControl($paginationControl, $extraClasses)
 		return '';
 	}
 
-	$ret = "<div class=\"forum paginationControl $extraClasses\">".PHP_EOL;
+	$ret = "<div class=\"paginationControl $extraClasses\">".PHP_EOL;
 	$ret .= '	'.$paginationControl.PHP_EOL;
 	$ret .='</div>'.PHP_EOL;
 	return $ret;
@@ -43,7 +49,7 @@ function renderModerators($moderators, $view)
 	if(!$moderators) {
 		return '';
 	}
-	$ret = '<div class="moderatorInfo">'.PHP_EOL;
+	$ret = '<div class="moderatorInfo headerCardAction">'.PHP_EOL;
 	$ret .= ucfirst($view->translate('forumModeratorsList')).': '.PHP_EOL;
 	$ret .='	<ul class="forumModeratorList">'.PHP_EOL;
 	foreach($moderators as $moderator){
@@ -54,24 +60,13 @@ function renderModerators($moderators, $view)
 	return $ret;
 }
 
-$this->headTitle($title);
-
-echo '<div class="forumHeader card">'.PHP_EOL;
-	echo '<div class="forumHeaderTitle">'.PHP_EOL;
-		echo renderTitle($title).PHP_EOL;
-		echo renderModerators($this->moderators, $this).PHP_EOL;
-	echo '</div>'.PHP_EOL;
-	echo renderJumpForm($this->forumListForm, $this).PHP_EOL;
-echo '</div>'.PHP_EOL;
-
-echo '<div class="listNavigation card">'.PHP_EOL;
-	echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
-	echo $this->addNewDataLink($this->dataType, $this->forum->id);
-echo '</div>'.PHP_EOL;
-echo'<div class="card">'.PHP_EOL;
+/**
+ * RENDERING
+ */
+echo $this->cardHeader($hc).PHP_EOL;
+echo'<div class="card noPaddingCard">'.PHP_EOL;
 	echo $this->forumTopicList($this->topics, $this->lastLogin);
 echo '</div>'.PHP_EOL;
-	
 if ($paginationControl) {
 	echo '<div class="listNavigation card">'.PHP_EOL;
 		echo renderPaginationControl($paginationControl, 'bottom').PHP_EOL;

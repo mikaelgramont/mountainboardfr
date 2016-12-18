@@ -72,6 +72,8 @@ h2.blogDescription {
 .mediaTitle,
 .topicTitle,
 .privateMessageTitle {
+    position: relative;
+    top: .1em;
 	font-size: 2em;
 	line-height: 1.3em;
 }
@@ -163,7 +165,8 @@ a.topic::before {
     background: url("../../images/default/linkSprites.png") -10px -334px no-repeat;
 }
 a.forum::before {
-    top: 2px;
+    margin-right: 4px;
+	top: 2px;
     background: url("../../images/default/linkSprites.png") -10px -334px no-repeat;
 }
 a.news::before {
@@ -192,6 +195,7 @@ a.facebook::before {
     background: url("../../images/default/linkSprites.png") -10px -728px no-repeat;
     text-decoration: none;
 }
+a.close,
 a.close::before {
     background: url("../../images/default/linkSprites.png") -7px -765px no-repeat;
     display: block;
@@ -405,6 +409,73 @@ header.noCategoryContent #headerContent {
     padding: 1em;
     margin: 1em 0;
 }
+.card.noPaddingCard {
+	padding: 0;
+}
+
+
+/** Header cards **/
+
+.headerCard {
+ 	display: flex;
+ 	flex-wrap: wrap;
+ 	justify-content: space-between;
+ }
+ 
+.headerCardTitle {
+    font-size: 2em;
+    line-height: 1.3em;
+	margin-right: .5em;
+}
+ 
+.headerCardTitle,
+.headerCardAction,
+.headerCardMenuAnchor {
+	display: inline-block;
+	align-self: center;
+}
+
+.headerCardMenuAnchor {
+ 	display: none; 	
+	width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    fill: currentColor;
+}
+
+.headerCardMenuAnchor:hover {
+	cursor: pointer;
+}
+
+.cardSectionRight,
+.cardSectionLeft {
+	display: flex;
+}
+ 
+.cardWrapper.hasBothCards .subHeaderCardTop {
+	margin-bottom: 1px;
+}
+
+.cardWrapper.hasBothCards .subHeaderCardBottom {
+	margin-top: 0;
+}
+
+@media screen and (max-width: 667px) {
+ 	.cardWrapper .action,
+ 	.cardWrapper .subHeaderCardBottom {
+ 		display: none;
+ 	}
+	 .headerCardMenuAnchor {
+	 	display: inline-block;
+	 }
+	 
+	 .headerCardAction {
+	   display: none;
+	 }
+ }
+
+/** End Header cards **/
 
 .leftCard,
 .leftCardContainer {	
@@ -1164,6 +1235,9 @@ ul#topics li:nth-child(even) {
 #postsList li div.postContent p {
     margin-bottom: 0.5em;
 }
+.postContent {
+	margin: .5em;
+} 
 #postsList li div.postInfo {
     margin-bottom: 0.5em;
     background-color: #C0C0C0;
@@ -1776,16 +1850,13 @@ div.privateMessageReplyLinkContainer {
 }
 /** login page */
 
-div.connectionLinks {
+.connectionLinks {
     padding: 0 0 1em 0em;
-/*     height: 1em;
-    margin-bottom: 1em;
- */}
-div.connectionLinks a {
+}
+.connectionLinks a {
     margin: 0em 0 2em 5em;
     background-color: #EFEF20;
     display: block;
-/*     float: left; */
     width: 8em;
     position: relative;
     border-radius: 1em;
@@ -2004,30 +2075,52 @@ p.element-group-simple span.errors {
 #facebookPhotoExplorer div.photos li.selected {
     background: #A0A0A0
 }
+#overlay {
+    display: none;
+	position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 3001;
+    background: rgba(0,0,0,.6);
+}
+#overlay.visible {
+	display: flex;
+}
 #modalInfo {
+	position: relative;
     display: none;
     background: none repeat scroll 0 0 #E7E4DC;
     border: 0.0125em solid white;
-    margin-left: 6em;
-    min-height: 12em;
-    position: fixed;
-    top: 8em;
     width: 48em;
-    z-index: 3001;
+    max-width: 90vw;
+}
+#modalInfo.visible {
+	display: initial;
 }
 #modalInfo a.close {
     position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+    top: 1em;
+    right: 1em;
 }
-#modalInfo div.modalContent {
+#modalInfo .modalContent {
     padding: 1em;
 }
 #modalInfo p.modalTitle {
-    font-size: 1.5em;
+	padding: 0 2em;
+    text-align: center;
+	font-size: 1.5em;
     font-weight: bold;
 }
-#overlay,
+.modalList li {
+	width: 20em;
+	max-width: 95%;
+	margin: .5em auto;
+}
+
 #menuOverlay,
 #headerOverlay {
     display: none;
@@ -2038,16 +2131,27 @@ p.element-group-simple span.errors {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 3;
 }
 #headerOverlay {
     position: absolute;
 }
 
-#modalInfo div.connectionLinks {
-    margin-left: -2em;
-    margin-top: 2em;
+#modalInfo .connectionLinks {
+	display: flex;
+	justify-content: space-around;
+    align-items: center;
+	padding: 0;
+	margin-top: 1em;
+    flex-direction: column;	
 }
+#modalInfo .connectionLinks a {
+    display: inline-block;
+    margin: 1em 0;
+}
+
+
+
 p.homePageLoginTitle {
     margin: 0 0 1em 1em;
     font-weight: bold;
@@ -2055,11 +2159,18 @@ p.homePageLoginTitle {
 
 
 @media screen and (min-width: 668px) {
+    #modalInfo .connectionLinks {
+        flex-direction: row;
+    }
+	#modalInfo .connectionLinks a {
+	    margin: 0;
+	}
 /** Menu */
     #topMenu {
         position: absolute;
         top: 7em;
         right: .5em;
+        z-index: 1;
     }
     #catMenu {
         display: block;

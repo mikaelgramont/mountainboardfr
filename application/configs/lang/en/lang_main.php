@@ -175,8 +175,10 @@ $array = array(
 
     // Pagination
         'previousItem' => 'previous',
+        'goToPreviousPage' => 'previous page',
         'nextItem' => 'next',
-
+        'goToNextPage' => 'next page',
+        
     // Maps
         'mapString' => 'map',
         'clearLocation' => 'clear location',

@@ -68,15 +68,16 @@ if($this->richTextContent) {
 <?php echo $this->layout()->comments . PHP_EOL; ?>
 		</div>
 <?php } ?>
-    	<div id="modalInfo">
+  	</div>
+<?php echo $this->includeView("commonviews/footer.phtml"); ?>
+	<div id="overlay">
+	   	<div id="modalInfo">
 			<a class="close" href="#"></a>
 			<div class="modalContent">
 <?php echo $this->layout()->modal . PHP_EOL; ?>
 			</div>
-    	</div>
-  	</div>
-<?php echo $this->includeView("commonviews/footer.phtml"); ?>
-	<div id="overlay"></div>
+	 	</div>
+ 	</div>
 	<div id="menuOverlay"></div>
 <?php
 $this->google_Analytics();

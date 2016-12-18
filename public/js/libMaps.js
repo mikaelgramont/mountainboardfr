@@ -31,7 +31,7 @@ Lib.Maps = {
 			showTypes: [],
 
 			init: function(userOptions, callback){
-				if (typeof goog == 'undefined' || !goog.maps) {
+				if (typeof google == 'undefined' || !google.maps) {
 					return;
 				}
 				this.defaultOptions.mapTypeId = google.maps.MapTypeId.HYBRID;
@@ -273,7 +273,7 @@ Lib.Maps = {
 			map:null,
 			
 			init: function(userOptions, callback){
-				if (typeof goog == 'undefined' || !goog.maps) {
+				if (typeof google == 'undefined' || !google.maps) {
 					return;
 				}
 				this.defaultOptions.mapTypeId = google.maps.MapTypeId.HYBRID;
@@ -323,7 +323,7 @@ Lib.Maps = {
 			map:null,
 			
 			init: function(userOptions, callback){
-				if (typeof goog == 'undefined' || !goog.maps) {
+				if (typeof google == 'undefined' || !google.maps) {
 					return;
 				}
 				this.defaultOptions.mapTypeId = google.maps.MapTypeId.HYBRID;

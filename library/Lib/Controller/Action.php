@@ -143,7 +143,10 @@ class Lib_Controller_Action extends Zend_Controller_Action
         }
         
         $jQueryHelper->addOnLoad('$(".close").click(function() {return false;})');
-
+        if (APPLICATION_ENV == 'development') {
+            $jQueryHelper->addJavascriptFile($this->view->asset()->script('lib.js'));
+            $jQueryHelper->addJavascriptFile($this->view->asset()->script('libEvent.js'));
+        }
         header('Content-Type: text/html; charset=UTF-8');
 
         if($this->_request->getControllerName() != 'Search'){

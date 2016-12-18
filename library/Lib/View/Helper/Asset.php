@@ -9,9 +9,10 @@ class Lib_View_Helper_Asset extends Zend_View_Helper_Abstract
 		'general.js' => array(
 			SWFOBJECT_LOCAL_PATH,
 			UPLOADIFY_PATH,
-			'libForm.js',
-			'libChat.js',
-//			'libMaps.js',
+			'lib.js',
+		    'libEvent.js',
+		    'libForm.js',
+			'libMaps.js',
 			'autocomplete.js',
 			'jquery.tablesorter.js',
 			'jquery.tagbox.js',

@@ -6,15 +6,24 @@
  */
 class Lib_View_Helper_ActionLink extends Zend_View_Helper_Abstract
 {
-	public function actionLink($prepend, $append, User_Row $user, array $routingInfo, $class="", $id="")
+	protected $_hasRenderedActionLinkJS = false;
+    
+    public function actionLink($prepend, $append, User_Row $user,
+            array $routingInfo, $class="", $id="", $renderAsHeaderAction=false)
 	{
 		$return  = $prepend;
-
+		
 		if($user->isLoggedIn()){
-			if(isset($routingInfo['url'])){
-				$return .= $this->view->getHelper('routeLink')->link($routingInfo['url'], $routingInfo['title'], $class, $id);
+			if ($renderAsHeaderAction) {
+    		    $class .= " headerCardAction headerCardActionInMenu";
+    		}
+    		if(isset($routingInfo['url'])){
+				$return .= $this->view->getHelper('routeLink')
+				    ->link($routingInfo['url'], $routingInfo['title'], $class, $id);
 			} else {
-				$return .= $this->view->routeLink($routingInfo['route'], $routingInfo['title'], $routingInfo['params'], $class, $id);
+				$return .= $this->view->routeLink(
+				    $routingInfo['route'], $routingInfo['title'],
+				    $routingInfo['params'], $class, $id);
 			}
 
 			$return .= $append;
@@ -26,17 +35,20 @@ class Lib_View_Helper_ActionLink extends Zend_View_Helper_Abstract
 			$destination = $routingInfo['url'];
 			$title = $routingInfo['title'];
 		} else {
-			$destination = $router->assemble($routingInfo['params'], $routingInfo['route'], true);
+			$destination = $router->assemble($routingInfo['params'],
+			    $routingInfo['route'], true);
 			$title = $this->view->translate($routingInfo['route']);
 		}
-
+		
+		$loginButtonClass = 'actionLink';
+    	if ($renderAsHeaderAction) {
+		    $loginButtonClass .= " headerCardAction headerCardActionInMenu";
+		}
+		
 		$loginUrl = $router->assemble(array(), 'login', true);
-		$return .= "<a class=\"actionLink\" href=\"".$loginUrl.'">'.ucfirst($title).'</a>'.PHP_EOL;
+		$return .= "<a class=\"$loginButtonClass\" href=\"".$loginUrl.'">'.ucfirst($title).'</a>'.PHP_EOL;
 		$return .= $append;
-
-
 		$modal  = '	<p class="modalTitle">'.ucfirst($this->view->translate('actionLinkModalInstructions')).'</p>'.PHP_EOL;
-
 		$oauth = new Facebook_Oauth(array(
 			'scope' => array('email'),
 			'destination' => APP_URL.$destination,
@@ -49,29 +61,36 @@ class Lib_View_Helper_ActionLink extends Zend_View_Helper_Abstract
 		$modal .= $this->loginRegistrationMarkup($user, false, true, $destination, $fbLink).PHP_EOL;
 
 		$this->view->layout()->modal .= $modal;
-
-		$js = <<<JS
-
-		$('.actionLink').click(function(){
-			$('#modalInfo').fadeIn();
-			$('#overlay').show();
-			return false;
-		});
-		$('#modalInfo a.close').click(function(){
-			$('div.connectionLinks').show();
-			$('div.loginStatus').hide();
-			$('#modalInfo').hide();
-			$('#overlay').hide();
-			return false;
-		});
-JS;
-
-
-		$this->view->getHelper('jQuery')->addOnLoad($js);
+		$this->_maybeRenderActionLinkJS();
 
 		return $return;
 	}
 
+	protected function _maybeRenderActionLinkJS()
+	{
+	    if ($this->_hasRenderedActionLinkJS) {
+	        return;
+	    }
+	    
+		$js = <<<JS
+		
+$('.actionLink').click(function(){
+    $('#modalInfo').fadeIn();
+    $('#overlay').css('display', 'flex');
+    return false;
+});
+$('#modalInfo a.close').click(function(){
+    $('div.connectionLinks').show();
+    $('div.loginStatus').hide();
+	$('#modalInfo').hide();
+	$('#overlay').hide();
+	return false;
+});
+JS;
+		$this->view->getHelper('jQuery')->addOnLoad($js);
+		$this->_hasRenderedActionLinkJS = true;
+	}
+	
 	protected function _facebookLink($url, $title, $id = "", $class = "")
 	{
 		$linkTitle = ucfirst(sprintf($this->view->translate('facebookConnectLinkTitle'), APP_NAME));

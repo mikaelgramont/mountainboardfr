@@ -176,7 +176,9 @@ $array = array(
 
     // Pagination
         'previousItem' => 'précédent',
+        'goToPreviousPage' => 'page précédente',
         'nextItem' => 'suivant',
+        'goToNextPage' => 'page suivante',
 
     // Maps
         'mapString' => 'carte',
