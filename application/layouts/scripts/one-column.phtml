@@ -45,11 +45,10 @@ echo $header;
   	</div>
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 	<div id="overlay">
-		<div id="modalInfo">
+		<div class="modalContent">
 			<a class="close" href="#"></a>
-			<div class="modalContent">
+<?php echo $this->modalContentRenderer($this->modalContent).PHP_EOL; ?>			
 <?php echo $this->layout()->modal . PHP_EOL; ?>
-			</div>
 		</div>
 	</div>
 	<div id="menuOverlay"></div>

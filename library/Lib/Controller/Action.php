@@ -156,6 +156,9 @@ class Lib_Controller_Action extends Zend_Controller_Action
         }
         
         $this->view->pageClass = "";
+        $this->view->modalContent = new ModalContent(array(
+            'actionMenu' => ''
+        ));
     }
 
     public function postDispatch()

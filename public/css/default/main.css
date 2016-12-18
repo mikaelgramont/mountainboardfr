@@ -712,6 +712,9 @@ p.element-group,
     left: 10em;
     background: none;
 }
+.modalContent p.element-group {
+	width: initial;
+}
 p.element-group.active {
     background-color: rgba(192, 192, 192, 0.5);
 }
@@ -2090,26 +2093,28 @@ p.element-group-simple span.errors {
 #overlay.visible {
 	display: flex;
 }
-#modalInfo {
-	position: relative;
-    display: none;
-    background: none repeat scroll 0 0 #E7E4DC;
-    border: 0.0125em solid white;
-    width: 48em;
-    max-width: 90vw;
-}
-#modalInfo.visible {
-	display: initial;
-}
-#modalInfo a.close {
+#overlay .close {
     position: absolute;
     top: 1em;
     right: 1em;
 }
-#modalInfo .modalContent {
-    padding: 1em;
+.modalContent {
+	position: relative;
+    padding: 1em 3.5em 1em 1em;
+    margin: 1em;
+	background: none repeat scroll 0 0 #E7E4DC;
+    border: 0.0125em solid white;
+    width: 48em;
+    max-width: 75vw;
 }
-#modalInfo p.modalTitle {
+.modalContentItem {
+	display: none;
+}
+.modalContentItem.visible {
+	display: initial;
+}
+
+.modalContent .modalTitle {
 	padding: 0 2em;
     text-align: center;
 	font-size: 1.5em;
@@ -2118,7 +2123,10 @@ p.element-group-simple span.errors {
 .modalList li {
 	width: 20em;
 	max-width: 95%;
-	margin: .5em auto;
+	margin: 0em auto 1em;
+}
+.modalList li:last-child {
+	margin-bottom: 0;
 }
 
 #menuOverlay,
@@ -2137,7 +2145,7 @@ p.element-group-simple span.errors {
     position: absolute;
 }
 
-#modalInfo .connectionLinks {
+.modalContent .connectionLinks {
 	display: flex;
 	justify-content: space-around;
     align-items: center;
@@ -2145,7 +2153,7 @@ p.element-group-simple span.errors {
 	margin-top: 1em;
     flex-direction: column;	
 }
-#modalInfo .connectionLinks a {
+.modalContent .connectionLinks a {
     display: inline-block;
     margin: 1em 0;
 }
@@ -2159,10 +2167,10 @@ p.homePageLoginTitle {
 
 
 @media screen and (min-width: 668px) {
-    #modalInfo .connectionLinks {
+    .modalContent .connectionLinks {
         flex-direction: row;
     }
-	#modalInfo .connectionLinks a {
+	.modalContent .connectionLinks a {
 	    margin: 0;
 	}
 /** Menu */

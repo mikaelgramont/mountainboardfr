@@ -40,7 +40,7 @@ class Lib_View_Helper_RouteLink extends Zend_View_Helper_Abstract
 
     public function link($url, $title, $class, $id, $linkTitle="")
     {
-    	$link = "<a$class$id$linkTitle href=\"$url\">$title</a>";
+    	$link = "<a $class $id $linkTitle href=\"$url\">$title</a>";
     	return $link;
     }
 }

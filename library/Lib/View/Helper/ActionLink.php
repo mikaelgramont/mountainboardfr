@@ -15,7 +15,7 @@ class Lib_View_Helper_ActionLink extends Zend_View_Helper_Abstract
 		
 		if($user->isLoggedIn()){
 			if ($renderAsHeaderAction) {
-    		    $class .= " headerCardAction headerCardActionInMenu";
+    		    $class .= "class=\"headerCardAction headerCardActionInMenu\"";
     		}
     		if(isset($routingInfo['url'])){
 				$return .= $this->view->getHelper('routeLink')
@@ -48,7 +48,7 @@ class Lib_View_Helper_ActionLink extends Zend_View_Helper_Abstract
 		$loginUrl = $router->assemble(array(), 'login', true);
 		$return .= "<a class=\"$loginButtonClass\" href=\"".$loginUrl.'">'.ucfirst($title).'</a>'.PHP_EOL;
 		$return .= $append;
-		$modal  = '	<p class="modalTitle">'.ucfirst($this->view->translate('actionLinkModalInstructions')).'</p>'.PHP_EOL;
+		$modalLogin  = '	<p class="modalTitle">'.ucfirst($this->view->translate('actionLinkModalInstructions')).'</p>'.PHP_EOL;
 		$oauth = new Facebook_Oauth(array(
 			'scope' => array('email'),
 			'destination' => APP_URL.$destination,
@@ -58,9 +58,9 @@ class Lib_View_Helper_ActionLink extends Zend_View_Helper_Abstract
 		$id = empty($id) ? ' id="facebookConnect"' : " id=\"$id\"";
 		$fbLink = "<a$class$id href=\"".$fbUrl.'">'.ucfirst($this->view->translate('fbConnect')).'</a>'.PHP_EOL;
 		$fbLink = $this->_facebookLink($fbUrl, $this->view->translate('fbConnect'), $id, $class);
-		$modal .= $this->loginRegistrationMarkup($user, false, true, $destination, $fbLink).PHP_EOL;
+		$modalLogin .= $this->loginRegistrationMarkup($user, false, true, $destination, $fbLink).PHP_EOL;
 
-		$this->view->layout()->modal .= $modal;
+		$this->view->modalContent->addItem('login', $modalLogin);
 		$this->_maybeRenderActionLinkJS();
 
 		return $return;
@@ -73,19 +73,11 @@ class Lib_View_Helper_ActionLink extends Zend_View_Helper_Abstract
 	    }
 	    
 		$js = <<<JS
-		
-$('.actionLink').click(function(){
-    $('#modalInfo').fadeIn();
-    $('#overlay').css('display', 'flex');
-    return false;
-});
-$('#modalInfo a.close').click(function(){
-    $('div.connectionLinks').show();
-    $('div.loginStatus').hide();
-	$('#modalInfo').hide();
-	$('#overlay').hide();
-	return false;
-});
+Lib.Event.listenOnClass('click', 'actionLink', function(e) {
+    Lib.showModal('login');
+    e.preventDefault();
+}, Lib);
+
 JS;
 		$this->view->getHelper('jQuery')->addOnLoad($js);
 		$this->_hasRenderedActionLinkJS = true;
