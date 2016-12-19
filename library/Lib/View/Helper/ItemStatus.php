@@ -15,28 +15,27 @@ class Lib_View_Helper_ItemStatus extends Zend_View_Helper_Abstract
         $viewVars = $this->view->getVars();
         $baseUrl = $viewVars['baseUrl'].'/';
 
-        if(!$showValid){
+        if (!$showValid) {
         	return '';
 		}
 
 		$isEditable = $data->isEditableBy($this->view->user, $this->view->acl);
 		$itemType = $data->getItemType();
 
-        if(($data->status == Data::VALID)){
+        if (($data->status == Data::VALID)) {
             // Valid string
             $link = Globals::getRouter()->assemble(array('dataType' => $itemType, 'id' => $data->id), 'invalidatedata', true);
-            $statusAltTitle = ucfirst($this->view->translate('valid')) . '. ' .ucfirst($this->view->translate('clickToInvalidate')) .'.';
+            $title = ucfirst($this->view->translate('valid')) . '. ' .ucfirst($this->view->translate('clickToInvalidate')) .'.';
             $url = $this->view->cdnHelper->url($baseUrl.IMAGES_PATH.'status/'.self::VALID_IMAGE);
-            $content = ' <a href="'. $link .'"><img src="'.$url.'" class="inset" alt="'.$statusAltTitle.'" title="'.$statusAltTitle.'"/></a>';
 
         } else {
             // Invalid string
             $link = Globals::getRouter()->assemble(array('dataType' => $itemType, 'id' => $data->id), 'validatedata', true);
-            $statusAltTitle = ucfirst($this->view->translate('invalid')) . '. ' .ucfirst($this->view->translate('clickToValidate')) .'.';
+            $title = ucfirst($this->view->translate('invalid')) . '. ' .ucfirst($this->view->translate('clickToValidate')) .'.';
             $url = $this->view->cdnHelper->url($baseUrl.IMAGES_PATH.'status/'.self::INVALID_IMAGE);
-            $content = ' <a href="'. $link .'"><img src="'.$url.'" class="inset" alt="'.$statusAltTitle.'" title="'.$statusAltTitle.'"/>';
         }
-
+        $content = ' <a href="'. $link .'" title="'.$title.'"><img src="'.$url.'" class="inset" alt="" /></a>';
+        
         return $content;
     }
 }

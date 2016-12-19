@@ -131,7 +131,11 @@ div.posterInfo a.user::before {
     background: none;
 }
 .posterInfo a.user {
-	word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 100%;
 }
 a.spot::before {
     width: 0.875em;
@@ -426,6 +430,8 @@ header.noCategoryContent #headerContent {
     font-size: 2em;
     line-height: 1.3em;
 	margin-right: .5em;
+	position: relative;
+	top: 2px;
 }
  
 .headerCardTitle,
@@ -433,6 +439,10 @@ header.noCategoryContent #headerContent {
 .headerCardMenuAnchor {
 	display: inline-block;
 	align-self: center;
+}
+
+.headerCardActionInMenuOnly {
+	display: none;
 }
 
 .headerCardMenuAnchor {
@@ -472,6 +482,10 @@ header.noCategoryContent #headerContent {
 	 
 	 .headerCardAction {
 	   display: none;
+	 }
+	 
+	 .hiddenOnMobile {
+	 	display: none;
 	 }
  }
 
@@ -1240,7 +1254,10 @@ ul#topics li:nth-child(even) {
 }
 .postContent {
 	margin: .5em;
-} 
+}
+.postContent a {
+	word-break: break-all;
+}
 #postsList li div.postInfo {
     margin-bottom: 0.5em;
     background-color: #C0C0C0;
@@ -1288,6 +1305,9 @@ div.avatar {
     left: 0;
 }
 /** Comments **/
+.postFormContainer {
+	overflow-x: auto;
+}
 
 #commentForm p.element-group {
     left: 0;
@@ -2157,13 +2177,10 @@ p.element-group-simple span.errors {
     margin: 1em 0;
 }
 
-
-
 p.homePageLoginTitle {
     margin: 0 0 1em 1em;
     font-weight: bold;
 }
-
 
 @media screen and (min-width: 668px) {
     .modalContent .connectionLinks {

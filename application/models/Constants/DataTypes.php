@@ -11,6 +11,7 @@ class Constants_DataTypes
     const DOSSIER = 'dossier';
     const DPT = 'dpt';
     const EVENT = 'event';
+    const FORUM = 'forum';
     const MEDIAALBUM = 'mediaalbum';
     const NEWS = 'news';
     const PHOTO = 'photo';

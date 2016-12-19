@@ -13,10 +13,12 @@ Lib.Form = {
 			}
 			var c = form.elements;
 		
-			var formName = (form.id) ? form.id : 'form';
-		
-			var rules = this.Forms[formName];
 			var formStatus = true;
+			if (typeof this.Forms == 'undefined') {
+				return formStatus;
+			}
+			var formName = (form.id) ? form.id : 'form';
+			var rules = this.Forms[formName];
 		
 			for(var key in rules) {
 				var element = form[key];

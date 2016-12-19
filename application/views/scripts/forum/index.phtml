@@ -10,7 +10,7 @@ function renderTitle($title)
 function renderJumpForm($form, $view)
 {
 	$ret = '<div class="actionLinkContainer" id="forumListMain">'.PHP_EOL;
-	$ret .= ucfirst($view->translate('goToForum')).' '.$form.PHP_EOL;
+	$ret .= '<span class="hiddenOnMobile">'.ucfirst($view->translate('goToForum')).'</span> '.$form.PHP_EOL;
 	$ret .= '</div>'.PHP_EOL;
 	return $ret;
 }

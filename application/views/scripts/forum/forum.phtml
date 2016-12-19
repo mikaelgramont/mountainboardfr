@@ -28,6 +28,9 @@ function renderJumpForm($form, $view)
 	$ret .= '	<div class="actionLinkContainer" id="forumListMain">'.PHP_EOL;
 	$ret .= 		ucfirst($view->translate('goToForum')).' '.$form.PHP_EOL;
 	$ret .= '	</div>'.PHP_EOL;
+	$ret .= '	<div>'.PHP_EOL;
+	$ret .= $view->routeLink('forums', null, array(), "headerCardAction headerCardActionInMenu headerCardActionInMenuOnly").PHP_EOL;
+	$ret .= '	</div>'.PHP_EOL;
 	$ret .= '</div>'.PHP_EOL;
 	return $ret;
 }

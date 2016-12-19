@@ -1,6 +1,13 @@
 'use strict';
 
 var Lib = {
+		CARD_ACTION_CLASSES_BLACKLIST_: [
+		'dataLink',
+		'headerCardAction',
+		'headerCardActionInMenu',
+		'headerCardActionInMenuOnly',
+	],
+		
     modalListeners_: {},
 
     uuid: function() {
@@ -32,44 +39,9 @@ var Lib = {
         var actionEls = cardWrapperEl.getElementsByClassName(
             'headerCardActionInMenu');
         
-        var maybeGetAttributesFromElement = function(el) {
-            var list = [];
-            if (!el.hasAttribute('href') || el.hasAttribute('aria-hidden')) {
-                return list;
-            }
-            var label = el.hasAttribute('aria-label') ?
-                el.getAttribute('aria-label') : el.innerText;
-            if (label.length == 0) {
-                return list;
-            }
-            var className = el.className.
-            	replace('headerCardAction', '').
-            	replace('headerCardActionInMenu', '');
-            list.push({
-                href: el.getAttribute('href'),
-                label: label,
-                className: className
-            });
-            return list;
-        };
-        
-        var getActionList = function(el) {
-            if (el.tagName == 'A') {
-                return maybeGetAttributesFromElement(el);
-            } else {
-                var list = [];
-                var linkEls = el.getElementsByTagName('a');
-                for (var i = 0, l = linkEls.length; i < l; i++) {
-                    list = list.concat(
-                    	maybeGetAttributesFromElement(linkEls[i]));
-                }
-                return list;
-            }
-        };
-
         var list = [];
         for (var i = 0, l = actionEls.length; i < l; i++) {
-            var res = getActionList(actionEls[i]);
+            var res = this.getActionList(actionEls[i]);
             list = list.concat(res);
         }
         
@@ -93,6 +65,47 @@ var Lib = {
         this.showModal(modalContentId);
     },
     
+    maybeGetAttributesFromElement: function(el) {
+        var list = [];
+        if (!el.hasAttribute('href') || el.hasAttribute('aria-hidden')) {
+            return list;
+        }
+        
+        var label;
+        if (el.hasAttribute('aria-label')) {
+        	label = el.getAttribute('aria-label');
+        } else if (el.hasAttribute('title')) {
+        	label = el.getAttribute('title');
+        } else {
+        	label = el.innerText;
+        }
+        if (label.length == 0) {
+            return list;
+        }
+        list.push({
+            href: el.getAttribute('href'),
+            label: label,
+            className: el.className.split(' ').filter(function(name) {
+            	return this.CARD_ACTION_CLASSES_BLACKLIST_.indexOf(name) == -1;
+            }, this).join(' ')
+        });
+        return list;
+    },
+
+    getActionList: function(el) {
+        if (el.tagName == 'A') {
+            return this.maybeGetAttributesFromElement(el);
+        } else {
+            var list = [];
+            var linkEls = el.getElementsByTagName('a');
+            for (var i = 0, l = linkEls.length; i < l; i++) {
+                list = list.concat(
+                	this.maybeGetAttributesFromElement(linkEls[i]));
+            }
+            return list;
+        }
+    },
+
     getModalContentEl: function(contentId) {
     	return document.getElementById('modalContent-' + contentId);
     },

@@ -12,10 +12,10 @@ class Lib_View_Helper_EditLink extends Zend_View_Helper_Abstract
         $viewVars = $this->view->getVars();
         $baseUrl = $viewVars['baseUrl'].'/';
 
-        $editAltTitle = ucfirst($this->view->translate('edit'));
-        $content  = ' <a class="editLink" href="'.$data->getEditLink().'">';
+        $title = ucfirst($this->view->translate('edit'));
+        $content  = ' <a class="editLink" title="'.$title.'" href="'.$data->getEditLink().'">';
         $img = $this->view->cdnHelper->url($baseUrl.IMAGES_PATH.'actions/edit.gif');
-        $content .= ' <img src="'.$img.'" class="inset" alt="'.$editAltTitle.'" title="'.$editAltTitle.'"/>';
+        $content .= ' <img src="'.$img.'" class="inset" alt="" />';
         if($text){
         	$content .= ucfirst($this->view->translate($text));
         }

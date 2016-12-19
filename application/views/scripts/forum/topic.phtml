@@ -31,13 +31,17 @@ function renderTitle($title)
 
 function renderTopicActions($topic, $user, $view, $acl)
 {
+    $return = '';
 	if($topic->isEditableBy($user, $acl)){
-		echo $view->itemStatus($topic, true);
-		echo $view->editLink($topic);
+	    $return .= '<div class="headerCardAction headerCardActionInMenu">'.PHP_EOL;
+		$return .= $view->itemStatus($topic, true);
+		$return .=  $view->editLink($topic);
 		if(count($topic->getPosts()) == 1){
-			echo $view->deleteLink($topic);
+			$return .= $view->deleteLink($topic);
 		}
+		$return .= '</div>'.PHP_EOL;
 	}
+	return $return;
 }
 
 function renderPaginationControl($paginationControl, $extraClasses)
@@ -52,24 +56,21 @@ function renderPaginationControl($paginationControl, $extraClasses)
 	return $ret;
 }
 
+$hc = new HeaderContent($title);
+$hc->setTitleClass('forumHeader');
+$hc->setHeaderActions(
+    renderTopicActions($this->topic, $this->user, $this, $this->acl),
+    '<div class="actionLinkContainer backToTopicLink headerCardAction headerCardActionInMenu">'.$this->itemLink($linkInfo).'</div>'
+);
+$hc->setSubHeaderActions(
+    renderPaginationControl($paginationControl, 'headerCardAction headerCardActionInMenu')
+);
+
 $this->headTitle($title);
 
+echo $this->cardHeader($hc).PHP_EOL;
 
-echo '<div class="forumHeader card">'.PHP_EOL;
-	echo '<div class="forumHeaderTitle">'.PHP_EOL;
-		echo renderTitle($title).PHP_EOL;
-		echo renderTopicActions($this->topic, $this->user, $this, $this->acl).PHP_EOL;
-	echo '</div>'.PHP_EOL;
-	echo '<div class="actionLinkContainer backToTopicLink">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
-echo '</div>'.PHP_EOL;
-
-if ($paginationControl) {
-	echo '<div class="listNavigation card">'.PHP_EOL;
-		echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
-	echo '</div>'.PHP_EOL;
-}
-
-echo '<div class="forumPostList card">'.PHP_EOL;
+echo '<div class="forumPostList card noPaddingCard">'.PHP_EOL;
 	echo $this->forumPostList($this->topic, $this->posts, $this->page, $this->lastLogin);
 echo '</div>'.PHP_EOL;
 
@@ -83,7 +84,7 @@ if ($paginationControl) {
 }
 
 if ($userCanPost) {
-	echo '<div class="listNavigation card">'.PHP_EOL;
+	echo '<div class="listNavigation card postFormContainer">'.PHP_EOL;
 		echo $this->form->render();
 	echo '</div>'.PHP_EOL;
 }

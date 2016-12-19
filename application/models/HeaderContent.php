@@ -40,7 +40,7 @@ class HeaderContent
     
     public function hasHeaderActions()
     {
-        return !empty($this->_headerLeftActions) &&
+        return !empty($this->_headerLeftActions) ||
             !empty($this->_headerRightActions);
     }
     
