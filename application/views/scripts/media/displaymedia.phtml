@@ -18,6 +18,16 @@ if($this->media->mediaType == Media_Item::TYPE_PHOTO){
 }
 $renderer = $this->mediaDisplay();
 
+$hc = new HeaderContent(ucfirst($this->media->getTitle()));
+$hc->setHeaderActions(
+    renderMediaActions($this->media, $editable, $this),
+    renderBackToAlbum($this->album, $this)
+);
+$hc->setSubHeaderActions(
+    renderPrev($this->previousMedia, $this),
+    renderNext($this->nextMedia, $this)
+);
+
 /**
  * FUNCTIONS 
  */
@@ -38,16 +48,11 @@ function nextPrevMeta($prev, $next, $view)
 	}
 }
 
-function renderHeaderCard($media, $album, $editable, $view)
+function renderMediaActions($media, $editable, $view)
 {
-	$backToAlbum = sprintf($view->translate('backToAlbum'),	$album->getTitle());
-	
 	$content = '';
-	$content .= '<div class="card albumHeader">'.PHP_EOL;
-	$content .= '	<h1 id="mainTitle" class="mediaTitle">'.PHP_EOL;
-	$content .= '		'.ucfirst($media->getTitle()).PHP_EOL;
 	if($editable){
-		$content .= '	<div class="mediaEditLinks">'.PHP_EOL;
+		$content .= '	<div class="mediaEditLinks headerCardAction headerCardActionInMenu">'.PHP_EOL;
 		if($media->mediaType == Media_Item::TYPE_PHOTO){
 			$content .= '		'.$view->mediaPhotoRotateLinks($media).PHP_EOL;
 		}
@@ -56,39 +61,43 @@ function renderHeaderCard($media, $album, $editable, $view)
 		$content .= '		'.$view->deleteLink($media).PHP_EOL;
 		$content .= '	</div>'.PHP_EOL;
 	}
-	$content .= '	</h1>'.PHP_EOL;
-	$content .= '	<div>'.PHP_EOL;
-	$content .= '		<div id="backToAlbum" class="actionLinkContainer">'.PHP_EOL;
-	$content .= '			'.$view->itemLink(
-		array(
-			'name' => $backToAlbum,
-			'link' => $album->getLink(),
-			'itemType' => Constants_DataTypes::MEDIAALBUM
-		), 'dataLink album').PHP_EOL;
-	$content .= '		</div>'.PHP_EOL;
-	$content .= '	</div>'.PHP_EOL;
-	$content .= '</div>'.PHP_EOL;
 	return $content;
 }
 
-function renderSubHeaderCard($prev, $next, $view)
+function renderBackToAlbum($album, $view)
+{
+    $content = '		<div id="backToAlbum" class="actionLinkContainer headerCardAction headerCardActionInMenu">'.PHP_EOL;
+	$content .= '			'.$view->itemLink(
+		array(
+			'name' => sprintf(
+			    $view->translate('backToAlbum'), $album->getTitle()),
+			'link' => $album->getLink(),
+			'itemType' => Constants_DataTypes::MEDIAALBUM
+		), 'dataLink album').PHP_EOL;
+    $content .= '		</div>'.PHP_EOL;
+	return $content;
+}
+
+function renderPrev($prev, $view)
 {
 	$content = '';
-	if(!empty($prev) || !empty($next)){
-		$content .= '<div class="card albumHeader">'.PHP_EOL;
-		if(!empty($prev)){
-			$link = $prev->getLink();
-			$content .= '	<div class="actionLinkContainer prevMedia">'.PHP_EOL;
-			$content .= $view->itemLink($prev, 'linkLeft', 'prev').PHP_EOL;
-			$content .='	</div>'.PHP_EOL;
-		}
-		if(!empty($next)){
-			$link = $next->getLink();
-			$content .= '	<div class="actionLinkContainer nextMedia">'.PHP_EOL;
-			$content .= $view->itemLink($next, 'linkRight', 'next').PHP_EOL;
-			$content .= '	</div>'.PHP_EOL;
-		}
-		$content .= '</div>'.PHP_EOL;
+	if(!empty($prev)){
+		$link = $prev->getLink();
+		$content .= '	<div class="actionLinkContainer prevMedia headerCardAction headerCardActionInMenu">'.PHP_EOL;
+		$content .= $view->itemLink($prev, 'linkLeft', 'prev').PHP_EOL;
+		$content .='	</div>'.PHP_EOL;
+	}
+	return $content;
+}
+
+function renderNext($next, $view)
+{
+	$content = '';
+	if(!empty($next)){
+		$link = $next->getLink();
+		$content .= '	<div class="actionLinkContainer nextMedia headerCardAction headerCardActionInMenu">'.PHP_EOL;
+		$content .= $view->itemLink($next, 'linkRight', 'next').PHP_EOL;
+		$content .= '	</div>'.PHP_EOL;
 	}
 	return $content;
 }
@@ -188,10 +197,7 @@ nextPrevMeta($this->previousMedia, $this->nextMedia, $this);
  * RENDERING
  * 
  */
-echo renderHeaderCard($this->media, $this->album, $editable, $this);
-
-echo renderSubHeaderCard($this->previousMedia, $this->nextMedia, $this);
-
+echo $this->cardHeader($hc).PHP_EOL;
 echo '<div class="card mediaCard">'.PHP_EOL;
 echo '	<div class="media '.$mediaClass.'">'.PHP_EOL;
 echo '		<div class="mediaElement">'.PHP_EOL;

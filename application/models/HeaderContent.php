@@ -74,7 +74,7 @@ class HeaderContent
     
     public function hasSubHeaderActions()
     {
-        return !empty($this->_subHeaderLeftActions) &&
+        return !empty($this->_subHeaderLeftActions) ||
             !empty($this->_subHeaderRightActions);
     }
     
