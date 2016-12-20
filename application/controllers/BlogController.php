@@ -59,7 +59,7 @@ class BlogController extends Lib_Controller_Action
         }
         $select->order("date DESC");
 
-        $posts = $this->_helper->dataPaginator($select, $page, 'commonviews/two-dimension-pagination.phtml', BLOGPOSTS_PER_PAGE);
+        $posts = $this->_helper->dataPaginator($select, $page, 'commonviews/pagination.phtml', BLOGPOSTS_PER_PAGE);
 
         $this->view->blog = $blog;
         $this->view->dataType = 'Blog_Post';

@@ -10,10 +10,19 @@ $commentsAllowed = !in_array($this->album->id, array(
 	Media_Album_VideoMain::ID,
 	Media_Album_Portfolio::ID)); 
 $commentClass = $commentsAllowed ? ' withComments' : '';
+$description = 'toto';
 $displayDescription = '';
 if($description != $title && !empty($description)){
-	$displayDescription = '<span> - '.ucfirst($description).'</span>'.PHP_EOL;
+	$displayDescription = '<span class="headerCardAction">&nbsp;- '.ucfirst($description).'</span>'.PHP_EOL;
 }
+
+$hc = new HeaderContent($title.$displayDescription);
+$hc->setHeaderActions('<span class="headerCardAction headerCardActionInMenu">'.$editLink.'</span>');
+$hc->setSubHeaderActions(
+    renderPaginationControl($paginationControl, 'top headerCardAction headerCardActionInMenu'),
+    renderActions($this->album, $this->user, $this)
+);
+
 
 
 function renderTitle($title, $displayDescription, $editLink)
@@ -105,14 +114,16 @@ function renderAlbum($medias, $view)
 
 $this->headTitle($title);
 
-echo '<div class="card">'.PHP_EOL;
-	echo renderTitle($title, $displayDescription, $editLink).PHP_EOL; 
-echo '</div>'.PHP_EOL;
+// echo '<div class="card">'.PHP_EOL;
+// 	echo renderTitle($title, $displayDescription, $editLink).PHP_EOL; 
+// echo '</div>'.PHP_EOL;
 
-echo '<div class="listNavigation card">'.PHP_EOL;
-	echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
-	echo renderActions($this->album, $this->user, $this).PHP_EOL;
-echo '</div>'.PHP_EOL;
+// echo '<div class="listNavigation card">'.PHP_EOL;
+// 	echo renderPaginationControl($paginationControl, 'top').PHP_EOL;
+// 	echo renderActions($this->album, $this->user, $this).PHP_EOL;
+// echo '</div>'.PHP_EOL;
+
+echo $this->cardHeader($hc).PHP_EOL;
 
 echo '<div class="card albumCard">'.PHP_EOL;
 	echo renderAlbum($medias, $this).PHP_EOL;

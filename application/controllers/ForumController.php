@@ -372,7 +372,7 @@ class ForumController extends Lib_Controller_Action
 
         $page = $this->_getParam(3, 1);
         $result = Data_Utils::getChildrenList($this->_user, $this->_acl, $dataType, $topic, 'date ASC');
-        $posts = $this->_helper->dataPaginator($result['select'], $page, 'commonviews/two-dimension-pagination.phtml', $result['itemsPerPage']);
+        $posts = $this->_helper->dataPaginator($result['select'], $page, 'commonviews/pagination.phtml', $result['itemsPerPage']);
 
         if(!in_array($this->_user->status, array(User::STATUS_BANNED, User::STATUS_GUEST, User::STATUS_PENDING))){
         	$postTable = new Forum_Post();

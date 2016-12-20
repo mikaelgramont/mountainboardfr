@@ -3,34 +3,40 @@ if (!$this->pageCount || $this->pageCount == 1){
     return;
 }
 
-// Previous page link
+$previous = $this->translate('previousItem'); 
+$goToPreviousPage = ucfirst($this->translate('goToPreviousPage'));
+$next = $this->translate('nextItem'); 
+$goToNextPage = ucfirst($this->translate('goToNextPage'));
 
+// Previous page link
 if (isset($this->previous)){
-    echo '<a href="'.$this->url(
-        array('dataType'=> $this->dataType, 'page' => $this->previous)).
-        '">&lt; '. $this->translate('previousItem').'</a> | ';
+    echo '<a aria-label="'.$goToPreviousPage.'" href="'.$this->url(array(
+        'name' => $this->name,
+        'id' => $this->id,
+        'page' => $this->previous)).'">&lt; '.$previous.'</a> | ';
 } else {
-    echo '<span class="disabled">&lt; '.$this->translate('previousItem').'</span> | ';
+    echo '<span class="disabled">&lt; '.$previous.'</span> | ';
 }
 
 // Numbered page links
-
 foreach ($this->pagesInRange as $page){
   if ($page != $this->current){
-    echo '<a href="'.$this->url(
-        array('dataType'=> $this->dataType, 'page' => $page)).'">'.$page.'</a> | ';
+    echo '<a aria-hidden="true" href="'.$this->url(array(
+        'name' => $this->name,
+        'id' => $this->id,
+        'page' => $page)).'">'.$page.'</a> | ';
   } else {
       echo '<span class="current">'.$page.'</span> | ';
   }
 }
 
 // Next page link
-
 if (isset($this->next)){
-    echo '<a href="'.$this->url(
-        array('dataType'=> $this->dataType, 'page' => $this->next)).'">'.
-        $this->translate('nextItem').' &gt; </a>';
+    echo '<a aria-label="'.$goToNextPage.'" href="'.$this->url(array(
+        'name' => $this->name,
+        'id' => $this->id,
+        'page' => $this->next)).'">'.$next.' &gt; </a>';
 } else {
-    echo '<span class="disabled">'. $this->translate('nextItem').' &gt;</span>';
+    echo '<span class="disabled">'.$next.' &gt;</span>';
 }
 ?>
