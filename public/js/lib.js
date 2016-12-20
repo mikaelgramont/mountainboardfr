@@ -2,6 +2,7 @@
 
 var Lib = {
 		CARD_ACTION_CLASSES_BLACKLIST_: [
+		'linkLeft', 'linkRight',
 		'dataLink',
 		'headerCardAction',
 		'headerCardActionInMenu',
@@ -140,14 +141,24 @@ var Lib = {
         		this.dismissModal();
         	}
        	}).bind(this));
+        document.body.addEventListener('keyup',
+        	this.onModalKeyPress.bind(this), true);
+    },
+    
+    onModalKeyPress: function(e) {
+		if (e.keyCode == 27) {
+			this.dismissModal();
+		}    	
     },
     
     dismissModal: function() {
-        document.getElementById('overlay').classList.add('visible');
     	Lib.Event.unlistenByKey(this.modalListeners_.closeClick);
     	delete this.modalListeners_.closeClick;
+    	
+        document.removeEventListener('keyup', this.onModalKeyPress);
+
     	var overlayEl = document.getElementById('overlay');
-        overlayEl.classList.remove('visible');
         overlayEl.removeEventListener('click', this.dismissModal);
+        overlayEl.classList.remove('visible');
     }
 };
