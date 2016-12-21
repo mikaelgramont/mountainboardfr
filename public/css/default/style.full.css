@@ -329,19 +329,6 @@ header {
         rgb(143,143,143) 289px,
         rgb(226,226,226) 290px
     );
-    background-image: -webkit-linear-gradient(
-        center top,
-        rgb(143,143,143) 0px,
-        rgb(143,143,143) 58px,
-        rgb(107,107,107) 59px,
-        rgb(0,0,0) 60px,
-        rgb(0,0,0) 78px,
-        rgb(192,192,192) 79px,
-        rgb(143,143,143) 80px,
-        rgb(181,181,181) 288px,
-        rgb(143,143,143) 289px,
-        rgb(226,226,226) 290px
-    );   
     background-image: -webkit-gradient(
         linear,
         left top,
@@ -469,6 +456,9 @@ header.noCategoryContent #headerContent {
 
 .cardWrapper.hasBothCards .subHeaderCardBottom {
 	margin-top: 0;
+}
+.mediaEditLinks {
+	display: inline-block;
 }
 
 @media screen and (max-width: 667px) {
@@ -1327,9 +1317,6 @@ div.avatar {
 #postComment {}
 /** Media */
 
-.mediaEditLinks {
-	display: inline-block;
-}
 .photoRotationLinks,
 .photoRotationLinks li {
 	display: inline-block;
@@ -2346,7 +2333,12 @@ p.homePageLoginTitle {
         z-index: 2;
         top: 0;
         width: 100%;
+		will-change: transform;
+		transition: transform 100ms ease-in-out;
     }
+	header.offscreen {
+		transform: perspective(0) translate3d(0, -100%, 0);
+	}
     #headerContent {
        height: 5.5em;
     }

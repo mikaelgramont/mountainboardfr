@@ -33,7 +33,7 @@ class Lib_View_Helper_Header extends Zend_View_Helper_Abstract
 		$slides = $this->view->useHeaderSlideshow ? $this->view->homePageSlides() : '';
 		$logoUrl = $this->view->cdnHelper->url($imgPath. 'logo.png');
     		$content = <<<HTML
-<header$class>
+<header$class id="header">
 	<div id="headerContent">
 		$languageBox
 		$slides
@@ -68,6 +68,7 @@ HTML;
         );
         $options = array_merge($defaultOptions, $userOptions);
     	$this->view->getHelper('homePageSlides')->getScripts();
+    	$this->view->jQuery()->addOnLoad('Lib.setupPageScrollListener()');
     	return $content;
     }
 

@@ -160,5 +160,63 @@ var Lib = {
     	var overlayEl = document.getElementById('overlay');
         overlayEl.removeEventListener('click', this.dismissModal);
         overlayEl.classList.remove('visible');
+    },
+
+    setupPageScrollListener: function() {
+        let timeout;
+        let currentVerticalDirection;
+        let lastVerticalPosition = 0;
+        let lastVerticalDirection = 'down'; // 'up' or 'down';
+        let currentState = 'visible';
+        let visibilityState;
+        let headerEl = document.getElementById('header');
+        let headerHeight = headerEl.clientHeight;
+        const THRESHOLD = headerHeight;
+        const MAX_SCREEN_WIDTH_FOR_FIXED_HEADER = 667;
+
+        function onScroll(e) {
+            let currentVerticalPosition = window.scrollY;
+
+            if (currentVerticalPosition < lastVerticalPosition) {
+                currentVerticalDirection = 'up';
+            } else {
+                currentVerticalDirection = 'down';
+            }
+
+            if (currentVerticalDirection != lastVerticalDirection) {
+                // need to update
+                if (currentVerticalDirection == 'up') {
+                    // Show
+                    visibilityState = 'visible';
+                } else {
+                    if (currentVerticalPosition > THRESHOLD) {
+                        // Hide
+                        visibilityState = 'hidden';
+                    }
+                }
+            } else {
+                if (currentVerticalDirection == 'down' &&
+                    currentVerticalPosition > THRESHOLD) {
+                    visibilityState = 'hidden';
+                }
+            }
+
+            lastVerticalPosition = currentVerticalPosition;
+            lastVerticalDirection = currentVerticalDirection;
+            headerEl.classList.toggle('offscreen', visibilityState == 'hidden');
+        }
+        window.addEventListener('scroll', function(e) {
+            if (window.innerWidth > MAX_SCREEN_WIDTH_FOR_FIXED_HEADER) {
+                headerEl.classList.remove('offscreen');
+                return;
+            }
+            if (timeout) {
+                return;
+            }
+            timeout = setTimeout(function() {
+                onScroll(e);
+                timeout = null;
+            }, 200);
+        });
     }
 };
