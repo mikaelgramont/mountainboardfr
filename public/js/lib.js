@@ -163,19 +163,19 @@ var Lib = {
     },
 
     setupPageScrollListener: function() {
-        let timeout;
-        let currentVerticalDirection;
-        let lastVerticalPosition = 0;
-        let lastVerticalDirection = 'down'; // 'up' or 'down';
-        let currentState = 'visible';
-        let visibilityState;
-        let headerEl = document.getElementById('header');
-        let headerHeight = headerEl.clientHeight;
-        const THRESHOLD = headerHeight;
-        const MAX_SCREEN_WIDTH_FOR_FIXED_HEADER = 667;
+        var timeout;
+        var currentVerticalDirection;
+        var lastVerticalPosition = 0;
+        var lastVerticalDirection = 'down'; // 'up' or 'down';
+        var currentState = 'visible';
+        var visibilityState;
+        var headerEl = document.getElementById('header');
+        var headerHeight = headerEl.clientHeight;
+        var THRESHOLD = headerHeight;
+        var MAX_SCREEN_WIDTH_FOR_FIXED_HEADER = 667;
 
         function onScroll(e) {
-            let currentVerticalPosition = window.scrollY;
+            var currentVerticalPosition = window.scrollY;
 
             if (currentVerticalPosition < lastVerticalPosition) {
                 currentVerticalDirection = 'up';

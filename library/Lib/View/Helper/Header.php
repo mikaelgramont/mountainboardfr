@@ -68,7 +68,8 @@ HTML;
         );
         $options = array_merge($defaultOptions, $userOptions);
     	$this->view->getHelper('homePageSlides')->getScripts();
-    	$this->view->jQuery()->addOnLoad('Lib.setupPageScrollListener()');
+        $this->view->jQuery()->addJavascriptFile($this->view->asset()->script('general.js'));
+    	$this->view->jQuery()->addOnLoad('debugger; Lib.setupPageScrollListener()');
     	return $content;
     }
 
