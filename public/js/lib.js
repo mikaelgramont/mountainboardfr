@@ -170,8 +170,7 @@ var Lib = {
         var currentState = 'visible';
         var visibilityState;
         var headerEl = document.getElementById('header');
-        var headerHeight = headerEl.clientHeight;
-        var THRESHOLD = headerHeight;
+        var THRESHOLD = 20;
         var MAX_SCREEN_WIDTH_FOR_FIXED_HEADER = 667;
 
         function onScroll(e) {

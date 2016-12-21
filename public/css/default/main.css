@@ -2165,7 +2165,7 @@ p.homePageLoginTitle {
         position: absolute;
         top: 7em;
         right: .5em;
-        z-index: 1;
+        z-index: 3;
     }
     #catMenu {
         display: block;
@@ -2313,6 +2313,9 @@ p.homePageLoginTitle {
         display: block;
         padding: 0.125em 1em;
         text-decoration: none;  
+    }
+    #topMenu .category li {
+    	margin: .5em 0;
     }
     #topMenu .category > a {
         padding: .5em 1em;

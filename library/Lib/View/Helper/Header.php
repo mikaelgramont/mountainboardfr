@@ -55,12 +55,12 @@ class Lib_View_Helper_Header extends Zend_View_Helper_Abstract
             </button>
 	    </div>
 $searchForm
-	    <div id="topMenu">
-$menu
-		</div>
         <div id="headerOverlay"></div>
 	</div>
 </header>
+<div id="topMenu">
+$menu
+</div>
 HTML;
 
         $defaultOptions = array(
@@ -69,7 +69,7 @@ HTML;
         $options = array_merge($defaultOptions, $userOptions);
     	$this->view->getHelper('homePageSlides')->getScripts();
         $this->view->jQuery()->addJavascriptFile($this->view->asset()->script('general.js'));
-    	$this->view->jQuery()->addOnLoad('debugger; Lib.setupPageScrollListener()');
+    	$this->view->jQuery()->addOnLoad('Lib.setupPageScrollListener();');
     	return $content;
     }
 
