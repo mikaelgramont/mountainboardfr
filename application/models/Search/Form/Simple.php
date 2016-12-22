@@ -6,7 +6,9 @@ class Search_Form_Simple extends Lib_Form
 	 */
 	protected $_search;
 
-	public function __construct(Search $search = null, $options = null, $csrfProtection = false)
+	public function __construct(
+	    Search $search = null, $options = null, $csrfProtection = false,
+	    $extraOptions = null)
 	{
 		if(empty($options)){
 			$options = array();
@@ -20,9 +22,12 @@ class Search_Form_Simple extends Lib_Form
 		$this->setMethod('GET');
 		$this->setAction(Globals::getRouter()->assemble(array(), 'search'));
 
+		$submitId =
+		    (is_array($extraOptions) && isset($extraOptions['submitId'])) ?
+		    $extraOptions['submitId'] : 'searchSubmit';
 		$elements = array(
             'searchTerms' => $this->getSearchTerms(),
-        	'submit' => $this->getSubmit()
+        	'submit' => $this->getSubmit(null, $submitId)
         );
         $this->addElements($elements);
 	}
@@ -43,9 +48,19 @@ class Search_Form_Simple extends Lib_Form
     	return $searchTerms;
     }
 
-    public function getSubmit($label = 'searchSubmit')
+    public function getSubmit($label = 'searchSubmit', $submitId = null)
     {
-        $element = new Zend_Form_Element_Submit('searchSubmit', array('label' => ucfirst(Globals::getTranslate()->_($label)), 'value' => 'submit'));
+        if (empty($label)) {
+            $label = 'searchSubmit';
+        }
+        if (empty($submitId)) {
+            $submitId = 'searchSubmit';
+        }
+        $element = new Zend_Form_Element_Submit(
+            'searchSubmit', array(
+                'label' => ucfirst(Globals::getTranslate()->_($label)),
+                'value' => 'submit'));
+        $element->id = $submitId;
         //$element->setValue(ucfirst(Globals::getTranslate()->_($label)));
 		return $element;
     }

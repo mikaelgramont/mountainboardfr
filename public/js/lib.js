@@ -15,7 +15,9 @@ var Lib = {
 	modalContainerEl_: document.getElementById('modalContainer'),
 	desktopMenuEl_: document.getElementById('catMenu'),
 	mobileMenuEl_: document.getElementById('mobileMenu'),
-	
+	searchButtonEl_: document.getElementById('searchButton'),
+	simpleSearchEl_: document.getElementById('simpleSearchMobile'),
+	modalCloseEl_: document.getElementById('closeModal'),
 	modalContainerEl_: document.getElementsByClassName('modalContent')[0],
 		
     modalListeners_: {},
@@ -130,12 +132,15 @@ var Lib = {
     		this.dismissMobileMenu();	
     	} else if (this.currentMenuDisplayMode_ == 'modal') {
     		this.dismissModal();	
+    	} else if (this.currentMenuDisplayMode_ == 'search') {
+    		this.dismissSearch();	
     	}
+    	this.currentMenuDisplayMode_ = null;
     },
     
     setupMenus: function(menuId) {
-    	var menuButtonEl = document.getElementById('menuButton');
-    	menuButtonEl.addEventListener('click', this.showMobileMenu.bind(this));
+    	document.getElementById('menuButton').addEventListener(
+    		'click', this.showMobileMenu.bind(this));
     	
     	this.overlayEl_.addEventListener('click', (function(e) {
         	if (e.target == this.overlayEl_) {
@@ -145,17 +150,28 @@ var Lib = {
         document.body.addEventListener(
         	'keyup', this.onModalKeyPress.bind(this), true);
     	
-        $("#searchButton").bind("click", function(e) {
-            document.body.classList.toggle("searchVisible");
-            if (document.body.classList.contains("searchVisible")) {
-                $("#searchTerms").focus();
-            }
-        });
+    	this.searchButtonEl_.addEventListener(
+        	'click', this.onSearchButtonClick.bind(this));
 
         Lib.Event.listenOnClass(
         	'click', 'category', this.onCategoryClick, this);
         this.desktopMenuEl_.addEventListener(
         	'mouseleave', this.closeMenuDropdowns.bind(this));
+    },
+    
+    onSearchButtonClick: function(e) {
+    	this.showOverlay('search');
+    	this.simpleSearchEl_.classList.toggle("offscreen");
+        if (this.simpleSearchEl_.classList.contains("offscreen")) {
+            document.getElementById('searchTerms').focus();
+        }
+    },
+    
+    dismissSearch: function() {
+		this.simpleSearchEl_.classList.add("offscreen");
+    	setTimeout((function() {
+	    	this.overlayEl_.classList.remove('visible');
+    	}).bind(this), 300)    	
     },
     
     onCategoryClick: function(e) {
@@ -202,6 +218,7 @@ var Lib = {
         	this.showModalContainer_();
         	this.hideModalContentChildren_(this.getModalContentEl(contentId));
         }
+        this.modalCloseEl_.classList.add('visible');
     	this.showOverlay('modal');
     },
     
@@ -216,6 +233,7 @@ var Lib = {
         document.removeEventListener('keyup', this.onModalKeyPress);
         
     	setTimeout((function() {
+    		this.modalCloseEl_.classList.remove('visible');
 	    	this.overlayEl_.classList.remove('visible');
     	}).bind(this), 0)
     },

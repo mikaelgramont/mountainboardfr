@@ -71,7 +71,7 @@ if($this->richTextContent) {
   	</div>
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 	<div id="overlay">
-		<a class="close closeModal" href="#"></a>
+		<a class="close closeModal" id="closeModal" href="#"></a>
 		<div id="modalContent" class="modalContent">
 <?php echo $this->modalContentRenderer($this->modalContent).PHP_EOL; ?>			
 <?php echo $this->layout()->modal . PHP_EOL; ?>
@@ -79,6 +79,9 @@ if($this->richTextContent) {
 	 	<div id="mobileMenu" class="mobileMenu offscreen">
 	 		<?php echo $headerHelper->mobileMenu() ?>
 	 	</div>
+	 	<?php if ($this->searchFormMobile) { ?>
+	 	<div id="mobileSearchContainer"><?php echo $this->searchFormMobile ?></div>
+	 	<?php } ?>
  	</div>
 <?php
 $this->google_Analytics();

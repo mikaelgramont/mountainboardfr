@@ -46,13 +46,16 @@ echo $header;
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 	<div id="overlay">
 		<div id="modalContainer" class="modalContent">
-			<a class="close closeModal" href="#"></a>
+			<a class="close closeModal" id="closeModal" href="#"></a>
 <?php echo $this->modalContentRenderer($this->modalContent).PHP_EOL; ?>			
 <?php echo $this->layout()->modal . PHP_EOL; ?>
 		</div>
 	 	<div id="mobileMenu" class="mobileMenu offscreen">
 	 		<?php echo $headerHelper->mobileMenu() ?>
 	 	</div>
+	 	<?php if ($this->searchFormMobile) { ?>
+	 	<div id="mobileSearchContainer"><?php echo $this->searchFormMobile ?></div>
+	 	<?php } ?>
 	</div>
 <?php
 $this->google_Analytics();

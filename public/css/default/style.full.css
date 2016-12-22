@@ -462,6 +462,10 @@ header.noCategoryContent #headerContent {
 }
 
 @media screen and (max-width: 667px) {
+	#simpleSearch {
+		display: none;
+	}
+	
  	.cardWrapper .action,
  	.cardWrapper .subHeaderCardBottom {
  		display: none;
@@ -2109,6 +2113,12 @@ p.element-group-simple span.errors {
     top: 1em;
     right: 1em;
 }
+#overlay .closeModal {
+	display: none;
+}
+#overlay .closeModal.visible {
+	display: initial;
+}
 .modalContent {
 	display: none;
 	position: relative;
@@ -2150,21 +2160,6 @@ p.element-group-simple span.errors {
 
 .mobileMenu.visible {
 	display: initial;
-}
-
-#menuOverlay,
-#headerOverlay {
-    display: none;
-    background: none repeat scroll 0 0 black;
-    height: 100%;
-    left: 0;
-    opacity: 0.6;
-    position: fixed;
-    top: 0;
-    width: 100%;
-}
-#headerOverlay {
-    position: absolute;
 }
 
 p.homePageLoginTitle {
@@ -2302,14 +2297,7 @@ p.homePageLoginTitle {
 	}
 
 
-    .menuVisible #menuOverlay,
-    .menuVisible #headerOverlay,
-    .searchVisible #menuOverlay,
-    .searchVisible #headerOverlay {
-        display: initial;
-    }
-    .menuVisible #menuButton,
-    .searchVisible #searchButton {
+    #searchButton {
         z-index: 4;
     }    
     #mobileMenu {
@@ -2383,29 +2371,32 @@ p.homePageLoginTitle {
     .leftCard {
     	margin-bottom: 1em;
     }
-    #simpleSearch {        
-        display: initial;
+    
+    #mobileSearchContainer {
+    	align-self: flex-start;
+    }
+    #simpleSearchMobile {
+    	position: fixed;        
         left: 0;
         top: 0;
-        height: 100%;
         z-index: 2;
         padding: 1em;
         box-sizing: border-box;
         font-size: 1.5em;
         transition: transform 300ms;
+		transform: translateX(0);   
+    }
+    #simpleSearchMobile.offscreen {
         transform: translateX(-100%);
     }
-    .searchVisible #simpleSearch {
-        transform: translateX(0);   
-    }
-    .searchVisible #simpleSearch input {
+    #simpleSearchMobile input {
         vertical-align: middle;
     }
-    .searchVisible #searchTerms {
+    #simpleSearchMobile #searchTerms {
         font-size: 1em;
         width: 180px;
     }
-    .searchVisible #searchSubmit {
+    #simpleSearchMobile input[type=submit] {
         width: 120px;
         font-size: .75em;
         -webkit-appearance: none;

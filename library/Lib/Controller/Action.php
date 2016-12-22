@@ -151,8 +151,14 @@ class Lib_Controller_Action extends Zend_Controller_Action
 
         if($this->_request->getControllerName() != 'Search'){
 			$this->view->searchForm = new Search_Form_Simple();
+        	$this->view->searchFormMobile = new Search_Form_Simple(
+        	    null,
+        	    array('id' => 'simpleSearchMobile', 'class' => 'offscreen'),
+        	    null,
+        	    array('submitId' => 'searchSubmitMobile'));
         } else {
         	$this->view->searchForm = null;
+        	$this->view->searchFormMobile = null;
         }
         
         $this->view->pageClass = "";
