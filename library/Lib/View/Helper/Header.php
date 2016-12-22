@@ -26,7 +26,7 @@ class Lib_View_Helper_Header extends Zend_View_Helper_Abstract
 
    		$menu = $this->menu($currentCategoryId, $currentSubCategoryId, $config, $userOptions);
    		$searchForm = (string)$this->view->searchForm;
-		$class = $this->getEmptyCategoryContentClass();
+		$class = ' class="'.$this->getEmptyCategoryContentClass().'"';
 		$imgPath = $this->view->baseUrl . '/' . IMAGES_PATH;
 		$alt = $title = $this->view->translate('logo');
 		$languageBox = $this->_getLanguageBox($imgPath);
@@ -155,8 +155,8 @@ HTML;
     public function getEmptyCategoryContentClass()
     {
 		$class = '';
-    	if(empty($this->_currentCategoryContent) && $this->view->useHeaderSlideshow){
-			$class = ' class="noCategoryContent"';
+    	if(empty($this->_currentCategoryContent)){
+			$class = ' noCategoryContent';
 		}
 		return $class;
     }

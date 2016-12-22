@@ -12,10 +12,7 @@ class CommunityController extends Lib_Controller_Action
 
     public function indexAction()
     {
-		/**
-         * Page d'accueil de la communauté:
-         * blogs, forums, etc...
-         */
+		$this->view->wrapperIsCard = true;
     }
 
     public function nearbyAction()

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|Galada');
 
-
 /** Reset */
 html, body, div, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p, blockquote, pre, form, fieldset, table, th, td {
     margin: 0;
@@ -1912,16 +1911,16 @@ div.additionalContent {
 div.additionalContent p.random {
     margin-bottom: 0.5em
 }
-#articleSubCategoriesDescription {
-    height: 24em;
-}
+#articleSubCategoriesDescription,
 #communitySubCategoriesDescription {
-    height: 54em;
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
-h1.subCategoriesTitle {
+.subCategoriesTitle {
     font-size: 1.5em;
 }
-h2.subCategoriesDescription {
+.subCategoriesDescription {
     font-weight: normal;
     margin: 1em 0;
 }
@@ -1931,15 +1930,10 @@ h2.subCategoriesDescription {
 }
 #articleSubCategoriesDescription li,
 #communitySubCategoriesDescription li {
-    width: 25em;
-    height: 8em;
-    float: left;
+	max-width: 18em;
     margin: 1em;
     padding: 1em;
     background-color: rgba(192, 192, 192, 0.7);
-}
-#communitySubCategoriesDescription li {
-    height: 9em;
 }
 /** Search */
 

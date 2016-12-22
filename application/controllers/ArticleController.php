@@ -13,5 +13,6 @@ class ArticleController extends Lib_Controller_Action
     public function indexAction()
     {
 		$this->_helper->layout->setLayout('one-column');
+		$this->view->wrapperIsCard = true;
     }
 }

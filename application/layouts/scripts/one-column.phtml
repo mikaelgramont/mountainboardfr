@@ -23,7 +23,7 @@ echo $this->headLink().PHP_EOL;
 <?php
 $headerHelper = new Lib_View_Helper_Header($this, $this->acl, $this->user);
 $header = $headerHelper->header();
-$wrapperClass = $headerHelper->getEmptyCategoryContentClass();
+$wrapperClass = $headerHelper->getEmptyCategoryContentClass() . $this->wrapperIsCard ? " card" : "";
 echo $this->headScript().PHP_EOL;?>
 </head>
 <body class="<?php echo $this->pageClass ?>">
@@ -31,7 +31,7 @@ echo $this->headScript().PHP_EOL;?>
 echo $this->imageErrorHandler($this->cspNonce).PHP_EOL;
 echo $header;
 ?>
-	<div id="wrapper" <?php echo $wrapperClass ?>>
+	<div id="wrapper" class="<?php echo $wrapperClass ?>">
 		<div id="contentWrapper" aria-labelledby="mainTitle" class="oneColumn">
 			<main id="firstContent"<?php if($this->richTextContent) echo ' class="richTextContent"'?>>
 <?php echo $this->layout()->content.PHP_EOL; ?>
