@@ -265,8 +265,6 @@ var Lib = {
     },
 
     setupPageScrollListener: function() {
-    	// TODO: adjust threshold depending on page position: if posY less than
-    	// header height, use header height. otherwise use 10
         var timeout;
         var currentVerticalDirection;
         var lastVerticalPosition = 0;
@@ -274,11 +272,20 @@ var Lib = {
         var currentState = 'visible';
         var visibilityState;
         var headerEl = document.getElementById('header');
-        var THRESHOLD = 20;
+        var headerHeight = headerEl.offsetHeight;
+        var THRESHOLD = 10;
         var MAX_SCREEN_WIDTH_FOR_FIXED_HEADER = 667;
 
         function onScroll(e) {
+        	var threshold;
+        	
             var currentVerticalPosition = window.scrollY;
+            // Threshold is different at the top of the page than in the middle.
+            if (currentVerticalPosition > headerHeight) {
+            	threshold = THRESHOLD;
+            } else {
+            	threshold = headerHeight;
+            }
 
             if (currentVerticalPosition < lastVerticalPosition) {
                 currentVerticalDirection = 'up';
@@ -292,14 +299,14 @@ var Lib = {
                     // Show
                     visibilityState = 'visible';
                 } else {
-                    if (currentVerticalPosition > THRESHOLD) {
+                    if (currentVerticalPosition > threshold) {
                         // Hide
                         visibilityState = 'hidden';
                     }
                 }
             } else {
                 if (currentVerticalDirection == 'down' &&
-                    currentVerticalPosition > THRESHOLD) {
+                    currentVerticalPosition > threshold) {
                     visibilityState = 'hidden';
                 }
             }
