@@ -1,4 +1,4 @@
-<?php
+    <?php
 class Lib_View_Helper_Header extends Zend_View_Helper_Abstract
 {
     protected $_acl;
@@ -55,21 +55,24 @@ class Lib_View_Helper_Header extends Zend_View_Helper_Abstract
             </button>
 	    </div>
 $searchForm
+	    <div id="topMenu">
+	    	$menu
+	    </div>
         <div id="headerOverlay"></div>
 	</div>
 </header>
-<div id="topMenu">
-$menu
-</div>
 HTML;
 
         $defaultOptions = array(
             'menuId' => 'catMenu',
         );
         $options = array_merge($defaultOptions, $userOptions);
-    	$this->view->getHelper('homePageSlides')->getScripts();
-        $this->view->jQuery()->addJavascriptFile($this->view->asset()->script('general.js'));
-    	$this->view->jQuery()->addOnLoad('Lib.setupPageScrollListener();');
+        if (APPLICATION_ENV != 'development') {
+            // This may break some dev features
+            $this->view->jQuery()->addJavascriptFile($this->view->asset()->script('general.js'));
+        }
+        $this->view->jQuery()->addOnLoad('Lib.setupMenus();');
+        $this->view->jQuery()->addOnLoad('Lib.setupPageScrollListener();');
     	return $content;
     }
 
@@ -109,13 +112,12 @@ HTML;
 	         * Main menu
 	         */
 	        $menuClass = empty($options['menuClass']) ? '' : " class='{$options['menuClass']}'";
-	        $content  = '<nav class="clearfix">';
+	        $content  = '<nav>';
 	        $content .= "<ul id='{$options['menuId']}'$menuClass>".PHP_EOL;
 	        foreach($config->categories->category as $category){
 	            $content .= $this->_getCategoryContent($category, $currentCategoryId, $currentSubCategoryId, $options);
 	        }
 	        $content .= '</ul>'.PHP_EOL;
-	        $content .= '</nav>'.PHP_EOL;
 	        
 	        /*
 	         * Current category menu
@@ -126,6 +128,7 @@ HTML;
 	            $content .= $this->_currentCategoryContent.PHP_EOL;
 	            $content .= '</ul>'.PHP_EOL;
 	        }
+	        $content .= '</nav>'.PHP_EOL;
         } catch (Exception $e) {
         	$message = "An error occured while generating the main menu";
         	Globals::getLogger()->error($message.": ".$e->getMessage().PHP_EOL.$e->getTraceAsString(), Zend_Log::ERR );
@@ -134,10 +137,22 @@ HTML;
         	throw new Lib_Exception_Menu($message);
         }
 
-        $this->view->jQuery()->addOnLoad($this->_getJavascript($options['menuId']));
         return $content;
     }
 
+    public function mobileMenu()
+    {
+        $currentCategoryId = Category::$names[Zend_Registry::get('Category')];
+        $currentSubCategoryId = SubCategory::$names[Zend_Registry::get('SubCategory')];
+        $config = null;
+        $userOptions = array(
+            'menuId' => 'mobileMenuList'
+        );
+        
+   		$menu = $this->menu($currentCategoryId, $currentSubCategoryId, $config, $userOptions);
+   		return $menu;
+    }
+    
     public function getEmptyCategoryContentClass()
     {
 		$class = '';
@@ -307,54 +322,6 @@ HTML;
             $content .= $this->_getSingleSubcategoryContent($currentSubCategoryId, $element, $options);
         }
         return $content;
-    }
-
-    /**
-     * Return the javascript used to make the menu work
-     *
-     * @param string $menuId
-     * @return string
-     */
-    protected function _getJavascript($menuId)
-    {
-        $mobileMediaQuery = "screen and (max-width: 667px)";
-        $js = '
-
-$("#menuOverlay").bind("click", function(e) {
-    document.body.classList.remove("menuVisible");
-    document.body.classList.remove("searchVisible");
-});
-
-$("#menuButton").bind("click", function(e) {
-    document.body.classList.toggle("menuVisible");
-});
-
-$("#searchButton").bind("click", function(e) {
-    document.body.classList.toggle("searchVisible");
-    if (document.body.classList.contains("searchVisible")) {
-        $("#searchTerms").focus();
-    }
-});
-
-var mobileMatch = window.matchMedia("'.$mobileMediaQuery.'");
-$("#'.$menuId.' li").click(function(e) {
-    if (mobileMatch.matches) {
-        return;
-    }
-    if(!$(e.target).parent().is("li.inactiveSubCat")) {
-		$(this).addClass("active").children("ul").toggle();
-		return false;
-	}
-}).hover(
-	function() {},
-	function() {
-        if (mobileMatch.matches) {
-            return;
-        }
-        $(this).removeClass("active").children("ul").hide()
-    }
-);';
-        return $js;
     }
 
     protected function _getLanguageBox($imgPath)

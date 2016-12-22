@@ -8,6 +8,13 @@ var Lib = {
 		'headerCardActionInMenu',
 		'headerCardActionInMenuOnly',
 	],
+	
+	overlayEl_: document.getElementById('overlay'),
+	modalContainerEl_: document.getElementById('modalContainer'),
+	desktopMenuEl_: document.getElementById('catMenu'),
+	mobileMenuEl_: document.getElementById('mobileMenu'),
+	
+	modalContainerEl_: document.getElementsByClassName('modalContent')[0],
 		
     modalListeners_: {},
 
@@ -111,55 +118,123 @@ var Lib = {
     	return document.getElementById('modalContent-' + contentId);
     },
     
-    showModal: function(contentId) {
-        if (!contentId) {
-        	return;
-        }
-    	var overlayEl = document.getElementById('overlay');
-        var contentEl = this.getModalContentEl(contentId);
-        var modalContentEls = overlayEl.getElementsByClassName(
-        	'modalContentItem');
-        for(var i = 0, l = modalContentEls.length; i < l; i++) {
-        	if (modalContentEls[i] === contentEl) {
-        		modalContentEls[i].classList.add('visible');
-        	} else {
-        		modalContentEls[i].classList.remove('visible');
-        	}
-        }
-        overlayEl.classList.add('visible');
-        
-        if (this.modalListeners_.close) {
-        	Lib.Event.unlistenByKey(this.modalListeners_.close);
-        	delete this.modalListeners_.close;
-        }
-        this.modalListeners_.closeClick = Lib.Event.listenOnClass('click',
-            'close', function(e) {
-        	this.dismissModal();
-        }, this);
-        overlayEl.addEventListener('click',	(function(e) {
-        	if (e.target == overlayEl) {
+    showOverlay: function() {
+        this.overlayEl_.classList.add('visible');
+    },
+    
+    hideOverlay: function() {
+    	this.overlayEl_.classList.remove('visible');
+    },
+    
+    setupMenus: function(menuId) {
+    	var menuButtonEl = document.getElementById('menuButton');
+    	menuButtonEl.addEventListener('click', this.showMobileMenu.bind(this));
+    	
+    	this.overlayEl_.addEventListener('click', (function(e) {
+        	if (e.target == this.overlayEl_) {
+        		this.dismissMobileMenu();
         		this.dismissModal();
         	}
        	}).bind(this));
-        document.body.addEventListener('keyup',
-        	this.onModalKeyPress.bind(this), true);
+        document.body.addEventListener(
+        	'keyup', this.onModalKeyPress.bind(this), true);
+    	
+        $("#searchButton").bind("click", function(e) {
+            document.body.classList.toggle("searchVisible");
+            if (document.body.classList.contains("searchVisible")) {
+                $("#searchTerms").focus();
+            }
+        });
+
+        Lib.Event.listenOnClass(
+        	'click', 'category', this.onCategoryClick, this);
+        this.desktopMenuEl_.addEventListener(
+        	'mouseleave', this.closeMenuDropdowns.bind(this));
+    },
+    
+    onCategoryClick: function(e) {
+    	this.closeMenuDropdowns();
+    	
+    	var parentEl = e.target.parentElement;
+    	if (parentEl.classList.contains('activeCat')) {
+    		return;
+    	} else if (parentEl.classList.contains('inactiveCat')) {
+    		e.preventDefault();
+    		parentEl.getElementsByTagName('ul')[0].classList.toggle('visible');
+    	}
+    },
+    
+    closeMenuDropdowns: function(e) {
+    	var cats = this.desktopMenuEl_.getElementsByClassName('inactiveCat');
+    	for(var i = 0, l = cats.length; i < l; i++) {
+    		var uls = cats[i].getElementsByTagName('ul');
+			if (uls && uls[0]) {
+				uls[0].classList.remove('visible');
+			}
+    	}
+    },
+    
+    showMobileMenu: function() {
+    	this.showOverlay();
+    	setTimeout((function() {
+    		this.mobileMenuEl_.classList.add("visible");
+    	}).bind(this), 0)
+    },
+    
+    dismissMobileMenu: function() {
+		this.mobileMenuEl_.classList.remove("visible");
+    	setTimeout((function() {
+        	this.hideOverlay();
+    	}).bind(this), 10000)
+    },
+    
+    showModal: function(contentId) {
+        this.modalListeners_.closeClick = Lib.Event.listenOnClass(
+        	'click', 'closeModal', this.dismissModal, this);
+
+        if (contentId) {
+        	this.showModalContainer_();
+        	this.hideModalContentChildren_(this.getModalContentEl(contentId));
+        }
+    	this.showOverlay();
+    },
+    
+    dismissModal: function() {
+        this.hideOverlay();
+        this.hideModalContainer_();
+        this.hideModalContentChildren_();
+    	this.overlayEl_.removeEventListener('click', this.dismissModal);
+
+    	Lib.Event.unlistenByKey(this.modalListeners_.closeClick);
+    	delete this.modalListeners_.closeClick;
+    	
+        document.removeEventListener('keyup', this.onModalKeyPress);
+    },
+
+    showModalContainer_: function() {
+    	this.modalContainerEl_.classList.add('visible');
+    },
+    
+    hideModalContainer_: function() {
+    	this.modalContainerEl_.classList.remove('visible');
+    },
+    
+    hideModalContentChildren_: function(exceptEl) {
+        var modalContentEls = this.overlayEl_.getElementsByClassName(
+    		'modalContentItem');
+        for(var i = 0, l = modalContentEls.length; i < l; i++) {
+	    	if (exceptEl && modalContentEls[i] === exceptEl) {
+	    		modalContentEls[i].classList.add('visible');
+	    	} else {
+	    		modalContentEls[i].classList.remove('visible');
+	    	}
+	    }
     },
     
     onModalKeyPress: function(e) {
 		if (e.keyCode == 27) {
 			this.dismissModal();
 		}    	
-    },
-    
-    dismissModal: function() {
-    	Lib.Event.unlistenByKey(this.modalListeners_.closeClick);
-    	delete this.modalListeners_.closeClick;
-    	
-        document.removeEventListener('keyup', this.onModalKeyPress);
-
-    	var overlayEl = document.getElementById('overlay');
-        overlayEl.removeEventListener('click', this.dismissModal);
-        overlayEl.classList.remove('visible');
     },
 
     setupPageScrollListener: function() {

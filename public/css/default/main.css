@@ -2110,6 +2110,7 @@ p.element-group-simple span.errors {
     right: 1em;
 }
 .modalContent {
+	display: none;
 	position: relative;
     padding: 1em 3.5em 1em 1em;
     margin: 1em;
@@ -2117,6 +2118,9 @@ p.element-group-simple span.errors {
     border: 0.0125em solid white;
     width: 48em;
     max-width: 75vw;
+}
+.modalContent.visible {
+	display: initial;
 }
 .modalContentItem {
 	display: none;
@@ -2138,6 +2142,14 @@ p.element-group-simple span.errors {
 }
 .modalList li:last-child {
 	margin-bottom: 0;
+}
+
+.mobileMenu {
+	display: none;
+}
+
+.mobileMenu.visible {
+	display: initial;
 }
 
 #menuOverlay,
@@ -2217,6 +2229,9 @@ p.homePageLoginTitle {
         width: 100%;
         border: 0.0625em solid #CCCCCC;
     }
+    #catMenu li ul.visible {
+    	display: initial;
+    }
     #catMenu li ul li {
         display: inline;
         position: relative;
@@ -2276,6 +2291,16 @@ p.homePageLoginTitle {
     body.menuVisible {
         overflow: hidden;
     }
+    
+    #topMenu {
+    	display: none;
+    }
+    
+	.mobileMenu {
+		/* It's hidden by a translation, no need for a display: none; */
+		display: initial;
+	}
+
 
     .menuVisible #menuOverlay,
     .menuVisible #headerOverlay,
@@ -2287,44 +2312,44 @@ p.homePageLoginTitle {
     .searchVisible #searchButton {
         z-index: 4;
     }    
-    #topMenu {
+    #mobileMenu {
         position: fixed;
+        height: 100vh;
         z-index: 2;
         top: 0;
         right: 0;
         bottom: 0;
+        left: 3em;
         border: 0;
         transition: transform 300ms;
         transform: translateX(100%);
         overflow-y: auto;
-        left: 100%;
     }
-    .menuVisible #topMenu {
-        left: 3em;
+    #mobileMenu.visible {
         transform: translateX(0);   
     }
-    #topMenu nav {
+    #mobileMenu nav {
         background: #ccc;
         background: linear-gradient(#ccc, #aaa);
         min-height: 100%;
         border-left: 1px solid #333;        
     }
-    #topMenu a {
+    #mobileMenu a {
         display: block;
         padding: 0.125em 1em;
         text-decoration: none;  
     }
-    #topMenu .category li {
+    #mobileMenu .category li {
     	margin: .5em 0;
     }
-    #topMenu .category > a {
+    #mobileMenu .category > a {
         padding: .5em 1em;
         background: #999;
         color: #eee;
         border-top: 1px solid #333;
         border-bottom: 1px solid #333;
     }
-    #topMenu a img {
+    #mobileMenu a img {
         display: none;
     }
     #currentCategoryMenu {

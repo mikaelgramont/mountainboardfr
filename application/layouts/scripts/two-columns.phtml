@@ -71,13 +71,15 @@ if($this->richTextContent) {
   	</div>
 <?php echo $this->includeView("commonviews/footer.phtml"); ?>
 	<div id="overlay">
-		<a class="close" href="#"></a>
-		<div class="modalContent">
+		<a class="close closeModal" href="#"></a>
+		<div id="modalContent" class="modalContent">
 <?php echo $this->modalContentRenderer($this->modalContent).PHP_EOL; ?>			
 <?php echo $this->layout()->modal . PHP_EOL; ?>
 	 	</div>
+	 	<div id="mobileMenu" class="mobileMenu">
+	 		<?php echo $headerHelper->mobileMenu() ?>
+	 	</div>
  	</div>
-	<div id="menuOverlay"></div>
 <?php
 $this->google_Analytics();
 echo $this->jQuery().PHP_EOL;
