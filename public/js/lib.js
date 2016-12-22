@@ -9,6 +9,8 @@ var Lib = {
 		'headerCardActionInMenuOnly',
 	],
 	
+	currentMenuDisplayMode_: null,
+	
 	overlayEl_: document.getElementById('overlay'),
 	modalContainerEl_: document.getElementById('modalContainer'),
 	desktopMenuEl_: document.getElementById('catMenu'),
@@ -118,12 +120,17 @@ var Lib = {
     	return document.getElementById('modalContent-' + contentId);
     },
     
-    showOverlay: function() {
+    showOverlay: function(mode) {
+    	this.currentMenuDisplayMode_ = mode;
         this.overlayEl_.classList.add('visible');
     },
     
     hideOverlay: function() {
-    	this.overlayEl_.classList.remove('visible');
+    	if (this.currentMenuDisplayMode_ == 'mobileMenu') {
+    		this.dismissMobileMenu();	
+    	} else if (this.currentMenuDisplayMode_ == 'modal') {
+    		this.dismissModal();	
+    	}
     },
     
     setupMenus: function(menuId) {
@@ -132,8 +139,7 @@ var Lib = {
     	
     	this.overlayEl_.addEventListener('click', (function(e) {
         	if (e.target == this.overlayEl_) {
-        		this.dismissMobileMenu();
-        		this.dismissModal();
+        		this.hideOverlay();
         	}
        	}).bind(this));
         document.body.addEventListener(
@@ -175,17 +181,17 @@ var Lib = {
     },
     
     showMobileMenu: function() {
-    	this.showOverlay();
+    	this.showOverlay('mobileMenu');
     	setTimeout((function() {
-    		this.mobileMenuEl_.classList.add("visible");
+    		this.mobileMenuEl_.classList.remove("offscreen");
     	}).bind(this), 0)
     },
     
     dismissMobileMenu: function() {
-		this.mobileMenuEl_.classList.remove("visible");
+		this.mobileMenuEl_.classList.add("offscreen");
     	setTimeout((function() {
-        	this.hideOverlay();
-    	}).bind(this), 10000)
+	    	this.overlayEl_.classList.remove('visible');
+    	}).bind(this), 300)
     },
     
     showModal: function(contentId) {
@@ -196,11 +202,10 @@ var Lib = {
         	this.showModalContainer_();
         	this.hideModalContentChildren_(this.getModalContentEl(contentId));
         }
-    	this.showOverlay();
+    	this.showOverlay('modal');
     },
     
     dismissModal: function() {
-        this.hideOverlay();
         this.hideModalContainer_();
         this.hideModalContentChildren_();
     	this.overlayEl_.removeEventListener('click', this.dismissModal);
@@ -209,6 +214,10 @@ var Lib = {
     	delete this.modalListeners_.closeClick;
     	
         document.removeEventListener('keyup', this.onModalKeyPress);
+        
+    	setTimeout((function() {
+	    	this.overlayEl_.classList.remove('visible');
+    	}).bind(this), 0)
     },
 
     showModalContainer_: function() {
@@ -238,6 +247,8 @@ var Lib = {
     },
 
     setupPageScrollListener: function() {
+    	// TODO: adjust threshold depending on page position: if posY less than
+    	// header height, use header height. otherwise use 10
         var timeout;
         var currentVerticalDirection;
         var lastVerticalPosition = 0;

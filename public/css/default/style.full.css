@@ -2322,11 +2322,11 @@ p.homePageLoginTitle {
         left: 3em;
         border: 0;
         transition: transform 300ms;
-        transform: translateX(100%);
+		transform: translateX(0);   
         overflow-y: auto;
     }
-    #mobileMenu.visible {
-        transform: translateX(0);   
+    #mobileMenu.offscreen {
+        transform: translateX(100%);
     }
     #mobileMenu nav {
         background: #ccc;
