@@ -1,42 +1,58 @@
 <?php
-$backToAlbum = sprintf($this->translate('backToAlbum'), $this->album->getTitle());
-if($this->media) {
-	if($this->mediaType == Media_Item::TYPE_PHOTO) {
-		$string = ucfirst($this->translate('editPhotoTitle'));
-	} else {
-		$string = ucfirst($this->translate('editVideoTitle'));
-	}
-} else {
-	if($this->mediaType == Media_Item::TYPE_PHOTO) {
-		$string = ucfirst($this->translate('uploadPhotoTitle'));
-	} else {
-		$string = ucfirst($this->translate('uploadVideoTitle'));
-	}
+$title = ucfirst($this->translate(
+    getTitleString($this->media, $this->mediaType)));	
+$hc = new HeaderContent($title);
+$hc->setHeaderActions(null, getBackToAlbum($this->album, $this));
+if ($fb = maybeGetFacebookUpload($this->mediaType, $this->media, $this)) {
+    $hc->setSubHeaderActions(null, $fb);
 }
-	
-$this->headTitle($string);
-?>
-<div class="card albumHeader">
-	<h1 id="mainTitle" class="albumTitle"><?php echo $string ?></h1>
-	<div id="backToAlbum" class="actionLinkContainer uploadPage">
-<?php
-echo $this->itemLink(array(
-	'name'=>$backToAlbum,
-	'link'=>$this->album->getLink(),
-	'itemType' => Constants_DataTypes::MEDIAALBUM
-), 'dataLink album').PHP_EOL;
-?>
-	</div>
-</div>
-<?php
-if ($this->mediaType == Media_Item::TYPE_PHOTO && !$this->media) {
-	echo '<div class="card">'.PHP_EOL;
-		echo $this->facebook_UploadLink();
-	echo '</div>'.PHP_EOL;
+
+function getTitleString($media, $mediaType)
+{
+    if($media) {
+    	if($mediaType == Media_Item::TYPE_PHOTO) {
+    		return 'editPhotoTitle';
+    	} else {
+    		return 'editVideoTitle';
+    	}
+    } else {
+    	if($mediaType == Media_Item::TYPE_PHOTO) {
+    		return 'uploadPhotoTitle';
+    	} else {
+    		return 'uploadVideoTitle';
+    	}
+    }
 }
-?>
-<div class="card">
-<?php
-	echo $this->form;
-?>
-</div>
+
+function getBackToAlbum($album, $view)
+{
+    $backToAlbum = sprintf($view->translate('backToAlbum'), $album->getTitle());
+    $ret = '';
+    $ret .= '<div id="backToAlbum" class="actionLinkContainer uploadPage '.
+        'headerCardAction headerCardActionInMenu">'.PHP_EOL;
+    $ret .= $view->itemLink(array(
+        'name' => $backToAlbum,
+        'link' => $album->getLink(),
+        'itemType' => Constants_DataTypes::MEDIAALBUM
+    ), 'dataLink album').PHP_EOL;
+	$ret .= '</div>'.PHP_EOL;
+    return $ret;
+}
+
+function maybeGetFacebookUpload($mediaType, $media, $view)
+{
+    $ret = '';
+    if ($mediaType == Media_Item::TYPE_PHOTO && !$media) {
+        $ret .= '<div class="headerCardAction headerCardActionInMenu">'.PHP_EOL;
+		$ret .= $view->facebook_UploadLink();
+		$ret .= '</div>'.PHP_EOL;
+    }
+    return $ret;
+}
+
+$this->headTitle($title);
+
+echo $this->cardHeader($hc).PHP_EOL;
+echo '<div class="card">'.PHP_EOL;
+echo $this->form.PHP_EOL;
+echo '</div>'.PHP_EOL;

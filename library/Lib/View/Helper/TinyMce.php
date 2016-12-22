@@ -32,7 +32,7 @@ tinyMCE.init({
 	language: '$lang',
 	body_class: 'richTextContent',
 	theme : "advanced",
-	theme_advanced_buttons1 : "{$code}cut,copy,paste,pasteword,|,bullist,numlist,|,undo,redo,|,link,unlink,image,cleanup,|,forecolor,backcolor,bold,italic,formatselect,fontselect,fontsizeselect,emotions",
+	theme_advanced_buttons1 : "{$code},bullist,|,link,unlink,image,|,bold,italic,|,emotions",
 	theme_advanced_buttons2 : "",
 	theme_advanced_buttons3 : "",
 	theme_advanced_toolbar_location : "top",

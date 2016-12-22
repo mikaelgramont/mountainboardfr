@@ -7,8 +7,8 @@ class HeaderContent
     protected $_headerLeftActions = '';
     protected $_headerRightActions = '';
     
-    protected $_subheaderLeftActions = '';
-    protected $_subheaderRightActions = '';
+    protected $_subHeaderLeftActions = '';
+    protected $_subHeaderRightActions = '';
     
     public function __construct($title)
     {

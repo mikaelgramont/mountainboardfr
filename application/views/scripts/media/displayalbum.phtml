@@ -45,7 +45,7 @@ function renderActions($album, $user, $view)
 	$ret = '';
 	switch($album->id){
 		case Media_Album_PhotoMain::ID:
-			$prepend = '<div class="addPhotoContainer">'.PHP_EOL.'	<div class="addPhoto actionLinkContainer">'.PHP_EOL;
+			$prepend = '<div class="addPhotoContainer">'.PHP_EOL.'	<div class="addPhoto actionLinkContainer headerCardAction headerCardActionInMenu">'.PHP_EOL;
 			$append = '	</div>'.PHP_EOL.'</div>'.PHP_EOL;
 			$ret .= $view->actionLink(
 					$prepend,
@@ -59,7 +59,7 @@ function renderActions($album, $user, $view)
 					'dataLink photo');
 			break;
 		case Media_Album_VideoMain::ID:
-			$prepend = '<div class="addVideo actionLinkContainer">'.PHP_EOL;
+			$prepend = '<div class="addVideo actionLinkContainer headerCardAction headerCardActionInMenu">'.PHP_EOL;
 			$append = '</div>'.PHP_EOL;
 			$ret .= $view->actionLink(
 					$prepend,
@@ -73,7 +73,7 @@ function renderActions($album, $user, $view)
 			break;
 		case Media_Album_Portfolio::ID:
 			if($view->acl->isAllowed($user, Lib_Acl::EDITOR_RESOURCE)){
-				$ret .= '<div class="addPhoto actionLinkContainer">'.PHP_EOL;
+				$ret .= '<div class="addPhoto actionLinkContainer headerCardAction headerCardActionInMenu">'.PHP_EOL;
 				$ret .= '	'.$view->routeLink('uploadportfolio').PHP_EOL;
 				$ret .= '</div>'.PHP_EOL;
 			}

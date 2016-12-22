@@ -762,7 +762,7 @@ p.element-group input {
     padding: 0 .5em;
 }
 p.element-group select {
-    line-height: 1.25em;
+    height: 2em;
     background: white;
 }
 p.element-group div.tag {
@@ -824,13 +824,7 @@ ul.errors {
 }
 #skipAutoFields {
     margin-top: 0.5em;
-    margin-left: 14em;
 }
-#userR {
-	
-}
-#photoForm,
-#videoForm,
 #spotForm,
 #trickForm {
     margin-top: 1em;
@@ -1306,7 +1300,7 @@ div.avatar {
     left: 0;
 }
 #commentForm p.submit-group {
-    padding-right: 14em;
+    padding-right: .75em;
 }
 #comments {
     position: relative;
