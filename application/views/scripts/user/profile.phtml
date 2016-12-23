@@ -12,13 +12,13 @@ $location = $this->profilee->getLocation();
  * FUNCTIONS 
  */
 
-function maybeUserActionsCard($profilee, $isMyPage, $isLoggedIn, $renderTakeTheirPlace, $view)
+function maybeUserActions($profilee, $isMyPage, $isLoggedIn, $renderTakeTheirPlace, $view)
 {
     $renderSendMessage = $isLoggedIn && !$isMyPage;
     
     $content = "";
     if($isMyPage || $renderSendMessage || $renderTakeTheirPlace){
-        $content .= '<div class="card">'.PHP_EOL;
+        $content .= '<div class="userActions headerCardAction headerCardActionInMenu">'.PHP_EOL;
         if($isMyPage){
             $content .= '  <div id="userPreferences">'.PHP_EOL;
             $content .= '	 <p class="actionLinkContainer">'.$view->routeLink('userupdate').'</p>'.PHP_EOL;
@@ -153,11 +153,15 @@ function maybeRenderLocationCard($isLoggedIn, $location, $view)
     return $content;
 }
 
-function userNameCard($username)
+function mainHeader($username, $view)
 {
-    $content = '<div class="card">'.PHP_EOL;
-    $content .= '	<h1 class="cardTitle">'.$username.'</h1>'.PHP_EOL;
-    $content .= '</div>'.PHP_EOL;
+    $hc = new HeaderContent($username);
+    if ($userActions = maybeUserActions(
+        $this->profilee, $isMyPage, $isLoggedIn, $isAdmin, $this)) { 
+            $hc->setHeaderActions($userActions);
+    }
+    
+    $content = $view->cardHeader($hc).PHP_EOL;
     return $content;
 }
 
@@ -195,6 +199,12 @@ function userAlbumCardContent($album, $view)
 /**
  * RENDERING 
  */
+$hc = new HeaderContent($username);
+if ($userActions = maybeUserActions(
+    $this->profilee, $isMyPage, $isLoggedIn, $isAdmin, $this)) { 
+        $hc->setHeaderActions(null, $userActions);
+}
+
 $userInfoCardContent = userProfilePic($this->profilee, $this);
 $userInfoCardContent .= '<div class="userProfileInfo">'.PHP_EOL;
 $userInfoCardContent .= personalInformation($this->profilee, $isLoggedIn, $this);
@@ -202,8 +212,7 @@ $userInfoCardContent .= contactInformation($this->profilee, $isLoggedIn, $this->
 $userInfoCardContent .= rideInformation($this->profilee, $this);
 $userInfoCardContent .= '</div>'.PHP_EOL;
 
-echo userNameCard($username);
-echo maybeUserActionsCard($this->profilee, $isMyPage, $isLoggedIn, $isAdmin, $this);
+echo $this->cardHeader($hc).PHP_EOL;
 echo mainCard($userInfoCardContent, userAlbumCardContent($this->album, $this));
 echo maybeRenderLocationCard($isLoggedIn, $location, $this);
 ?>
