@@ -1,0 +1,66 @@
+<?php
+$spot = $this->data;
+
+$hc = new HeaderContent(ucfirst($spot->getTitle()));
+$hc->setHeaderActions(getHeaderActions($spot, $this->user, $this->acl, $this));
+
+function getHeaderActions($spot, $user, $acl, $view)
+{
+    $headerActions = '';
+    if(($spot->isEditableBy($user, $acl))){
+        $headerActions .= $view->itemStatus($spot);
+        $headerActions .= $view->editLink($spot);
+    }
+    if(($spot->isDeletableBy($user, $acl))){
+        $headerActions .= $view->deleteLink($spot);
+    }
+    if ($headerActions) {
+        $headerActions = '<div class="headerCardAction headerCardActionInMenu">'.
+            $headerActions.'</div>'.PHP_EOL;
+    }
+    return $headerActions;
+}
+
+function spotInfo($spot, $view)
+{
+    $content = '';
+    $content .= '<div class="deemphasized-text">'.PHP_EOL;
+    $content .= $view->renderDataInformation($spot, 'spotInformation');
+    if($locationString = $view->renderLocationInfo($spot)){
+   		$content .= '<p class="location">'.PHP_EOL;
+   		$content .= ucfirst($view->translate('locationString')) .': '.PHP_EOL;
+   		$content .= $locationString.PHP_EOL;
+   		$content .= '</p>'.PHP_EOL;
+   	}
+   	$content .= '<p class="location">'.PHP_EOL;
+   	$content .= ucfirst($view->translate('spotType')).': '.PHP_EOL;
+   	$content .= $spot->getSpotType().PHP_EOL;
+   	$content .= ' - '.ucfirst($view->translate('groundType')).': '.PHP_EOL;
+   	$content .= $spot->getGroundType().PHP_EOL;
+   	$content .= '</p>'.PHP_EOL;
+   	$content .= '</div>'.PHP_EOL;
+    $content .= '<div class="infoCardContent">'.PHP_EOL;
+    $content .= '<p>'.$spot->getDescription().'</p>'.PHP_EOL;
+    $content .= $view->renderTags($spot->getTags());
+    $content .= '</div>'.PHP_EOL;
+    return $content;
+}
+
+echo $this->cardHeader($hc).PHP_EOL;
+echo '<div class="infoAndAlbumCardWrapper">'.PHP_EOL;
+echo '  <div class="card infoCard" >'.PHP_EOL;
+echo        spotInfo($spot, $this).PHP_EOL;
+echo '  </div>'.PHP_EOL;
+if(!empty($this->album)){
+    echo '  <div class="card albumCard">'.PHP_EOL;
+    echo        $this->albumPreview($this->album, 6).PHP_EOL;
+    echo '  </div>'.PHP_EOL;
+}
+echo '</div>'.PHP_EOL;
+if($this->hasMap){
+    echo '<div class="card">'.PHP_EOL;
+    $helper = new Lib_View_Helper_RenderData();
+    $helper->setView($this);
+    echo $helper->getMap($spot);
+    echo '</div>'.PHP_EOL;
+}

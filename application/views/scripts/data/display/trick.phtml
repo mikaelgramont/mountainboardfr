@@ -1,0 +1,51 @@
+<?php
+$trick = $this->data;
+
+$hc = new HeaderContent(ucfirst($trick->getTitle()));
+$hc->setHeaderActions(getHeaderActions($trick, $this->user, $this->acl, $this));
+
+function getHeaderActions($trick, $user, $acl, $view)
+{
+    $headerActions = '';
+    if(($trick->isEditableBy($user, $acl))){
+        $headerActions .= $view->itemStatus($trick);
+        $headerActions .= $view->editLink($trick);
+    }
+    if(($trick->isDeletableBy($user, $acl))){
+        $headerActions .= $view->deleteLink($trick);
+    }
+    if ($headerActions) {
+        $headerActions = '<div class="headerCardAction headerCardActionInMenu">'.
+            $headerActions.'</div>'.PHP_EOL;
+    }
+    return $headerActions;
+}
+
+function trickInfo($trick, $view)
+{
+    $content = '';
+    $content .= '<div class="deemphasized-text">'.PHP_EOL;
+    $content .=     $view->renderDataInformation($trick, 'trickInformation');
+   	$content .= '</div>'.PHP_EOL;
+    $content .= '<div class="infoCardContent">'.PHP_EOL;
+    $content .=     '<div>'.$trick->getDescription().'</div>'.PHP_EOL;
+    $tip = $trick->getTrickTip();
+    if($tip){
+        $content .=     '<div class="trickTip">'.$tip.'</div>'.PHP_EOL;
+    }
+    $content .=     $view->renderTags($trick->getTags());
+    $content .= '</div>'.PHP_EOL;
+    return $content;
+}
+
+echo $this->cardHeader($hc).PHP_EOL;
+echo '<div class="infoAndAlbumCardWrapper">'.PHP_EOL;
+echo '  <div class="card infoCard" >'.PHP_EOL;
+echo        trickInfo($trick, $this).PHP_EOL;
+echo '  </div>'.PHP_EOL;
+if(!empty($this->album)){
+    echo '  <div class="card albumCard">'.PHP_EOL;
+    echo        $this->albumPreview($this->album, 6).PHP_EOL;
+    echo '  </div>'.PHP_EOL;
+}
+echo '</div>'.PHP_EOL;
