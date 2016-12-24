@@ -84,6 +84,7 @@ $array = array(
 	'eashAbbr' => 'e',
 	'westAbbr' => 'w',
 	'viewOnGoogleMaps' => 'view on Google Maps',
+    'coordinates' => 'coordonnées',
 
     // Login messages
     'welcome' => 'welcome',

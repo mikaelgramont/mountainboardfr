@@ -167,12 +167,12 @@ function mainHeader($username, $view)
 
 function mainCard($userInfoCardContent, $userAlbumCardContent)
 {
-    $content =  '<div class="profilePageMainContainer">'.PHP_EOL;
-    $content .= '   <div class="card profileInfoCard">'.PHP_EOL;
+    $content =  '<div class="infoAndAlbumCardWrapper">'.PHP_EOL;
+    $content .= '   <div class="card infoCard">'.PHP_EOL;
     $content .= $userInfoCardContent;
     $content .= '   </div>'.PHP_EOL;
     if ($userAlbumCardContent) {
-        $content .= '   <div class="card profileAlbumCard">'.PHP_EOL;
+        $content .= '   <div class="card albumCard">'.PHP_EOL;
         $content .= $userAlbumCardContent;
         $content .= '   </div>'.PHP_EOL;
     }

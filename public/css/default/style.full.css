@@ -894,47 +894,52 @@ div.paginationControl,
 div.paginationControl a {
     color: white;
 }
-/** Profiles */
+/** Info w/ album pages */
 
-.profilePageMainContainer,
-.trickCardContainer {
+.infoAndAlbumCardWrapper {
 	display: flex;
 	width: 100%;
 	flex-wrap: wrap;
 }
 
-.profilePageMainContainer .card {
+.infoAndAlbumCardWrapper .card {
 	flex-grow: 1;
 	margin: 0;
 }
 
-.profilePageMainContainer .card.profileInfoCard {
+.infoAndAlbumCardWrapper .card.infoCard {
 	max-width: 20em;
 	margin-right: 1em;
 }
 
+.infoCardContent {
+	margin: 1em 0;
+}
+
+.infoAndAlbumCardWrapper .card.albumCard {
+	padding: 0 0 1em;
+}
+
 @media screen and (max-width: 752px) {
-	.profilePageMainContainer {
+	.infoAndAlbumCardWrapper {
 		display: block;
 	}
-	.profilePageMainContainer .card {
+	.infoAndAlbumCardWrapper .card {
 		margin: 1em 0;
 	}
-	.profilePageMainContainer .card.profileInfoCard {
+	.infoAndAlbumCardWrapper .card.infoCard {
 		max-width: none;
 		margin: 1em 0
 	}
 }
 
 @media screen and (min-width: 440px) and (max-width: 752px) {
-	.profileInfoCard {
+	.infoCard {
 		display: flex;
 	}
 }
 
-.profileAlbumCard {
-	padding: 0 0 1em;
-}
+/** Profiles */
 
 .userProfilePic {
 	margin-right: 1em;
@@ -1535,6 +1540,7 @@ div.trickMetadata p.tags {
 }
 .trickAlbum {
 	flex-grow: 1;
+	padding: 0 0 1em;
 }
 /** News */
 

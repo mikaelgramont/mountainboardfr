@@ -79,6 +79,14 @@ class Trick_Row extends Data_Row implements Data_Row_AlbumInterface
      */
     protected $_createAlbumOnSave = true;
 
+    /**
+     * The name of the view to render to display this object.
+     * 
+     * @var string
+     */
+    protected $_displayView = 'display/trick';
+    
+    
     public function getTrickTip()
     {
         return $this->trickTip;

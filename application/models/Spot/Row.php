@@ -85,6 +85,13 @@ class Spot_Row extends    Data_Row
      */
     protected $_createAlbumOnSave = true;
 
+    /**
+     * The name of the view to render to display this object.
+     * 
+     * @var string
+     */
+    protected $_displayView = 'display/spot';
+        
     public function hasLocation()
     {
         $location = $this->getLocation();

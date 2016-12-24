@@ -85,6 +85,7 @@ $array = array(
 	'eastAbbr' => 'e',
 	'westAbbr' => 'o',
 	'viewOnGoogleMaps' => 'voir sur Google Maps',
+    'coordinates' => 'coordonnées',
 
     // Login messages
     'welcome' => 'bienvenue',

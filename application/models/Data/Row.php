@@ -206,6 +206,13 @@ abstract class Data_Row extends Cache_Object_Row implements Data_Row_DataInterfa
     protected $_lang;
 
     /**
+     * The name of the view to render to display this object.
+     * 
+     * @var string
+     */
+    protected $_displayView = 'display';
+    
+    /**
      * Name of the layouts used to display this item
      *
      * @var string
@@ -1102,6 +1109,16 @@ abstract class Data_Row extends Cache_Object_Row implements Data_Row_DataInterfa
     	return $layout;
     }
 
+    /**
+     * Returns the name of the view for display.
+     * 
+     * @return string
+     */
+    public function getDisplayView()
+    {
+        return $this->_displayView;
+    }
+    
     /**
      * Creates the folder associated to this object
      *

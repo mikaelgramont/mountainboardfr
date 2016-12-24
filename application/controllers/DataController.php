@@ -124,13 +124,15 @@ class DataController extends Lib_Controller_Action
             $this->view->album = null;
         }
         
-        $this->view->richTextContent = true;
+        $this->view->richTextContent = false;
 
         if($identity = Zend_Auth::getInstance()->getIdentity()){
         	$this->view->lastLogin = $identity->lastLogin;
         } else {
         	$this->view->lastLogin = null;
         }
+        
+        $this->render($data->getDisplayView());
     }
 
     /**

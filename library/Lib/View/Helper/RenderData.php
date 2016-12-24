@@ -153,7 +153,7 @@ SCRIPT;
 
         $content .= $article->getContentFromCdn($this->view->cdnHelper, Zend_Registry::get('Zend_Locale')).PHP_EOL;
         if($hasMap){
-            $content .= $this->_getMap($article);
+            $content .= $this->getMap($article);
         }
 
         if(!empty($album)){
@@ -230,7 +230,7 @@ SCRIPT;
 
 HTML;
 
-		$content .= $this->_getMap($region, $params);
+		$content .= $this->getMap($region, $params);
         $content .= $this->_renderMapItemsTable($items, $spotsWithoutLocation, $this->view->user, $this->view->acl);
 
 		if(!empty($album)){
@@ -254,41 +254,7 @@ HTML;
      */
     public function renderSpot(Spot_Row $spot, Media_Album_Row $album = null, $hasMap = false)
     {
-        $content = '';
-        $content .= '	<div class="spotTitle">		<h1>'.ucfirst($spot->getTitle());
-        if(($spot->isEditableBy($this->view->user, $this->view->acl))){
-            $content .= $this->view->itemStatus($spot);
-            $content .= $this->view->editLink($spot);
-        }
-        if(($spot->isDeletableBy($this->view->user, $this->view->acl))){
-            $content .= $this->view->deleteLink($spot);
-        }
-        $content .= '		</h1>'.PHP_EOL;
-        $content .= $this->view->renderDataInformation($spot, 'spotInformation');
-        $content .= '	</div>'.PHP_EOL;
-        $content .= '	<div class="spotMetadata">'.PHP_EOL;
-        $content .= '		<div class="spotInfo">'.PHP_EOL;
-
-       	if($locationString = $this->view->renderLocationInfo($spot)){
-       		$content .= '			<p class="location">'. ucfirst($this->view->translate('locationString')) .': '. $locationString . '</p>'.PHP_EOL;
-       	}
-
-        $content .= '			<p class="typeInfo">';
-        $content .= ucfirst($this->view->translate('spotType')) . ': ' .$spot->getSpotType(). ' - '. ucfirst($this->view->translate('groundType')) . ': ' .$spot->getGroundType();
-        $content .= '			</p>'.PHP_EOL;
-        $content .= '			<h2>'.$spot->getDescription().'</h2>'.PHP_EOL;
-        $content .= $this->view->renderTags($spot->getTags());
-        $content .= '		</div>'.PHP_EOL;
-        $content .= '		<div class="spotAlbum">'.PHP_EOL;
-        if(!empty($album)){
-			$content .= $this->view->albumPreview($album);
-        }
-        $content .= '		</div>'.PHP_EOL;
-        if($hasMap){
-            $content .= $this->_getMap($spot);
-        }
-        $content .= '	</div>'.PHP_EOL;
-        return $content;
+        throw new Lib_Exception("Rendering moved to display/spot");
     }
 
     /**
@@ -300,39 +266,7 @@ HTML;
      */
     public function renderTrick(Trick_Row $trick, Media_Album_Row $album = null)
     {
-        $content = '<div class="card trickCard">'.PHP_EOL;
-        $content .= '	<div class="cardTitle">'.PHP_EOL;
-        $content .= '       <h1>'.ucfirst($trick->getTitle()).PHP_EOL;
-        if(($trick->isEditableBy($this->view->user, $this->view->acl))){
-            $content .= $this->view->itemStatus($trick);
-            $content .= $this->view->editLink($trick);
-        }
-        if(($trick->isDeletableBy($this->view->user, $this->view->acl))){
-            $content .= $this->view->deleteLink($trick);
-        }
-        $content .= '       </h1>'.PHP_EOL;
-        $content .= '   </div>'.PHP_EOL;
-        $content .= $this->view->renderDataInformation($trick, 'deemphasized-text', 'span');
-        $content .= '</div>'.PHP_EOL;
-
-        $content .= '<div class="trickCardContainer">'.PHP_EOL;
-        $content .= '	<div class="card trickInfo">'.PHP_EOL;
-        $content .= '		<p class="trickDescription">'.$trick->getDescription().'		</p>'.PHP_EOL;
-        $tip = $trick->getTrickTip();
-        if($tip){
-        	$content .= '		<p class="trickTip">'.$tip.'</p>'.PHP_EOL;
-        }
-        $content .= $this->view->renderTags($trick->getTags());
-        $content .= '	</div>'.PHP_EOL;
-        
-        if(!empty($album)){
-			$content .= '	<div class="card trickAlbum">'.PHP_EOL;
-			$content .= $this->view->albumPreview($album);
-			$content .= '	</div>'.PHP_EOL;
-        }
-        $content .= '</div>'.PHP_EOL;
-        
-        return $content;
+        throw new Lib_Exception("Rendering moved to display/trick");
     }
 
     public function renderBlogPost(Blog_Post_Row $blogPost)
@@ -382,7 +316,7 @@ HTML;
      * @param Data_Row $data
      * @return string
      */
-    protected function _getMap(Data_Row $data, $userParams = array())
+    public function getMap(Data_Row $data, $userParams = array())
     {
     	if(!APP_GOOGLE_MAPS_ACTIVE){
     		return '';
@@ -405,7 +339,7 @@ HTML;
         if($data instanceof Dpt_Row || $data instanceof Country_Row){
 	        $this->view->googleMaps()->regionDisplay($params);
 	        $content .= '<a name="mapAnchor" id="mapAnchor"></a>'.PHP_EOL;
-	        $content .= '   <div style="width:'.$params['width'].';height:'.$params['height'].';" id="'.$params['mapElementId'].'"></div>'.PHP_EOL;
+	        $content .= '   <div style="height:'.$params['height'].';" id="'.$params['mapElementId'].'"></div>'.PHP_EOL;
         } else {
 	        $location = $data->getLocation();
 	        if(empty($location)){
@@ -416,18 +350,25 @@ HTML;
 	        } else {
 
 	        	$this->view->googleMaps()->displayItem($location, $params);
-	            $content .= '   <div style="width:'.$params['width'].';height:'.$params['height'].';" id="'.$params['mapElementId'].'">'.PHP_EOL.
+	            $content .= '   <div style="height:'.$params['height'].';" id="'.$params['mapElementId'].'">'.PHP_EOL.
 	            			'		<img src="'.$this->view->staticGoogleMap($location).'" alt="" />'.PHP_EOL.
 	            			'	</div>'.PHP_EOL;
 
 	            $coordinates = ucfirst($this->view->translate('coordinates'));
 	            $content .= <<<GEO
-<div class="geo">{$coordinates}:
+<div class="geo deemphasized-text">{$coordinates}:
  <span class="latitude">{$location->latitude}</span>,
  <span class="longitude">{$location->longitude}</span>
 </div>
 GEO;
-	        	$content .= '<a href="https://maps.google.com/maps?q='.urlencode(ucfirst($data->getTitle())).'@'.$location->latitude.','.$location->longitude.'">'.ucfirst($this->view->translate('viewOnGoogleMaps')).'</a>'.PHP_EOL;
+	            $url = 'https://maps.google.com/maps?q=';
+	            $url .= urlencode(ucfirst($data->getTitle()));
+	            $url .= '@'.$location->latitude.','.$location->longitude;
+	        	$content .= '<div>'.PHP_EOL;
+	            $content .= '  <a href="'.$url.'">';
+	        	$content .=       ucfirst($this->view->translate('viewOnGoogleMaps'));
+	        	$content .= ' </a>'.PHP_EOL;
+	        	$content .= '</div>'.PHP_EOL;
 	        }
 		}
 
