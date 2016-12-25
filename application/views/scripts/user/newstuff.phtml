@@ -1,23 +1,48 @@
 <?php
-$this->headTitle(ucfirst(sprintf($this->translate('newStuffFor'), $this->escape(Globals::getUser()->username))));
-$this->keywords = array('home');
-$showNewItems = ($this->items['newElementsAndMetadata']) || $this->newUnreadMessages;
-$showOldItems = ($this->items['oldElementsAndNewMetadata']) || $this->oldUnreadMessages;
+$title = ucfirst($this->translate('newstuff'));
+$this->headTitle(ucfirst(sprintf(
+    $this->translate('newStuffFor'),
+    $this->escape(Globals::getUser()->username))));
+$showNewItems = (
+    $this->items['newElementsAndMetadata']) || $this->newUnreadMessages;
+$showOldItems = (
+    $this->items['oldElementsAndNewMetadata']) || $this->oldUnreadMessages;    
+    
+$hc = new HeaderContent($title);
+$hc->setHeaderActions(getPreferences($this), getMarkAsRead($this));
 
+function getPreferences($view)
+{
+    $content = '<div class="headerCardAction headerCardActionInMenu actionLinkContainer">'.PHP_EOL;
+    $content .= ucfirst($view->routeLink('editnotifications')).PHP_EOL;
+    $content .= '</div>'.PHP_EOL;
+    return $content;
+}
+
+function getNewStuff($view)
+{
+    $content = '<div class="actionLinkContainer">'.PHP_EOL;
+    $content .= ucfirst($view->translate('showStuffPosted')).PHP_EOL;
+    $content .= ' '.$view->rangeForm.'</div>'.PHP_EOL;
+    return $content;
+}
+
+function getMarkAsRead($view)
+{
+    $content = '<div class="headerCardAction headerCardActionInMenu actionLinkContainer">'.PHP_EOL;
+    $content .= ucfirst($view->routeLink('markallasread')).PHP_EOL;
+    $content .= '</div>'.PHP_EOL;
+    return $content;
+}
+
+echo $this->cardHeader($hc).PHP_EOL;
 ?>
+<div class="card">
+	<?php echo getNewStuff($this); ?>
+</div>
 
 <div class="card">
-	<h1 id="mainTitle" class="cardTitle"><?php echo ucfirst($this->translate('newstuff'))?></h1>
-</div>
-<div class="card">
-<?php
-echo '<div class="actionLinkContainer">'.ucfirst($this->translate('showStuffPosted')).' '.$this->rangeForm.'</div>'.PHP_EOL;
-echo '<div class="actionLinkContainer">'.$this->routeLink('markallasread').'</div>'.PHP_EOL;
-echo '<div class="actionLinkContainer">'.$this->routeLink('editnotifications').'</div>'.PHP_EOL;
-?>
-</div>
-<div class="card">
-<div id='newItems'>
+	<div id='newItems'>
 <?php
 if($showNewItems){
 	echo '<h2 class="itemSectionTitle">'.PHP_EOL;
@@ -49,7 +74,7 @@ if(empty($this->items['newElementsAndMetadata']) && empty($this->items['oldEleme
 	echo '<p class="noNewStuff">'.ucfirst($this->translate('noNewStuff')).'</p>'.PHP_EOL;
 }
 ?>
-</div>
+	</div>
 <?php
 if(empty($this->items['newElementsAndMetadata']) && empty($this->items['oldElementsAndNewMetadata'])){
 	echo $this->userActionSuggestions($this->user, 'newStuff');

@@ -529,8 +529,12 @@ header.noCategoryContent #headerContent {
 .twoColumns #secondContent {
     width: 37.9%;
 }
-.article p.description {
+.article .description {
     text-align: justify
+}
+
+.article p {
+	margin: .5em 0;
 }
 .article img {
     max-width: 100%;
@@ -1294,10 +1298,6 @@ div.avatar {
 .postFormContainer {
 	overflow-x: auto;
 }
-
-#commentForm p.submit-group {
-    padding-right: .75em;
-}
 #comments {
     position: relative;
     margin: 1em 0 1.5em 0;
@@ -1307,7 +1307,10 @@ div.avatar {
 #comments #postsList {
     margin: 0
 }
-#postComment {}
+#postComment {
+	margin: 0 1em;
+}
+
 /** Media */
 
 .photoRotationLinks,
@@ -1683,21 +1686,8 @@ ul.album li a.mediaThumbnailTitle {
 div.album.paginationControl.bottom.withComments {
     bottom: 31em;
 }
-div.addPhoto,
-div.addVideo {
-    padding: 0.625em;
-    background-color: #A0A0A0;
-    border-radius: 1em;
-}
-div.addPhotoFacebook,
-div.addPhoto {
-    display: inline;
-}
 div.addPhotoFacebook {
     background: #3B5998;
-    color: white;
-    padding: 0.5em 0.25em;
-    border-radius: 1em;
 }
 div.addPhotoFacebook a,
 div.addPhoto a,
