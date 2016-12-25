@@ -381,7 +381,6 @@
 	function internal_blur(e) {
 		var settings = get_settings(e.target);
 		 $(this).parent().parent().parent().parent().removeClass('active');
-console.log($(this));
 		if (!$.trim($(this).val())) {
 			// If empty, remove the tag
 			setTimeout(function() {
@@ -421,6 +420,7 @@ console.log($(this));
 			if (!e.shiftKey && $.trim($(this).val()) && !$(this).closest(settings.tag_class).next(settings.tag_class).length) {
 				// And it's not shift+tab, and do not have a next tag
 				var tag = $(this).closest(settings.tag_class).tagboxNewTagAfter(undefined,settings);
+				$(this).closest(settings.tag_class).find('span').text(this.value);
 				setTimeout(function() {
 						tag.next(settings.tag_class).find('input').focus();
 				},
@@ -455,7 +455,6 @@ console.log($(this));
 				tags.push('');
 			}
 			tag = target.closest(settings.tag_class);
-			
 			target.val(tags[0]).siblings('span').html(sanitize(tags[0]));
 			
 			var next_tag = [];
