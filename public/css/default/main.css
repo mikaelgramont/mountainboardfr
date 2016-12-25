@@ -1231,9 +1231,6 @@ ul#topics li:nth-child(even) {
 .backToTopicLink {
 	min-width: 14em;
 }
-#postsList {
-    margin: 1em 0em 3em 0
-}
 #postsList li {
     display: flex;
     position: relative;
@@ -1296,7 +1293,7 @@ div.avatar {
 }
 /** Comments **/
 .postFormContainer {
-	overflow-x: auto;
+	margin-top: 0;
 }
 #comments {
     position: relative;
@@ -2334,7 +2331,7 @@ p.homePageLoginTitle {
        height: 5.5em;
     }
     #wrapper {
-        margin-top: 5.5em;
+        margin-top: 6.5em;
     }
     #contentWrapper {
         display: block;
