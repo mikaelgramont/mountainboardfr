@@ -56,8 +56,11 @@ abstract class Data_Form extends Lib_Form implements Data_Form_DataInterface
             'tags' => $this->getTags()
         );
 
-        $isAllowedToEditAll = $this->_acl->isAllowed($this->_user, Lib_Acl::PUBLIC_EDIT_RESOURCE);
-        $isAllowedToEditThis = $this->_acl->isAllowed(Lib_Acl::OWNER_ROLE.'_'.$this->_user->{User::COLUMN_USERID}, Lib_Acl::PUBLIC_EDIT_RESOURCE.'_'.$this->_user{User::COLUMN_USERID});
+        $isAllowedToEditAll = $this->_acl->isAllowed(
+            $this->_user, Lib_Acl::PUBLIC_EDIT_RESOURCE);
+        $isAllowedToEditThis = $this->_acl->isAllowed(
+            Lib_Acl::OWNER_ROLE.'_'.$this->_user->{User::COLUMN_USERID},
+            Lib_Acl::PUBLIC_EDIT_RESOURCE.'_'.$this->_user{User::COLUMN_USERID});
         $isAllowedToEdit = $isAllowedToEditThis || $isAllowedToEditAll;
 
         $isAdmin = $this->_acl->isAllowed($this->_user, Lib_Acl::ADMIN_RESOURCE);
@@ -83,10 +86,14 @@ abstract class Data_Form extends Lib_Form implements Data_Form_DataInterface
         $this->addElements($elements);
 
         $this->addDisplayGroup(array('title', 'description'), 'documentGroup');
-    	if($isAdmin && !empty($this->_object->id)){
-            $this->addDisplayGroup(array('skipAutoFields', 'submitter', 'date', 'lastEditionDate',  'lastEditor'), 'autoFieldsGroup');
-        }
         $this->addDisplayGroup(array('tags', 'status'), 'miscGroup');
+        if($isAdmin && !empty($this->_object->id)){
+            $this->addDisplayGroup(
+                array(
+                    'skipAutoFields', 'submitter', 'date', 'lastEditionDate',
+                    'lastEditor'),
+                'autoFieldsGroup');
+        }
 
         $this->addElements(array($this->getSubmit()));
     }
@@ -107,12 +114,16 @@ abstract class Data_Form extends Lib_Form implements Data_Form_DataInterface
      *
      * @param array $data
      */
-    public function populateFromDatabaseData(array $data, $exceptionOnEmptyText = true)
+    public function populateFromDatabaseData(
+        array $data, $exceptionOnEmptyText = true)
     {
     	if($this->_object->id){
-    		// Only get title and description from the database if they are there already
-    		$data[Data_Form_Element::TITLE] = $this->_object->getTitle($exceptionOnEmptyText);
-    		$data[Data_Form_Element::DESCRIPTION] = $this->_object->getDescription($exceptionOnEmptyText);
+    		// Only get title and description from the database if they are
+    		// there already.
+    		$data[Data_Form_Element::TITLE] =
+    		    $this->_object->getTitle($exceptionOnEmptyText);
+    		$data[Data_Form_Element::DESCRIPTION] =
+    		    $this->_object->getDescription($exceptionOnEmptyText);
     	}
     	parent::populateFromDatabaseData($data);
     }

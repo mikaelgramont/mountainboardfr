@@ -86,7 +86,6 @@ class Lib_Form extends Zend_Form
             		array('AjaxValidation'),
             		array('File'),
 					array('CustomErrors'),
-					array('Hint'),
 					array('Description'),
             		array('Label', array('separator'=>' ', 'class' => 'form-element-label')),
             		array('HtmlTag', array('tag' => 'p', 'class' => $this->_groupClass)),
@@ -99,7 +98,6 @@ class Lib_Form extends Zend_Form
 		            array('AjaxValidation'),
 		            array('ViewHelper'),
 		            array('CustomErrors'),
-		            array('Hint'),
 		            array('Description'),
 		            array('Label', array('separator'=>' ', 'class' => 'form-element-label')),
 		            array('HtmlTag', array('tag' => 'p', 'class'=>'element-group-hidden')),
@@ -135,8 +133,7 @@ class Lib_Form extends Zend_Form
         $this->clearDecorators();
         $this->addDecorator('FormElements')
              ->addDecorator('JsForm')
-             ->addDecorator('JsValidation')
-             ->addDecorator('JsHint');
+             ->addDecorator('JsValidation');
 
         $this->setDisplayGroupDecorators(array(
             'FormElements',
@@ -147,7 +144,6 @@ class Lib_Form extends Zend_Form
             array('AjaxValidation'),
             array('ViewHelper'),
             array('CustomErrors'),
-            array('Hint'),
             array('Description'),
             array('Label', array('separator'=>' ', 'class' => 'form-element-label')),
             array('HtmlTag', array('tag' => 'p', 'class'=>$this->_groupClass)),

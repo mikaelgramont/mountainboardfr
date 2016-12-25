@@ -713,17 +713,11 @@ form.goToForm input[type=submit] {
 }
 p.element-group,
 #mapTools {
-    width: 45em;
-    padding: 0 1em 1em;
+    padding: 0;
     position: relative;
-    left: 10em;
-    background: none;
 }
 .modalContent p.element-group {
 	width: initial;
-}
-p.element-group.active {
-    background-color: rgba(192, 192, 192, 0.5);
 }
 p.element-group label.form-element-label {
     padding-top: 0.25em;
@@ -734,8 +728,10 @@ p.element-group input,
 p.element-group select,
 p.element-group textarea,
 p.element-group div.tag {
+	font-size: 1em;
     width: 100%;
     border: 0.125em solid #CCCCCC;
+    box-sizing: border-box;
 }
 p.element-group span.hint {
     position: absolute;
@@ -750,8 +746,8 @@ p.element-group.active span.hint {
     display: inline;
 }
 span.mceEditor {
-    margin-top: 2em;
     display: inline-block;
+    width: 100%;
 }
 #rideType {
     height: 4em;
@@ -764,9 +760,6 @@ p.element-group input {
 p.element-group select {
     height: 2em;
     background: white;
-}
-p.element-group div.tag {
-    border: 0.0625em solid #CCCCCC;
 }
 p.element-group input[type="file"] {
     border: inherit;
@@ -796,6 +789,7 @@ p.element-group textarea#media {
     height: 4em;
 }
 p.submit-group {
+	margin-top: 1em;
     text-align: right;
 }
 .submit-group input {
@@ -1014,9 +1008,13 @@ ul#userListItem li {
 #mapTypeSelector {
     display: block;
 }
+#mapTools {
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 #mapTools li {
-    float: right;
-    height: 2.5em;
+    margin: .5em 0 0;
 }
 a#clearLocation {
     padding-left: 1.25em;
@@ -1292,18 +1290,11 @@ div.avatar {
     background: none;
     padding: 0;
 }
-#loginForm p.element-group,
-#postForm p.element-group {
-    left: 0;
-}
 /** Comments **/
 .postFormContainer {
 	overflow-x: auto;
 }
 
-#commentForm p.element-group {
-    left: 0;
-}
 #commentForm p.submit-group {
     padding-right: .75em;
 }
@@ -1761,20 +1752,24 @@ div.dailymotion-embed {
 /** Tags **/
 
 p.element-group div.tag {
-    height: 1.875em;
-    margin-top: 1.75em;
+	height: 2em;
     background: white;
     display: inline-block;
 }
+span.tag {
+	margin-right: .5em;
+}
+span.tag input {
+	outline-offset: -1px;
+}
 span.tag label {
     background: #B0B0B0;
-    border: 0.0625em solid transparent;
-    margin: 0.1875em 0 0.1875em 0.3125em;
+    margin: 0;
     padding-right: 1.25em;
     position: relative;
     display: inline-block;
     min-width: 1.25em;
-    height: 1.375em;
+    height: 100%;
 }
 span.tag label small.close {
     position: absolute;
@@ -1815,7 +1810,6 @@ span.tag input {
 span.tag label span {
     display: inline-block;
     visibility: hidden;
-    margin-left: 5px;
 }
 /** Private Messages */
 
@@ -1898,9 +1892,6 @@ p.recoverPassword {
 }
 /** login form in second content column */
 
-#secondContent p.element-group {
-    width: initial;
-}
 #secondContent div.additionalContent {
     text-align: center;
     padding: 0.5em;

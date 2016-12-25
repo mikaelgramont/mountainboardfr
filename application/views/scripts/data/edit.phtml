@@ -1,25 +1,32 @@
 <?php
-echo '<div class="card">'.PHP_EOL;
-	if($this->data->id){
-		$stringName = 'edit'.ucfirst($this->dataType).'Title';
-	    $string = ucfirst($this->translate($stringName));
-	    echo '<h1 id="mainTitle" class="dataEditTitle">'.$string.'</h1>'.PHP_EOL;
-	    
-	    $linkInfo = array(
-	    	'link' => $this->data->getLink(),
-	    	'name' => sprintf(ucfirst($this->translate('backTo')), $this->data->getTitle()),
-	    	'itemType' => $this->data->getItemType()
-	    );
-		echo '<div id="backToData" class="actionLinkContainer">'.$this->itemLink($linkInfo).'</div>'.PHP_EOL;
-	} else {
-		$stringName = 'add'.ucfirst($this->dataType).'Title';
-	    $string = ucfirst($this->translate($stringName));
-		echo '<h1 class="dataAddTitle">'.$string.'</h1>'.PHP_EOL;
-	}
-echo '</div>'.PHP_EOL;
+if($this->data->id){
+    $stringName = 'edit'.ucfirst($this->dataType).'Title';
+    $titleClass = 'dataEditTitle';
+} else {
+	$stringName = 'add'.ucfirst($this->dataType).'Title';
+	$titleClass = 'dataAddTitle';
+}
+$title = ucfirst($this->translate($stringName));
 
-$this->headTitle($string);
+$hc = new HeaderContent($title);
+$hc->setTitleClass($titleClass);
 
+$linkInfo = array(
+ 	'link' => $this->data->getLink(),
+   	'name' => sprintf(
+  	    ucfirst($this->translate('backTo')),
+   	    $this->data->getTitle()),
+   	'itemType' => $this->data->getItemType()
+);
+$actions = '<span class="headerCardAction headerCardActionInMenu actionLinkContainer">'.PHP_EOL;
+$actions .= $this->itemLink($linkInfo).PHP_EOL;
+$actions .= '</span>'.PHP_EOL;
+$hc->setHeaderActions(null, $actions);
+
+
+$this->headTitle($title);
+
+echo $this->cardHeader($hc).PHP_EOL;
 echo '<div class="card">'.PHP_EOL;
 	echo $this->form.PHP_EOL;
 echo '</div>'.PHP_EOL;

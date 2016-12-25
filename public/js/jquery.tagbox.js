@@ -42,7 +42,7 @@
 				var content = this;
 				//Setting up the 'default' tag, witch is, an original DOM element that is never inserted, only cloned
 
-				settings.tag = $('<span class="'+settings.className+'"><label><span></span><input type="text" name="'+settings.name+'" value=" " /><small class="close" title="close">x</small></label></span>').get(0);
+				settings.tag = $('<span class="'+settings.className+'"><label><span></span><input type="text" name="'+settings.name+'" value=" " /><small class="close" title="close">×</small></label></span>').get(0);
 				setup_tag(settings);
 
 				// transform inputs into some block level element
@@ -355,12 +355,7 @@
 			// If is the 'close' button, hide the tag and remove
 			if (settings.fx) {
 				// animate if settings.fx
-				$(this).animate(
-					{width: 'hide'},
-					'fast',
-					function() {
-						$(this).remove();
-					});
+				$(this).remove();
 			}else {
 				// or just remove, without animation
 				$(this).remove();

@@ -7,6 +7,7 @@ class Lib_Form_Decorator_JsHint extends Zend_Form_Decorator_Abstract
     
 	public function render($content)
 	{
+	    return $content;
         $view = $this->getElement()->getView();
         if (null === $view) {
             return $content;

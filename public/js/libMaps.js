@@ -314,7 +314,7 @@ Lib.Maps = {
 				mapLabel:'',
 				clearLocation:'clearLocation',
 				locateMe:'locateMe',
-				width:'45em',
+				width:'100%',
 				height:'20em'
 			}, // End editItem.defaultOptions
 			

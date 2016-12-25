@@ -157,6 +157,7 @@ $data = array(
         'editForum_TopicTitle' => 'edit a topic',
         'editForum_PostTitle' => 'edit a post',
         'editCommentTitle' => 'edit a comment',
+        'editAlbumTitle' => 'edit an album',
 
 	// BACKTO LINKS
 		'backTo' => 'back to %s',

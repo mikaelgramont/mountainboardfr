@@ -150,15 +150,16 @@ $data = array(
         'addNewsTitle' => 'ajouter une nouvelle news',
 
     // EDITLINKS
-        'editSpotTitle' => 'editer un spot',
-        'editEventTitle' => 'editer un évenement',
-        'editTrickTitle' => 'editer un trick',
-        'editDossierTitle' => 'editer un dossier',
-        'editTestTitle' => 'editer un test',
-        'editNewsTitle' => 'editer une news',
-        'editForum_TopicTitle' => 'editer une discussion',
-        'editForum_PostTitle' => 'editer un message',
-        'editCommentTitle' => 'editer un commentaire',
+        'editSpotTitle' => 'éditer un spot',
+        'editEventTitle' => 'éditer un évenement',
+        'editTrickTitle' => 'éditer un trick',
+        'editDossierTitle' => 'éditer un dossier',
+        'editTestTitle' => 'éditer un test',
+        'editNewsTitle' => 'éditer une news',
+        'editForum_TopicTitle' => 'éditer une discussion',
+        'editForum_PostTitle' => 'éditer un message',
+        'editCommentTitle' => 'éditer un commentaire',
+        'editAlbumTitle' => 'éditer un album',
 
 	// BACKTO LINKS
 		'backTo' => 'retourner à %s',
