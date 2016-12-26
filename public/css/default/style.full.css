@@ -998,6 +998,8 @@ ul#userListItem li {
     width: 32em;
     height: 32em;
     margin: 2em 0 0 0;
+    border: .125em solid #ccc;
+    box-sizing: border-box;
 }
 #simpleMapElement {
     height: 18em;
