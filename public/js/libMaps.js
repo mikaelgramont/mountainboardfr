@@ -11,7 +11,7 @@ Lib.Maps = {
 				bounds:[],
 				mapElementId:'',
 				icons:{
-				}
+				},
 			}, // End displayRegion.defaultOptions
 			
 			options:{},
@@ -47,7 +47,8 @@ Lib.Maps = {
 			    var mapOptions = {
 			    	zoom: options.zoom,
 				    center: center,
-				    mapTypeId: options.mapTypeId
+				    mapTypeId: options.mapTypeId,
+				    scrollwheel: false
 				};
 				var map = window.map = this.map = new google.maps.Map(document.getElementById(options.mapElementId), mapOptions);
 
@@ -265,7 +266,8 @@ Lib.Maps = {
 				zoom:8,
 				mapTypeId: null,
 				mapElementId:'',
-				regionDetails:''
+				regionDetails:'',
+				scrollwheel: false
 			}, // End displayItem.defaultOptions
 			
 			options:{},
@@ -282,7 +284,8 @@ Lib.Maps = {
 			    var mapOptions = {
 			    	zoom: parseInt(options.zoom),
 			    	center: latLng,
-			    	mapTypeId: options.mapTypeId
+			    	mapTypeId: options.mapTypeId,
+				    scrollwheel: false
 			    };
 			    var map = this.map = new google.maps.Map(document.getElementById(options.mapElementId), mapOptions);
 				var marker = this.marker = new google.maps.Marker({
@@ -315,7 +318,7 @@ Lib.Maps = {
 				clearLocation:'clearLocation',
 				locateMe:'locateMe',
 				width:'100%',
-				height:'20em'
+				height:'20em',
 			}, // End editItem.defaultOptions
 			
 			options:{},
@@ -332,13 +335,18 @@ Lib.Maps = {
 		
 				this.setupPage();
 				
-				var latLng = new google.maps.LatLng(parseFloat(options.center[0]), parseFloat(options.center[1]));
+				var latLng = new google.maps.LatLng(
+						parseFloat(options.center[0]),
+						parseFloat(options.center[1]));
 			    var mapOptions = {
 			    	zoom: parseInt(options.zoom),
 			    	center: latLng,
-			    	mapTypeId: options.mapTypeId
+			    	mapTypeId: options.mapTypeId,
+					scrollwheel: false
 			    };
-			    var map = this.map = new google.maps.Map(document.getElementById(options.mapElementId), mapOptions);
+			    
+			    var map = this.map = new google.maps.Map(
+			    	document.getElementById(options.mapElementId), mapOptions);
 				if(options.hasMarker){
 				    var marker = this.marker = new google.maps.Marker({
 						position: latLng, 
@@ -349,8 +357,10 @@ Lib.Maps = {
 				}
 				if(options.bounds.length == 4){
 				    var bounds = new google.maps.LatLngBounds(
-					    	new google.maps.LatLng(options.bounds[0],options.bounds[1]),
-					    	new google.maps.LatLng(options.bounds[2],options.bounds[3])
+					    	new google.maps.LatLng(
+					    		options.bounds[0], options.bounds[1]),
+					    	new google.maps.LatLng(
+					    		options.bounds[2], options.bounds[3])
 				    );
 				    google.maps.event.addDomListenerOnce(map, 'bounds_changed', function() {
 				    	var zoom = map.getZoom();

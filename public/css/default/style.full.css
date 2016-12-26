@@ -829,6 +829,9 @@ ul.errors {
 }
 /** Content */
 
+#postForm {
+	width: 100%;
+}
 span.postInformation,
 p.postInformation {
     font-size: 0.8em;
