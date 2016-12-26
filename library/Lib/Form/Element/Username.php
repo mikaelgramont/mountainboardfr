@@ -75,6 +75,14 @@ class Lib_Form_Element_Username extends Lib_Form_Element_Data
         if($autoComplete){
            $this->helper = $this->_autoCompleteHelper;
         }
+        
+        $this->_setPlaceholder();
+    }
+    
+    protected function _setPlaceholder()
+    {
+		$this->placeholder = ucfirst(
+		    $this->getTranslator()->_($this->getHint()));
     }
 
     protected function _getDataByTitle($title)
@@ -94,5 +102,6 @@ class Lib_Form_Element_Username extends Lib_Form_Element_Data
 	public function setHint($hint)
 	{
 		$this->_hint = $hint;
+		$this->_setPlaceholder();
 	}
 }

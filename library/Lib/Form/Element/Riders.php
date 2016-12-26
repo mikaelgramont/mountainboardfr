@@ -16,6 +16,8 @@ class Lib_Form_Element_Riders extends Zend_Form_Element_Text
 	public function __construct($spec, $media = null, $options = null)
 	{
 		parent::__construct($spec, $options);
+		$this->placeholder = ucfirst(
+		    $this->getTranslator()->_($this->getHint()));
 		$this->_media = $media;
 		$this->_list = $this->buildRiderList();
 	}

@@ -36,6 +36,15 @@ class Lib_Form_Element_Trick extends Lib_Form_Element_Data
      */
     protected $_table = 'Trick';
 
+    public function __construct($name = null, $autoComplete = false, $mustExist = false, $mustNotExist = false, $emptyAllowed = false, $options = null)
+    {
+        parent::__construct(
+            $name, $autoComplete, $mustExist, $mustNotExist, $emptyAllowed,
+            $options);
+		$this->placeholder = ucfirst(
+		    $this->getTranslator()->_($this->getHint()));
+    }
+    
 	public function getHint()
 	{
 		return 'trickHint';

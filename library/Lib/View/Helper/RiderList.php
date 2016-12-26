@@ -3,7 +3,8 @@ class Lib_View_Helper_RiderList extends Zend_View_Helper_FormElement
 {
     public function riderList($name, $value, $params = array(), $attribs = array())
     {
-		$list = $this->view->form->getElement('riders')->getList();
+        $element = $this->view->form->getElement('riders');
+		$list = $element->getList();
 
     	$js = <<<JS
 
@@ -20,6 +21,7 @@ JS;
 		if(is_array($value) && count($value) == 1 && empty($value[0])){
 			$value = '';
 		}
+		$attribs['placeholder'] = $element->placeholder;
 		$return = $this->view->formText($name, $value, $attribs);
     	return $return;
     }

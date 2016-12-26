@@ -71,7 +71,12 @@
 				$box
 					.click(function(e, text) {
 						// If you click the tagbox, a new tag is created
-						 $(this).tagboxNewTagAppend(text, settings).find(settings.tag_class+':last input').focus();
+						 $(this).tagboxNewTagAppend(text, settings).find(
+							  settings.tag_class+':last input').focus();
+					})
+					.bind('focus', function(e, text) {
+						$(this).trigger('remove_tag', '');
+						$(this).tagboxNewTagAppend(text, settings)
 					})
 					.bind('add_tag', function(e, text) {
 						// if(!find_tag.call(this, text).length){

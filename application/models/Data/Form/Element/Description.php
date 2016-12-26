@@ -10,6 +10,9 @@ class Data_Form_Element_Description extends Lib_Form_Element_TinyMce
 		$this->_form = $form;
 		
 		parent::__construct('description', $options);
+		$this->placeholder = ucfirst(
+		    $this->getTranslator()->_($this->getHint()));
+		
         $this->setLabel(ucfirst(Globals::getTranslate()->_('description')))
              ->setRequired(true)
              ->addValidator('NotEmpty')

@@ -19,7 +19,11 @@ abstract class Lib_View_Helper_AutoCompleteData extends Zend_View_Helper_FormEle
         }
 
         $params['url'] = Globals::getRouter()->assemble(array(), $this->_route, true);
-
+        if (isset($params['placeholder'])) {
+            $attribs['placeholder'] = $params['placeholder'];
+            unset($params['placeholder']);
+        }
+        
         $this->view->JQuery()->addJavascriptFile($this->view->asset()->script('autocomplete.js'));
 
         return $this->view->autoComplete($id, $value, $params, $attribs);

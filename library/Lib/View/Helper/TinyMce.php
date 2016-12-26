@@ -37,7 +37,7 @@ tinyMCE.init({
 	theme_advanced_buttons3 : "",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
-	plugins: "emotions",
+	plugins: "emotions,placeholder",
 	content_css: '$css',
 	file_browser_callback : function myFileBrowser (field_name, url, type, win) {
 		var cmsUrl = '$fileBrowserUrl';

@@ -7,7 +7,9 @@ class Data_Form_Element_Title extends Zend_Form_Element_Text
 	{
 		$this->_form = $form;
 		parent::__construct('title', $options);
-
+		$this->placeholder = ucfirst(
+		    $this->getTranslator()->_($this->getHint()));
+		
 		$toLowerFilter = new Zend_Filter_StringToLower();
         $toLowerFilter->setEncoding(APP_PAGE_ENCODING);
 

@@ -15,6 +15,15 @@ class Lib_Form_Element_Tags extends Zend_Form_Element_Text
      */
     protected $_isArray = true;	
 
+    public function __construct($name = null, $autoComplete = false, $mustExist = false, $mustNotExist = false, $emptyAllowed = false, $options = null)
+    {
+        parent::__construct(
+            $name, $autoComplete, $mustExist, $mustNotExist, $emptyAllowed,
+            $options);
+		$this->placeholder = ucfirst(
+		    $this->getTranslator()->_($this->getHint()));
+    }
+
 	public function getHint()
 	{
 		return 'tagsHint';
