@@ -13,9 +13,9 @@ if (isset($this->previous)){
     echo '<a aria-label="'.$goToPreviousPage.'" href="'.$this->url(array(
         'name' => $this->name,
         'id' => $this->id,
-        'page' => $this->previous)).'">&lt; '.$previous.'</a> | ';
+        'page' => $this->previous)).'">&lt; </a> ';
 } else {
-    echo '<span class="disabled">&lt; '.$previous.'</span> | ';
+    echo '<span class="disabled">&lt; </span> ';
 }
 
 // Numbered page links
@@ -24,9 +24,9 @@ foreach ($this->pagesInRange as $page){
     echo '<a aria-hidden="true" href="'.$this->url(array(
         'name' => $this->name,
         'id' => $this->id,
-        'page' => $page)).'">'.$page.'</a> | ';
+        'page' => $page)).'">'.$page.'</a> ';
   } else {
-      echo '<span class="current">'.$page.'</span> | ';
+      echo '<span class="current">'.$page.'</span> ';
   }
 }
 
@@ -35,8 +35,8 @@ if (isset($this->next)){
     echo '<a aria-label="'.$goToNextPage.'" href="'.$this->url(array(
         'name' => $this->name,
         'id' => $this->id,
-        'page' => $this->next)).'">'.$next.' &gt; </a>';
+        'page' => $this->next)).'"> &gt; </a>';
 } else {
-    echo '<span class="disabled">'.$next.' &gt;</span>';
+    echo '<span class="disabled"> &gt;</span>';
 }
 ?>

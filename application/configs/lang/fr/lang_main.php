@@ -184,7 +184,7 @@ $array = array(
     // Maps
         'mapString' => 'carte',
         'clearLocation' => 'effacer la position',
-		'locateMe' => 'détecter ma position automatiquement',
+		'locateMe' => 'détecter ma position',
         'mapLabel' => 'position',
 
     // Files

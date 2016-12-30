@@ -183,7 +183,7 @@ $array = array(
     // Maps
         'mapString' => 'map',
         'clearLocation' => 'clear location',
-		'locateMe' => 'locate me automatically',
+		'locateMe' => 'locate me',
 		'mapLabel' => 'location',
 
     // Files

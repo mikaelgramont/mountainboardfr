@@ -16,10 +16,14 @@ if($description != $title && !empty($description)){
 }
 
 $hc = new HeaderContent($title.$displayDescription);
-$hc->setHeaderActions('<span class="headerCardAction headerCardActionInMenu">'.$editLink.'</span>');
-$hc->setSubHeaderActions(
-    renderPaginationControl($paginationControl, 'top headerCardAction headerCardActionInMenu'),
-    renderActions($this->album, $this->user, $this)
+$hc->setHeaderActions(
+    '<div class="headerCardAction headerCardActionInMenu">'.
+        $editLink.
+    '</div>',
+    '<div class="headerCardAction headerCardActionInMenu">'.
+        renderPaginationControl($paginationControl, '').
+        renderActions($this->album, $this->user, $this).
+    '</div>'
 );
 
 function renderTitle($title, $displayDescription, $editLink)
@@ -45,8 +49,8 @@ function renderActions($album, $user, $view)
 	$ret = '';
 	switch($album->id){
 		case Media_Album_PhotoMain::ID:
-			$prepend = '<div class="addPhotoContainer">'.PHP_EOL.'	<div class="addPhoto actionLinkContainer headerCardAction headerCardActionInMenu">'.PHP_EOL;
-			$append = '	</div>'.PHP_EOL.'</div>'.PHP_EOL;
+			$prepend = '<div class="actionLinkContainer">'.PHP_EOL;
+			$append = '</div>'.PHP_EOL;
 			$ret .= $view->actionLink(
 					$prepend,
 					$append,
@@ -55,11 +59,10 @@ function renderActions($album, $user, $view)
 						'route' => 'uploadphotomain',
 						'title' => null,
 						'params' => array()
-					),
-					'dataLink photo');
+					));
 			break;
 		case Media_Album_VideoMain::ID:
-			$prepend = '<div class="addVideo actionLinkContainer headerCardAction headerCardActionInMenu">'.PHP_EOL;
+			$prepend = '<div class="actionLinkContainer">'.PHP_EOL;
 			$append = '</div>'.PHP_EOL;
 			$ret .= $view->actionLink(
 					$prepend,
@@ -69,11 +72,11 @@ function renderActions($album, $user, $view)
 						'route' => 'uploadvideo',
 						'title' => null,
 						'params' => array()
-					), 'dataLink video');
+					));
 			break;
 		case Media_Album_Portfolio::ID:
 			if($view->acl->isAllowed($user, Lib_Acl::EDITOR_RESOURCE)){
-				$ret .= '<div class="addPhoto actionLinkContainer headerCardAction headerCardActionInMenu">'.PHP_EOL;
+				$ret .= '<div class="actionLinkContainer">'.PHP_EOL;
 				$ret .= '	'.$view->routeLink('uploadportfolio').PHP_EOL;
 				$ret .= '</div>'.PHP_EOL;
 			}

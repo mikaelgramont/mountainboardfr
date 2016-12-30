@@ -50,7 +50,6 @@ var Lib = {
         var cardWrapperEl = this.getAncestor(event.target, 'cardWrapper');
         var actionEls = cardWrapperEl.getElementsByClassName(
             'headerCardActionInMenu');
-        
         var list = [];
         for (var i = 0, l = actionEls.length; i < l; i++) {
             var res = this.getActionList(actionEls[i]);

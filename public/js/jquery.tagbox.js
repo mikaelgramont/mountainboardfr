@@ -1,5 +1,6 @@
 ; (function($) {
-
+	$tagWrapper = null;
+	
 	$.tagbox = {
 		defaults: {
 			separator: /[,]/, // It's possible to use multiple separators, like /[,;.]/
@@ -21,6 +22,7 @@
 			// object to preserve chainability
 			var $chain = this;
 			var remove_from_chain=[];
+			var $old;
 			
 			this.each(function init_box() {
 				var $box = $(this);
@@ -47,11 +49,12 @@
 
 				// transform inputs into some block level element
 				if ($box.is(":input")) {
-					var $old = $box;
+					$old = $box;
 					// keep name attr
 					settings.name = settings.name || this.name; // We use the input's name as the default name in this case
 					// create new element
-					$box.wrap('<'+settings.container+' class="'+settings.className+'"></'+settings.container+'>');
+					$box.wrap('<div class="tagWrapper"></div>')
+					$box.wrap('<'+settings.container+' tabindex="0" class="tagRoot '+settings.className+'"></'+settings.container+'>');
 					// import string
 					$box = $box.parent().text($box.val());
 					// preserve chainability
@@ -59,7 +62,12 @@
 					remove_from_chain.push($old.get(0)); // queue for later removal, since we are inside the jQuery.each protected loop
 					// remove from the DOM
 					$old.remove();
+					var placeholderEl = document.createElement('div');
+					placeholderEl.classList.add('tagPlaceholder');
+					placeholderEl.innerText = $old.attr('placeholder');
+					$box.parent().append(placeholderEl);
 					
+					$tagWrapper = $('.tagWrapper');
 				};
 				// only apply tagbox once
 				if ($.data($box.get(0),'settings')) {
@@ -171,6 +179,17 @@
 			return newTagAction.call(this,tag, settings, 'after');
 		}
 	});
+	
+	function updatePlaceholderClass() {
+		//console.log('updatePlaceholderClass', $tagWrapper);
+		if ($tagWrapper.find('input').length > 0) {
+			//console.log('has inputs');
+			$tagWrapper.addClass('hasTags');
+		} else {
+			//console.log('no inputs');
+			$tagWrapper.removeClass('hasTags');
+		}
+	};
 	
 	function newTagAction(tag, settings, action) {
 		var the_tag = new_tag(tag, settings);
@@ -374,22 +393,27 @@
 			target.tagboxNewTagBefore(undefined,settings);
 			target.prev(settings.tag_class).find(':input').focus();
 		}
-
+		updatePlaceholderClass();
 	};
 	
 	function internal_focus(e) {
 		// Store the value to activate / deactivate the suggestions
 		this.initialValue = this.value;
 		 $(this).parent().parent().parent().parent().addClass('active');
+		 
+		updatePlaceholderClass();
 	};
 	
 	function internal_blur(e) {
+		updatePlaceholderClass($(this));
+		
 		var settings = get_settings(e.target);
 		 $(this).parent().parent().parent().parent().removeClass('active');
 		if (!$.trim($(this).val())) {
 			// If empty, remove the tag
 			setTimeout(function() {
 					$(e.target).closest(settings.tag_class).remove();
+					updatePlaceholderClass();
 			},100);
 			// This timeout is necessary for safari.
 		}else if(settings.suggestion_links) {
@@ -399,6 +423,8 @@
 			};
 			find_suggestion(this.value,settings).addClass('active'); // Get the current value and activate
 		}
+		
+		updatePlaceholderClass();
 	};
 	
 	function internal_keydown(e) {
@@ -428,11 +454,13 @@
 				$(this).closest(settings.tag_class).find('span').text(this.value);
 				setTimeout(function() {
 						tag.next(settings.tag_class).find('input').focus();
+						updatePlaceholderClass();
 				},
 				50);
 				return true;
 			}
 		}
+		updatePlaceholderClass();
 	};
 	
 	function internal_keyup(e,force_autocomplete) {
@@ -477,6 +505,7 @@
 
 			
 		}
+		updatePlaceholderClass();
 	};
 	
 	function split_tags (text, settings){
@@ -523,7 +552,4 @@
 		return text.replace(/\s/g, '&nbsp;').replace("<", "&lt;") + "M"
 	};
 
-	
-
-	
 } (jQuery));
