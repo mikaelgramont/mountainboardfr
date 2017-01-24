@@ -336,6 +336,10 @@ abstract class Data_Row extends Cache_Object_Row implements Data_Row_DataInterfa
      */
     public function getAllTranslatedTexts($lang)
     {
+        if (!$this->id) {
+            return array();
+        }
+        
     	if(!ALLOW_CACHE){
 			$translatedTexts = Data_TranslatedText::getAllTranslatedTexts($this->id, $this->getItemType());
 			return $translatedTexts;

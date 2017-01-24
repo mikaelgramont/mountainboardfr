@@ -95,8 +95,9 @@ class Event_Form extends Article_Form
 
         $dateValidator = new Zend_Validate_Date($format, $locale);
         $date = new Lib_Form_Element_Date($spec,array());
+        $options = array('yearRange' => (string)(date('Y') - 1) . ':'. (string)(date('Y') + 2));
         $date->setLabel(ucfirst(Globals::getTranslate()->_($spec)))
-             ->setOptions(array('yearRange' => date('Y') - 1 . ':'. date('Y') + 2))
+             ->setOptions($options)
              ->addValidator($dateValidator);
 		return $date;
     }
