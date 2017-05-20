@@ -1622,6 +1622,18 @@ div.blogOwner {
     bottom: .125em;
     height: 2em;
     background: rgba(0,0,0,.5);
+    background: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgba(0,0,0,.5)),
+        color-stop(100%, rgba(0,0,0,0))
+    );
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, .5) 0,
+        rgba(0, 0, 0, 0) 100%
+    );
 	color: #fff;
     display: flex;
     align-items: center;
@@ -1637,7 +1649,7 @@ div.blogOwner {
 	text-overflow: ellipsis;
 	padding: 0 .25em;
 	font-family: Galada, cursive;
-	text-shadow: 1px 1px 1px #000;
+	text-shadow: 0px 0px 5px #000;
 }
 .mediaOverlayComments {
 	flex: 0 0 2em;
