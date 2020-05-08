@@ -44,6 +44,9 @@ class IndexController extends Lib_Controller_Action
     public function contactAction()
     {
     	$form = new Lib_Form_Contact($this->_user);
+        $this->view->display = 'form';
+        $this->view->form = $form;
+        return;
 
         $data = $this->_request->getPost();
         if(!$data || !$form->isValid($data)){
